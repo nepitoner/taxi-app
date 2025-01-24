@@ -1,0 +1,22 @@
+server:
+  port: 0
+spring:
+  application:
+    name: ${APPLICATION_NAME:passenger-service}
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/passenger_db}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    enabled: true
+    change-log: classpath:db\changelog\db.changelog-master.yaml
+    drop-first: true
+
+minio:
+  url: ${MINIO_URL:http://localhost:9000}
+  access:
+    name: ${MINIO_USER}
+    secret: ${MINIO_USER_PASS}
+  bucket:
+    photo_bucket_name: passengers-photo-files
