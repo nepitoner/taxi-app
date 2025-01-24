@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class PassengerExceptionHandler {
 
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleNotFound(NotFoundException exception) {
+    @ExceptionHandler(PassengerNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFound(PassengerNotFoundException exception) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(new ErrorResponse(HttpStatus.NOT_FOUND, exception.getMessage()));
     }

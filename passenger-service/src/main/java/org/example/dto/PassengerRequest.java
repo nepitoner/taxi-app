@@ -15,7 +15,7 @@ import static org.example.utils.constant.PassengerServiceConstant.PHONE_NUMBER_R
 
 @Builder
 @Schema(description = "Dto for getting passenger's information")
-public record PassengerDtoRequest(
+public record PassengerRequest(
 
         @NotBlank(message = INCORRECT_DATA_MESSAGE)
         @Schema(description = "Passenger's first name", example = "Ivan")

@@ -1,7 +1,7 @@
 package org.example.mapper;
 
-import org.example.dto.PassengerDtoRequest;
-import org.example.dto.PassengerDtoResponse;
+import org.example.dto.PassengerRequest;
+import org.example.dto.PassengerResponse;
 import org.example.entity.Passenger;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -19,17 +19,17 @@ public interface PassengerMapper {
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "profilePictureRef", ignore = true)
-    Passenger mapDtoToEntity(PassengerDtoRequest passengerDtoRequest);
+    Passenger mapDtoToEntity(PassengerRequest passengerRequest);
 
     @Mapping(target = "rating", ignore = true)
     @Mapping(target = "isDeleted", ignore = true)
     @Mapping(target = "profilePictureRef", ignore = true)
-    Passenger mapDtoToEntity(PassengerDtoRequest passengerDtoRequest, UUID passengerId,
+    Passenger mapDtoToEntity(PassengerRequest passengerRequest, UUID passengerId,
                              LocalDateTime createdAt, LocalDateTime updatedAt);
 
     @Mapping(target = "totalPageAmount", ignore = true)
-    PassengerDtoResponse mapEntityToDto(Passenger passenger);
+    PassengerResponse mapEntityToDto(Passenger passenger);
 
-    PassengerDtoResponse mapEntityToDto(Passenger passenger, int totalPageAmount);
+    PassengerResponse mapEntityToDto(Passenger passenger, int totalPageAmount);
 
 }

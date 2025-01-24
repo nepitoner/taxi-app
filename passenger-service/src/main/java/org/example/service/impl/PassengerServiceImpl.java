@@ -2,8 +2,8 @@ package org.example.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.dto.PassengerDtoRequest;
-import org.example.dto.PassengerDtoResponse;
+import org.example.dto.PassengerRequest;
+import org.example.dto.PassengerResponse;
 import org.example.entity.Passenger;
 import org.example.mapper.PassengerMapper;
 import org.example.repository.PassengerRepository;
@@ -31,7 +31,7 @@ public class PassengerServiceImpl implements PassengerService {
     private final Clock clock;
 
     @Override
-    public List<PassengerDtoResponse> getAllPassengers(int page, int limit) {
+    public List<PassengerResponse> getAllPassengers(int page, int limit) {
         Pageable pageable = PageRequest.of(page - 1, limit);
         Page<Passenger> responsePage = passengerRepository.findByIsDeletedIsFalse(pageable);
         List<Passenger> passengers = responsePage.getContent();
@@ -45,7 +45,7 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Override
     @Transactional
-    public UUID registerPassenger(PassengerDtoRequest dto) {
+    public UUID registerPassenger(PassengerRequest dto) {
         Passenger passengerToRegister = passengerMapper.mapDtoToEntity(dto);
         UUID passengerId = passengerRepository.save(passengerToRegister).getPassengerId();
 
@@ -56,9 +56,9 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Override
     @Transactional
-    public PassengerDtoResponse updatePassenger(UUID passengerId, PassengerDtoRequest passengerDtoRequest) {
+    public PassengerResponse updatePassenger(UUID passengerId, PassengerRequest passengerRequest) {
         Passenger passenger = passengerRepository.findByPassengerIdAndIsDeletedIsFalse(passengerId);
-        Passenger updatePassenger = passengerMapper.mapDtoToEntity(passengerDtoRequest, passengerId,
+        Passenger updatePassenger = passengerMapper.mapDtoToEntity(passengerRequest, passengerId,
                 passenger.getCreatedAt(), LocalDateTime.now(clock));
 
         Passenger newPassenger = passengerRepository.save(updatePassenger);

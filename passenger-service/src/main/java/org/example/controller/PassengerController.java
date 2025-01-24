@@ -7,8 +7,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
-import org.example.dto.PassengerDtoRequest;
-import org.example.dto.PassengerDtoResponse;
+import org.example.dto.PassengerRequest;
+import org.example.dto.PassengerResponse;
 import org.example.dto.SuccessResponse;
 import org.example.exception.RequestTimeoutException;
 import org.example.facade.PassengerFacade;
@@ -53,11 +53,11 @@ public class PassengerController {
             @ApiResponse(responseCode = "200", description = "All the passengers were successfully sent"),
             @ApiResponse(responseCode = "400", description = "Validation failed")
     })
-    public ResponseEntity<List<PassengerDtoResponse>> getAllPassengers(
+    public ResponseEntity<List<PassengerResponse>> getAllPassengers(
             @RequestParam(defaultValue = "1") @Min(value = 1, message = "Incorrect page. Must be greater than 1") int page,
             @RequestParam(defaultValue = "10") @Min(value = 1, message = "Incorrect data. Must be greater than 1") int limit
     ) {
-        List<PassengerDtoResponse> passengers = passengerService.getAllPassengers(page, limit);
+        List<PassengerResponse> passengers = passengerService.getAllPassengers(page, limit);
         return ResponseEntity.status(HttpStatus.OK).body(passengers);
     }
 
@@ -67,8 +67,8 @@ public class PassengerController {
             @ApiResponse(responseCode = "204", description = "The passenger was successfully registered"),
             @ApiResponse(responseCode = "400", description = "Validation failed")
     })
-    public ResponseEntity<SuccessResponse> registerPassenger(@Valid @RequestBody PassengerDtoRequest passengerDtoRequest) {
-        UUID registeredPassengerId = passengerFacade.validateNewPassenger(passengerDtoRequest);
+    public ResponseEntity<SuccessResponse> registerPassenger(@Valid @RequestBody PassengerRequest passengerRequest) {
+        UUID registeredPassengerId = passengerFacade.validateNewPassenger(passengerRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(new SuccessResponse(registeredPassengerId));
     }
 
@@ -79,10 +79,10 @@ public class PassengerController {
             @ApiResponse(responseCode = "400", description = "Validation failed"),
             @ApiResponse(responseCode = "404", description = "Passenger with specified id wasn't found")
     })
-    public ResponseEntity<PassengerDtoResponse> updatePassenger(@PathVariable UUID passengerId,
-                                                                @Valid @RequestBody PassengerDtoRequest passengerDtoRequest) {
+    public ResponseEntity<PassengerResponse> updatePassenger(@PathVariable UUID passengerId,
+                                                             @Valid @RequestBody PassengerRequest passengerRequest) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(passengerFacade.validateRegisteredPassenger(passengerId, passengerDtoRequest));
+                .body(passengerFacade.validateRegisteredPassenger(passengerId, passengerRequest));
     }
 
     @DeleteMapping(value = "/{passengerId}", produces = APPLICATION_JSON_VALUE)

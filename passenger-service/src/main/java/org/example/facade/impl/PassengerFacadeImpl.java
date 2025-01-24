@@ -2,9 +2,9 @@ package org.example.facade.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.example.config.MinioConfigProperties;
-import org.example.dto.PassengerDtoRequest;
-import org.example.dto.PassengerDtoResponse;
-import org.example.exception.NotFoundException;
+import org.example.dto.PassengerRequest;
+import org.example.dto.PassengerResponse;
+import org.example.exception.PassengerNotFoundException;
 import org.example.exception.RepeatedDataException;
 import org.example.exception.RequestTimeoutException;
 import org.example.facade.PassengerFacade;
@@ -31,7 +31,7 @@ public class PassengerFacadeImpl implements PassengerFacade {
     private final PassengerRepository passengerRepository;
 
     @Override
-    public UUID validateNewPassenger(PassengerDtoRequest dto) {
+    public UUID validateNewPassenger(PassengerRequest dto) {
         if (passengerRepository.existsByPhoneNumberOrEmail(dto.phoneNumber(), dto.email())) {
             throw new RepeatedDataException(String.format(
                     ExceptionConstant.REPEATED_DATA_MESSAGE, dto.phoneNumber(), dto.email()));
@@ -40,7 +40,7 @@ public class PassengerFacadeImpl implements PassengerFacade {
     }
 
     @Override
-    public PassengerDtoResponse validateRegisteredPassenger(UUID passengerId, PassengerDtoRequest dto) {
+    public PassengerResponse validateRegisteredPassenger(UUID passengerId, PassengerRequest dto) {
         checkExistenceAndPresence(passengerId);
         if (passengerRepository.existsByPhoneNumberAndPassengerIdIsNot(dto.phoneNumber(), passengerId) ||
                 passengerRepository.existsByEmailAndPassengerIdIsNot(dto.email(), passengerId)
@@ -68,7 +68,7 @@ public class PassengerFacadeImpl implements PassengerFacade {
 
     private void checkExistenceAndPresence(UUID passengerId) {
         if (!passengerRepository.existsByPassengerIdAndIsDeletedIsFalse(passengerId)) {
-            throw new NotFoundException(String.format(ExceptionConstant.NOT_FOUND_MESSAGE, passengerId));
+            throw new PassengerNotFoundException(String.format(ExceptionConstant.NOT_FOUND_MESSAGE, passengerId));
         }
     }
 

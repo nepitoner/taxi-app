@@ -1,21 +1,21 @@
 package org.example.service;
 
-import org.example.dto.PassengerDtoRequest;
-import org.example.dto.PassengerDtoResponse;
+import org.example.dto.PassengerRequest;
+import org.example.dto.PassengerResponse;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface PassengerService {
 
-    UUID registerPassenger(PassengerDtoRequest passengerDtoRequest);
+    UUID registerPassenger(PassengerRequest passengerRequest);
 
-    PassengerDtoResponse updatePassenger(UUID passengerId, PassengerDtoRequest passengerDtoRequest);
+    PassengerResponse updatePassenger(UUID passengerId, PassengerRequest passengerRequest);
 
     UUID addPhoto(UUID passengerId, String fileRef);
 
     void deletePassenger(UUID passengerId);
 
-    List<PassengerDtoResponse> getAllPassengers(int page, int limit);
+    List<PassengerResponse> getAllPassengers(int page, int limit);
 
 }
