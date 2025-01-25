@@ -4,5 +4,5 @@ import lombok.Builder;
 
 import java.util.UUID;
 @Builder
-public record SuccessResponse(UUID registeredPassengerId) {
+public record SuccessResponse(UUID passengerId) {
 }
