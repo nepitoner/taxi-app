@@ -1,8 +1,8 @@
-package org.example.utils.validator.annotation;
+package org.example.validator.annotation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import org.example.utils.validator.FileEmptinessValidator;
+import org.example.validator.FileEmptinessValidator;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

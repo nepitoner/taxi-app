@@ -1,9 +1,9 @@
 package org.example.service;
 
+import org.example.dto.PagedPassengerResponse;
 import org.example.dto.PassengerRequest;
 import org.example.dto.PassengerResponse;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface PassengerService {
@@ -16,6 +16,6 @@ public interface PassengerService {
 
     void deletePassenger(UUID passengerId);
 
-    List<PassengerResponse> getAllPassengers(int page, int limit);
+    PagedPassengerResponse getAllPassengers(int page, int limit);
 
 }

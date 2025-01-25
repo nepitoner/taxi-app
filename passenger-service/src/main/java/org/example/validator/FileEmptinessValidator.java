@@ -1,8 +1,8 @@
-package org.example.utils.validator;
+package org.example.validator;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.example.utils.validator.annotation.NotEmptyFile;
+import org.example.validator.annotation.NotEmptyFile;
 import org.springframework.web.multipart.MultipartFile;
 
 public class FileEmptinessValidator implements ConstraintValidator<NotEmptyFile, MultipartFile> {
