@@ -54,7 +54,7 @@ public class PassengerController {
             @ApiResponse(responseCode = "400", description = "Validation failed")
     })
     public ResponseEntity<PagedPassengerResponse> getAllPassengers(
-            @RequestParam(defaultValue = "0") @Min(value = 0, message = "Incorrect page. Must be greater than 1") int page,
+            @RequestParam(defaultValue = "0") @Min(value = 0, message = "Incorrect page. Must be greater than 0") int page,
             @RequestParam(defaultValue = "10") @Min(value = 1, message = "Incorrect data. Must be greater than 1") int limit
     ) {
         PagedPassengerResponse passengers = passengerService.getAllPassengers(page, limit);
