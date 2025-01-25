@@ -9,7 +9,9 @@ import java.util.UUID;
 
 public interface PassengerRepository extends JpaRepository<Passenger, UUID> {
 
-    boolean existsByPhoneNumberOrEmail(String phoneNumber, String email);
+    boolean existsByPhoneNumber(String phoneNumber);
+
+    boolean existsByEmail(String email);
 
     boolean existsByPhoneNumberAndPassengerIdIsNot(String phoneNumber, UUID passengerID);
 
