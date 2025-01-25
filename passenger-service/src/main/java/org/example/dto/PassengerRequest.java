@@ -10,7 +10,7 @@ import lombok.Builder;
 
 import java.time.LocalDate;
 
-import static org.example.utils.constant.PassengerServiceConstant.INCORRECT_DATA_MESSAGE;
+import static org.example.utils.constant.ExceptionConstant.INCORRECT_DATA_MESSAGE;
 import static org.example.utils.constant.PassengerServiceConstant.PHONE_NUMBER_REGEX;
 
 @Builder
