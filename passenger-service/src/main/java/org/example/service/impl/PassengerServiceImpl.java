@@ -2,9 +2,11 @@ package org.example.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.dto.PagedPassengerResponse;
 import org.example.dto.PassengerRequest;
 import org.example.dto.PassengerResponse;
 import org.example.entity.Passenger;
+import org.example.validator.PassengerValidator;
 import org.example.mapper.PassengerMapper;
 import org.example.repository.PassengerRepository;
 import org.example.service.PassengerService;
@@ -16,13 +18,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class PassengerServiceImpl implements PassengerService {
+
+    private final PassengerValidator passengerValidator;
 
     private final PassengerMapper passengerMapper;
 
@@ -31,21 +34,22 @@ public class PassengerServiceImpl implements PassengerService {
     private final Clock clock;
 
     @Override
-    public List<PassengerResponse> getAllPassengers(int page, int limit) {
-        Pageable pageable = PageRequest.of(page - 1, limit);
+    public PagedPassengerResponse getAllPassengers(int page, int limit) {
+        Pageable pageable = PageRequest.of(page, limit);
         Page<Passenger> responsePage = passengerRepository.findByIsDeletedIsFalse(pageable);
-        List<Passenger> passengers = responsePage.getContent();
-        int totalPageAmount = responsePage.getTotalPages();
-
-        log.info("Getting all passengers. Total page amount {}", totalPageAmount);
-        return passengers.stream()
-                .map(passenger -> passengerMapper.mapEntityToDto(passenger, totalPageAmount))
-                .toList();
+        PagedPassengerResponse pagedPassengerResponse = passengerMapper.mapPageEntityToPagedDto(page, limit,
+                responsePage.getTotalElements(), responsePage.get()
+                        .map(passengerMapper::mapEntityToDto)
+                        .toList());
+        log.info("Getting all passengers.");
+        return pagedPassengerResponse;
     }
 
     @Override
     @Transactional
     public UUID registerPassenger(PassengerRequest dto) {
+        passengerValidator.checkUniqueness(dto);
+
         Passenger passengerToRegister = passengerMapper.mapDtoToEntity(dto);
         UUID passengerId = passengerRepository.save(passengerToRegister).getPassengerId();
 
@@ -57,6 +61,9 @@ public class PassengerServiceImpl implements PassengerService {
     @Override
     @Transactional
     public PassengerResponse updatePassenger(UUID passengerId, PassengerRequest passengerRequest) {
+        passengerValidator.checkExistenceAndPresence(passengerId);
+        passengerValidator.checkUniqueness(passengerId, passengerRequest);
+
         Passenger passenger = passengerRepository.findByPassengerIdAndIsDeletedIsFalse(passengerId);
         Passenger updatePassenger = passengerMapper.mapDtoToEntity(passengerRequest, passengerId,
                 passenger.getCreatedAt(), LocalDateTime.now(clock));
@@ -69,7 +76,9 @@ public class PassengerServiceImpl implements PassengerService {
     @Override
     @Transactional
     public void deletePassenger(UUID passengerId) {
-        Passenger passenger = passengerRepository.findById(passengerId).orElseThrow();
+        passengerValidator.checkExistenceAndPresence(passengerId);
+
+        Passenger passenger = passengerRepository.findByPassengerIdAndIsDeletedIsFalse(passengerId);
         passenger.setIsDeleted(true);
         passengerRepository.save(passenger);
         log.info("Passenger with id {} was successfully deleted", passengerId);
@@ -78,7 +87,9 @@ public class PassengerServiceImpl implements PassengerService {
     @Override
     @Transactional
     public UUID addPhoto(UUID passengerId, String fileRef) {
-        Passenger passenger = passengerRepository.findById(passengerId).orElseThrow();
+        passengerValidator.checkExistenceAndPresence(passengerId);
+
+        Passenger passenger = passengerRepository.findByPassengerIdAndIsDeletedIsFalse(passengerId);
         passenger.setProfilePictureRef(fileRef);
         log.info("Photo for passenger with id {} was successfully added", passengerId);
         return passengerRepository.save(passenger).getPassengerId();
