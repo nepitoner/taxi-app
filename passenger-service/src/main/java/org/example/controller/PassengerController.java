@@ -7,13 +7,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
+import org.example.dto.PagedPassengerResponse;
 import org.example.dto.PassengerRequest;
 import org.example.dto.PassengerResponse;
 import org.example.dto.SuccessResponse;
 import org.example.exception.RequestTimeoutException;
-import org.example.facade.PassengerFacade;
 import org.example.service.PassengerService;
-import org.example.utils.validator.annotation.NotEmptyFile;
+import org.example.service.StorageService;
+import org.example.validator.annotation.NotEmptyFile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -30,7 +31,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -45,7 +45,7 @@ public class PassengerController {
 
     private final PassengerService passengerService;
 
-    private final PassengerFacade passengerFacade;
+    private final StorageService storageService;
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     @Operation(summary = "Getting all passengers")
@@ -53,11 +53,11 @@ public class PassengerController {
             @ApiResponse(responseCode = "200", description = "All the passengers were successfully sent"),
             @ApiResponse(responseCode = "400", description = "Validation failed")
     })
-    public ResponseEntity<List<PassengerResponse>> getAllPassengers(
-            @RequestParam(defaultValue = "1") @Min(value = 1, message = "Incorrect page. Must be greater than 1") int page,
+    public ResponseEntity<PagedPassengerResponse> getAllPassengers(
+            @RequestParam(defaultValue = "0") @Min(value = 0, message = "Incorrect page. Must be greater than 1") int page,
             @RequestParam(defaultValue = "10") @Min(value = 1, message = "Incorrect data. Must be greater than 1") int limit
     ) {
-        List<PassengerResponse> passengers = passengerService.getAllPassengers(page, limit);
+        PagedPassengerResponse passengers = passengerService.getAllPassengers(page, limit);
         return ResponseEntity.status(HttpStatus.OK).body(passengers);
     }
 
@@ -68,8 +68,9 @@ public class PassengerController {
             @ApiResponse(responseCode = "400", description = "Validation failed")
     })
     public ResponseEntity<SuccessResponse> registerPassenger(@Valid @RequestBody PassengerRequest passengerRequest) {
-        UUID registeredPassengerId = passengerFacade.validateNewPassenger(passengerRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new SuccessResponse(registeredPassengerId));
+        UUID registeredPassengerId = passengerService.registerPassenger(passengerRequest);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new SuccessResponse(registeredPassengerId));
     }
 
     @PutMapping(value = "/{passengerId}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
@@ -81,8 +82,9 @@ public class PassengerController {
     })
     public ResponseEntity<PassengerResponse> updatePassenger(@PathVariable UUID passengerId,
                                                              @Valid @RequestBody PassengerRequest passengerRequest) {
+        PassengerResponse passengerResponse = passengerService.updatePassenger(passengerId, passengerRequest);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(passengerFacade.validateRegisteredPassenger(passengerId, passengerRequest));
+                .body(passengerResponse);
     }
 
     @DeleteMapping(value = "/{passengerId}", produces = APPLICATION_JSON_VALUE)
@@ -92,7 +94,7 @@ public class PassengerController {
             @ApiResponse(responseCode = "400", description = "Validation failed")
     })
     public ResponseEntity<Void> deletePassenger(@PathVariable UUID passengerId) {
-        passengerFacade.validateNotDeletedPassenger(passengerId);
+        passengerService.deletePassenger(passengerId);
         return ResponseEntity.noContent().build();
     }
 
@@ -105,7 +107,7 @@ public class PassengerController {
     })
     public ResponseEntity<SuccessResponse> addPassengerPhoto(@PathVariable UUID passengerId,
                                                              @RequestPart(value = "photoFile") @NotEmptyFile MultipartFile photoFile) throws IOException, RequestTimeoutException {
-        UUID id = passengerFacade.sendPhotoIntoStorage(photoFile, passengerId);
+        UUID id = storageService.sendPhotoIntoStorage(photoFile, passengerId);
         return ResponseEntity.status(HttpStatus.OK).body(new SuccessResponse(id));
     }
 
