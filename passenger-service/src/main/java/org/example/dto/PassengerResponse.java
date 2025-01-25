@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static org.example.utils.constant.PassengerServiceConstant.INCORRECT_DATA_MESSAGE;
+import static org.example.utils.constant.ExceptionConstant.INCORRECT_DATA_MESSAGE;
 import static org.example.utils.constant.PassengerServiceConstant.PHONE_NUMBER_REGEX;
 
 @Builder
@@ -23,9 +23,6 @@ public record PassengerResponse(
         @NotNull(message = INCORRECT_DATA_MESSAGE)
         @Schema(description = "Passenger's id", example = "71f5135e-fb46-415c-b4cf-bbb9be5692d")
         UUID passengerId,
-
-        @Schema(description = "Total page number", example = "5")
-        Integer totalPageAmount,
 
         @NotBlank(message = INCORRECT_DATA_MESSAGE)
         @Schema(description = "Passenger's first name", example = "Ivan")
