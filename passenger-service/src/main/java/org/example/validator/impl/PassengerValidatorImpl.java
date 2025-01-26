@@ -20,13 +20,13 @@ public class PassengerValidatorImpl implements PassengerValidator {
     @Override
     public void checkUniqueness(PassengerRequest dto) {
         if (passengerRepository.existsByPhoneNumber(dto.phoneNumber())) {
-            throw new RepeatedDataException(String.format(
-                    ExceptionConstant.REPEATED_PHONE_NUMBER_MESSAGE, dto.phoneNumber()));
+            throw new RepeatedDataException(
+                    ExceptionConstant.REPEATED_PHONE_NUMBER_MESSAGE.formatted(dto.phoneNumber()));
         }
 
         if (passengerRepository.existsByEmail(dto.email())) {
-            throw new RepeatedDataException(String.format(
-                    ExceptionConstant.REPEATED_EMAIL_MESSAGE, dto.email()));
+            throw new RepeatedDataException(
+                    ExceptionConstant.REPEATED_EMAIL_MESSAGE.formatted(dto.email()));
         }
     }
 
@@ -34,13 +34,13 @@ public class PassengerValidatorImpl implements PassengerValidator {
     public void checkUniqueness(UUID passengerId, PassengerRequest dto) {
 
         if (passengerRepository.existsByPhoneNumberAndPassengerIdIsNot(dto.phoneNumber(), passengerId)) {
-            throw new RepeatedDataException(String.format(
-                    ExceptionConstant.REPEATED_PHONE_NUMBER_MESSAGE, dto.phoneNumber()));
+            throw new RepeatedDataException(
+                    ExceptionConstant.REPEATED_PHONE_NUMBER_MESSAGE.formatted(dto.phoneNumber()));
         }
 
         if (passengerRepository.existsByEmailAndPassengerIdIsNot(dto.email(), passengerId)) {
-            throw new RepeatedDataException(String.format(
-                    ExceptionConstant.REPEATED_EMAIL_MESSAGE, dto.email()));
+            throw new RepeatedDataException(
+                    ExceptionConstant.REPEATED_EMAIL_MESSAGE.formatted(dto.email()));
         }
     }
 
@@ -48,7 +48,7 @@ public class PassengerValidatorImpl implements PassengerValidator {
     public void checkExistenceAndPresence(UUID passengerId) {
         if (!passengerRepository.existsByPassengerIdAndIsDeletedIsFalse(passengerId)) {
             throw new PassengerNotFoundException(
-                    String.format(ExceptionConstant.PASSENGER_NOT_FOUND_MESSAGE, passengerId));
+                    ExceptionConstant.PASSENGER_NOT_FOUND_MESSAGE.formatted(passengerId));
         }
     }
 
