@@ -10,41 +10,40 @@ import lombok.Builder;
 
 import java.time.LocalDate;
 
-import static org.example.utils.constant.ExceptionConstant.INCORRECT_DATA_MESSAGE;
 import static org.example.utils.constant.PassengerServiceConstant.PHONE_NUMBER_REGEX;
 
 @Builder
 @Schema(description = "Dto for getting passenger's information")
 public record PassengerRequest(
 
-        @NotBlank(message = INCORRECT_DATA_MESSAGE)
-        @Schema(description = "Passenger's first name", example = "Ivan")
+        @NotBlank(message = "incorrect.message")
+        @Schema(description = "passenger.name.first", example = "passenger.name.first.example")
         String firstName,
 
-        @NotBlank(message = INCORRECT_DATA_MESSAGE)
-        @Schema(description = "Passenger's last name", example = "Ivanov")
+        @NotBlank(message = "incorrect.message")
+        @Schema(description = "passenger.name.last", example = "passenger.name.last.example")
         String lastName,
 
-        @NotNull(message = INCORRECT_DATA_MESSAGE)
-        @PastOrPresent(message = INCORRECT_DATA_MESSAGE)
-        @Schema(description = "Passenger's date of birth", example = "01-01-2000")
+        @NotNull(message = "incorrect.message")
+        @PastOrPresent(message = "incorrect.message")
+        @Schema(description = "passenger.dateOfBirth", example = "passenger.dateOfBirth.example")
         LocalDate dateOfBirth,
 
-        @Email(message = INCORRECT_DATA_MESSAGE)
-        @NotBlank(message = INCORRECT_DATA_MESSAGE)
+        @Email(message = "incorrect.message")
+        @NotBlank(message = "incorrect.message")
         @Schema(
-                description = "Passenger's email", example = "name@mail.com"
+                description = "passenger.email", example = "passenger.email.example"
         )
         String email,
 
-        @NotBlank(message = INCORRECT_DATA_MESSAGE)
+        @NotBlank(message = "incorrect.message")
         @Schema(
-                description = "Passenger's phone number +375()......., 7 digits with code",
-                example = "+375(29)1234567"
+                description = "passenger.phoneNumber",
+                example = "passenger.phoneNumber.example"
         )
         @Pattern(
                 regexp = PHONE_NUMBER_REGEX,
-                message = INCORRECT_DATA_MESSAGE
+                message = "incorrect.message"
         )
         String phoneNumber
 ) {

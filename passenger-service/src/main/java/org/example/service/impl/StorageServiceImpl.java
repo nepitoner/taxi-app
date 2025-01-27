@@ -29,12 +29,19 @@ public class StorageServiceImpl implements StorageService {
     @Override
     public String uploadFile(String bucketName, String objectName, InputStream inputStream, String contentType) throws RequestTimeoutException {
         try {
-            boolean found = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
+            boolean found = minioClient.bucketExists(
+                    BucketExistsArgs.builder()
+                            .bucket(bucketName)
+                            .build());
             if (!found) {
-                minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
+                minioClient.makeBucket(MakeBucketArgs
+                        .builder()
+                        .bucket(bucketName)
+                        .build());
             }
             minioClient.putObject(
-                    PutObjectArgs.builder().bucket(bucketName)
+                    PutObjectArgs.builder()
+                            .bucket(bucketName)
                             .object(objectName)
                             .stream(inputStream, inputStream.available(), -1)
                             .contentType(contentType)
@@ -47,7 +54,7 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public UUID sendPhotoIntoStorage(MultipartFile photoFile, UUID id) throws IOException, RequestTimeoutException {
+    public UUID saveFileReference(MultipartFile photoFile, UUID id) throws IOException, RequestTimeoutException {
         String fileRef = uploadFile(properties.bucket().getPhotoBucketName(),
                 "passenger_photo_" + id, photoFile.getInputStream(),
                 photoFile.getContentType());

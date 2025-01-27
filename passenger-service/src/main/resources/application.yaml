@@ -16,8 +16,8 @@ spring:
 minio:
   url: ${MINIO_URL:http://localhost:9000}
   access:
-    name: ${MINIO_USER}
-    secret: ${MINIO_USER_PASS}
+    name: ${MINIO_USER:M4nncFFA1npwTuh62oHT}
+    secret: ${MINIO_USER_PASS:Gi3gZbAzWOqnO2FY6U6D9aWauG3oo5Yh1zOtTQwQ}
   bucket:
     photo_bucket_name: passengers-photo-files
 

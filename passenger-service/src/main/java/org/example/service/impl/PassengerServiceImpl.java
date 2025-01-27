@@ -6,10 +6,10 @@ import org.example.dto.PagedPassengerResponse;
 import org.example.dto.PassengerRequest;
 import org.example.dto.PassengerResponse;
 import org.example.entity.Passenger;
-import org.example.validator.PassengerValidator;
 import org.example.mapper.PassengerMapper;
 import org.example.repository.PassengerRepository;
 import org.example.service.PassengerService;
+import org.example.validator.PassengerValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -37,11 +37,9 @@ public class PassengerServiceImpl implements PassengerService {
     public PagedPassengerResponse getAllPassengers(int page, int limit) {
         Pageable pageable = PageRequest.of(page, limit);
         Page<Passenger> responsePage = passengerRepository.findByIsDeletedIsFalse(pageable);
-        PagedPassengerResponse pagedPassengerResponse = passengerMapper.mapPageEntityToPagedDto(page, limit,
-                responsePage.getTotalElements(), responsePage.get()
-                        .map(passengerMapper::mapEntityToDto)
-                        .toList());
-        log.info("Getting all passengers.");
+
+        PagedPassengerResponse pagedPassengerResponse = passengerMapper.mapPageEntityToPagedDto(page, limit, responsePage);
+        log.info("Passenger Service. Get all request. Pages amount {}", responsePage.getTotalPages());
         return pagedPassengerResponse;
     }
 
@@ -53,7 +51,7 @@ public class PassengerServiceImpl implements PassengerService {
         Passenger passengerToRegister = passengerMapper.mapDtoToEntity(dto);
         UUID passengerId = passengerRepository.save(passengerToRegister).getPassengerId();
 
-        log.info("Passenger with email {} was successfully created. New id {}",
+        log.info("Passenger Service. Register new passenger with email {}. New passenger id {}",
                 passengerToRegister.getEmail(), passengerId);
         return passengerId;
     }
@@ -69,7 +67,7 @@ public class PassengerServiceImpl implements PassengerService {
                 passenger.getCreatedAt(), LocalDateTime.now(clock));
 
         Passenger newPassenger = passengerRepository.save(updatePassenger);
-        log.info("Passenger with id {} was successfully updated", passengerId);
+        log.info("Passenger Service. Update passenger with id {}", passengerId);
         return passengerMapper.mapEntityToDto(newPassenger);
     }
 
@@ -81,7 +79,7 @@ public class PassengerServiceImpl implements PassengerService {
         Passenger passenger = passengerRepository.findByPassengerIdAndIsDeletedIsFalse(passengerId);
         passenger.setIsDeleted(true);
         passengerRepository.save(passenger);
-        log.info("Passenger with id {} was successfully deleted", passengerId);
+        log.info("Passenger Service. Delete passenger with id {}", passengerId);
     }
 
     @Override
@@ -91,7 +89,7 @@ public class PassengerServiceImpl implements PassengerService {
 
         Passenger passenger = passengerRepository.findByPassengerIdAndIsDeletedIsFalse(passengerId);
         passenger.setProfilePictureRef(fileRef);
-        log.info("Photo for passenger with id {} was successfully added", passengerId);
+        log.info("Passenger Service. Add photo. Passenger id {}", passengerId);
         return passengerRepository.save(passenger).getPassengerId();
     }
 

@@ -11,6 +11,6 @@ public interface StorageService {
 
     String uploadFile(String photoBucketName, String s, InputStream inputStream, String contentType) throws RequestTimeoutException;
 
-    UUID sendPhotoIntoStorage(MultipartFile photoFile, UUID passengerId) throws IOException, RequestTimeoutException;
+    UUID saveFileReference(MultipartFile photoFile, UUID passengerId) throws IOException, RequestTimeoutException;
 
 }

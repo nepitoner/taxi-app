@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.example.dto.PassengerRequest;
 import org.example.exception.PassengerNotFoundException;
 import org.example.exception.RepeatedDataException;
-import org.example.validator.PassengerValidator;
 import org.example.repository.PassengerRepository;
 import org.example.utils.constant.ExceptionConstant;
+import org.example.validator.PassengerValidator;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;

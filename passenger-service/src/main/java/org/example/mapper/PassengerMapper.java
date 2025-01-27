@@ -6,8 +6,11 @@ import org.example.dto.PassengerResponse;
 import org.example.entity.Passenger;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
+import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
+import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,6 +30,15 @@ public interface PassengerMapper {
 
     PassengerResponse mapEntityToDto(Passenger passenger);
 
-    PagedPassengerResponse mapPageEntityToPagedDto(int page, int limit, long totalPassengers, List<PassengerResponse> passengers);
+    @Mapping(target = "passengers", source = "responsePage", qualifiedByName = "mapPassengers")
+    @Mapping(target = "totalPassengers", source = "responsePage.totalElements")
+    PagedPassengerResponse mapPageEntityToPagedDto(int page, int limit, Page<Passenger> responsePage);
+
+    @Named("mapPassengers")
+    default List<PassengerResponse> mapPassengers(Page<Passenger> responsePage) {
+        return responsePage.get()
+                .map(this::mapEntityToDto)
+                .toList();
+    }
 
 }

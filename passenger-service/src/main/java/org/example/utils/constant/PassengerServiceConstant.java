@@ -1,6 +1,7 @@
 package org.example.utils.constant;
 
-import lombok.experimental.UtilityClass;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access=AccessLevel.PRIVATE)
 public final class PassengerServiceConstant {

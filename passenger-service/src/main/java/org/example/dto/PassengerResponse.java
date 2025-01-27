@@ -13,71 +13,70 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static org.example.utils.constant.ExceptionConstant.INCORRECT_DATA_MESSAGE;
 import static org.example.utils.constant.PassengerServiceConstant.PHONE_NUMBER_REGEX;
 
 @Builder
 @Schema(description = "Dto for getting passenger's information")
 public record PassengerResponse(
 
-        @NotNull(message = INCORRECT_DATA_MESSAGE)
-        @Schema(description = "Passenger's id", example = "71f5135e-fb46-415c-b4cf-bbb9be5692d")
+        @NotNull(message = "incorrect.message")
+        @Schema(description = "passenger.id", example = "passenger.id.example")
         UUID passengerId,
 
-        @NotBlank(message = INCORRECT_DATA_MESSAGE)
-        @Schema(description = "Passenger's first name", example = "Ivan")
+        @NotBlank(message = "incorrect.message")
+        @Schema(description = "passenger.name.first", example = "passenger.name.first.example")
         String firstName,
 
-        @NotBlank(message = INCORRECT_DATA_MESSAGE)
-        @Schema(description = "Passenger's last name", example = "Ivanov")
+        @NotBlank(message = "incorrect.message")
+        @Schema(description = "passenger.name.last", example = "passenger.name.last.example")
         String lastName,
 
-        @NotNull(message = INCORRECT_DATA_MESSAGE)
-        @PastOrPresent(message = "Incorrect date")
-        @Schema(description = "Passenger's date of birth", example = "01-01-2000")
+        @NotNull(message = "incorrect.message")
+        @PastOrPresent(message = "incorrect.message")
+        @Schema(description = "passenger.dateOfBirth", example = "passenger.dateOfBirth.example")
         LocalDate dateOfBirth,
 
-        @Email(message = INCORRECT_DATA_MESSAGE)
-        @NotBlank(message = INCORRECT_DATA_MESSAGE)
+        @Email(message = "incorrect.message")
+        @NotBlank(message = "incorrect.message")
         @Schema(
-                description = "Passenger's email", example = "name@mail.com"
+                description = "passenger.email", example = "passenger.email.example"
         )
         String email,
 
-        @NotBlank(message = INCORRECT_DATA_MESSAGE)
+        @NotBlank(message = "incorrect.message")
         @Schema(
-                description = "Passenger's phone number +375()......., 7 digits with code",
-                example = "+375291234567"
+                description = "passenger.phoneNumber",
+                example = "passenger.phoneNumber.example"
         )
-        @Pattern(regexp = PHONE_NUMBER_REGEX, message = INCORRECT_DATA_MESSAGE)
+        @Pattern(regexp = PHONE_NUMBER_REGEX, message = "incorrect.message")
         String phoneNumber,
 
-        @NotNull(message = INCORRECT_DATA_MESSAGE)
+        @NotNull(message = "incorrect.message")
         @Schema(
-                description = "Indicates whether the passenger record is deleted",
-                example = "false"
+                description = "passenger.isDeleted",
+                example = "passenger.isDeleted.example"
         )
         boolean isDeleted,
 
-        @NotNull(message = INCORRECT_DATA_MESSAGE)
+        @NotNull(message = "incorrect.message")
         @Positive(message = "Rating must be a positive number")
         @Schema(
-                description = "Passenger's rating, should be a float value greater than 0",
-                example = "4.5"
+                description = "passenger.rating",
+                example = "passenger.rating.example"
         )
         float rating,
 
-        @NotNull(message = INCORRECT_DATA_MESSAGE)
+        @NotNull(message = "incorrect.message")
         @Schema(
-                description = "Date and time when the passenger record was created",
-                example = "2025-01-23T10:15:30"
+                description = "passenger.createdAt",
+                example = "passenger.createdAt.example"
         )
         LocalDateTime createdAt,
 
-        @NotNull(message = INCORRECT_DATA_MESSAGE)
+        @NotNull(message = "incorrect.message")
         @Schema(
-                description = "Date and time when the passenger record was last updated",
-                example = "2025-01-23T10:15:30"
+                description = "passenger.updatedAt",
+                example = "passenger.updatedAt.example"
         )
         LocalDateTime updatedAt
 ) {
