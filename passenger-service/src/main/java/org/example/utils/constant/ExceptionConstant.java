@@ -2,8 +2,8 @@ package org.example.utils.constant;
 
 import lombok.experimental.UtilityClass;
 
-@UtilityClass
-public class ExceptionConstant {
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
+public final class ExceptionConstant {
 
     public final static String PASSENGER_NOT_FOUND_MESSAGE = "Passenger with id %s not found";
 
