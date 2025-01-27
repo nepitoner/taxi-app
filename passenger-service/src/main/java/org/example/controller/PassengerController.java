@@ -64,7 +64,7 @@ public class PassengerController {
     @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     @Operation(summary = "Register new passenger")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "The passenger was successfully registered"),
+            @ApiResponse(responseCode = "201", description = "The passenger was successfully registered"),
             @ApiResponse(responseCode = "400", description = "Validation failed")
     })
     public ResponseEntity<SuccessResponse> registerPassenger(@Valid @RequestBody PassengerRequest passengerRequest) {
@@ -90,8 +90,8 @@ public class PassengerController {
     @DeleteMapping(value = "/{passengerId}", produces = APPLICATION_JSON_VALUE)
     @Operation(summary = "Delete the passenger by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "The passenger was successfully deleted"),
-            @ApiResponse(responseCode = "400", description = "Validation failed")
+            @ApiResponse(responseCode = "204", description = "The passenger was successfully deleted"),
+            @ApiResponse(responseCode = "404", description = "Passenger with specified id wasn't found")
     })
     public ResponseEntity<Void> deletePassenger(@PathVariable UUID passengerId) {
         passengerService.deletePassenger(passengerId);
