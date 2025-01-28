@@ -3,7 +3,7 @@ package org.example.utils.constant;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access= AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ExceptionConstant {
 
     public final static String PASSENGER_NOT_FOUND_MESSAGE = "Passenger with id %s not found";
