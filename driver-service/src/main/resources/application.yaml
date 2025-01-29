@@ -1,0 +1,28 @@
+server:
+  port: 0
+spring:
+  application:
+    name: ${APPLICATION_NAME:driver-service}
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/driver_db}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    enabled: true
+    change-log: classpath:db\changelog\db.changelog-master.xml
+    drop-first: true
+
+minio:
+  url: ${MINIO_URL:http://localhost:9000}
+  access:
+    name: ${MINIO_USER:M4nncFFA1npwTuh62oHT}
+    secret: ${MINIO_USER_PASS:Gi3gZbAzWOqnO2FY6U6D9aWauG3oo5Yh1zOtTQwQ}
+  bucket:
+    photo_bucket_name: drivers-photo-files
+
+springdoc:
+  api-docs:
+    path: /api/v1/drivers/docs
+  swagger-ui:
+    path: /api/v1/drivers/swagger-ui.html
