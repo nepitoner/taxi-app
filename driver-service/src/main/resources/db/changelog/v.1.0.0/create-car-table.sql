@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS cars (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    brand VARCHAR(100) NOT NULL,
+    color VARCHAR(50) NOT NULL,
+    number VARCHAR(50) NOT NULL UNIQUE,
+    is_deleted BOOLEAN NOT NULL DEFAULT FALSE
+);
