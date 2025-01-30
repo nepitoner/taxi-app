@@ -7,6 +7,7 @@ import org.example.dto.driver.DriverRequest;
 import org.example.dto.driver.DriverResponse;
 import org.example.entity.Car;
 import org.example.entity.Driver;
+import org.example.exception.CarAlreadyTakenException;
 import org.example.mapper.CarMapper;
 import org.example.mapper.DriverMapper;
 import org.example.repository.CarRepository;
@@ -23,6 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.UUID;
+
+import static org.example.utils.constant.ExceptionConstant.TAKEN_CAR_MESSAGE;
 
 @Slf4j
 @Service
@@ -54,23 +57,6 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     @Transactional
-    public DriverResponse addCar(UUID driverId, UUID carId) {
-        driverValidator.checkExistenceAndPresence(driverId);
-        Driver driver = driverRepository.findByIdAndIsDeletedIsFalse(driverId);
-        Car car = carMapper.mapResponseToEntity(carService.getCarById(carId));
-
-        driver.getCars().add(car);
-        car.getDrivers().add(driver);
-
-        Driver driverWithCar = driverRepository.save(driver);
-        carRepository.save(car);
-
-        log.info("Driver Service. Add car. Car id {} and driver id {}", carId, driverId);
-        return driverMapper.mapEntityToResponse(driverWithCar);
-    }
-
-    @Override
-    @Transactional
     public UUID registerDriver(DriverRequest dto) {
         driverValidator.checkUniqueness(dto);
         Driver driverToRegister = driverMapper.mapDtoToEntity(dto);
@@ -88,8 +74,7 @@ public class DriverServiceImpl implements DriverService {
         driverValidator.checkUniqueness(driverId, driverRequest);
 
         Driver driver = driverRepository.findByIdAndIsDeletedIsFalse(driverId);
-        Driver updateDriver = driverMapper.mapDtoToEntity(driverRequest, driverId,
-                driver.getCreatedAt(), LocalDateTime.now(clock));
+        Driver updateDriver = driverMapper.mapDtoToEntity(driverRequest, LocalDateTime.now(clock), driver);
 
         Driver newDriver = driverRepository.save(updateDriver);
         log.info("Driver Service. Update driver with id {}", driverId);
@@ -102,6 +87,7 @@ public class DriverServiceImpl implements DriverService {
         driverValidator.checkExistenceAndPresence(driverId);
 
         Driver driver = driverRepository.findByIdAndIsDeletedIsFalse(driverId);
+        driver.getCars().clear();
         driver.setIsDeleted(true);
         driverRepository.save(driver);
         log.info("Driver Service. Delete driver with id {}", driverId);
@@ -116,6 +102,27 @@ public class DriverServiceImpl implements DriverService {
         driver.setProfilePictureRef(fileRef);
         log.info("Driver Service. Add photo to driver with id {}", driverId);
         return driverRepository.save(driver).getId();
+    }
+
+    @Override
+    @Transactional
+    public DriverResponse addCar(UUID driverId, UUID carId) {
+        driverValidator.checkExistenceAndPresence(driverId);
+        Driver driver = driverRepository.findByIdAndIsDeletedIsFalse(driverId);
+        Car car = carMapper.mapResponseToEntity(carService.getCarById(carId));
+
+        if (car.getDrivers().isEmpty()) {
+            driver.getCars().add(car);
+            car.getDrivers().add(driver);
+        } else {
+            throw new CarAlreadyTakenException(TAKEN_CAR_MESSAGE.formatted(carId));
+        }
+
+        Driver driverWithCar = driverRepository.save(driver);
+        carRepository.save(car);
+
+        log.info("Driver Service. Add car. Car id {} and driver id {}", carId, driverId);
+        return driverMapper.mapEntityToResponse(driverWithCar);
     }
 
 }

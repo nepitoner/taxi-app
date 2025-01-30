@@ -47,7 +47,7 @@ public class DriverController implements DriverSwagger {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public PagedResponse<DriverResponse> getAllDrivers(@RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
-                                       @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit) {
+                                                       @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit) {
         return driverService.getAllDrivers(page, limit);
     }
 
@@ -75,7 +75,8 @@ public class DriverController implements DriverSwagger {
     @PostMapping(value = "/{driverId}/driver_photo", consumes = MULTIPART_FORM_DATA_VALUE,
             produces = APPLICATION_JSON_VALUE)
     public SuccessResponse addDriverPhoto(@PathVariable UUID driverId,
-                                          @RequestPart(value = "photoFile") @NotEmptyFile MultipartFile photoFile) throws IOException, RequestTimeoutException {
+                                          @RequestPart(value = "photoFile")
+                                          @NotEmptyFile MultipartFile photoFile) throws IOException, RequestTimeoutException {
         UUID id = storageService.saveFileReference(photoFile, driverId);
         return new SuccessResponse(id.toString());
     }

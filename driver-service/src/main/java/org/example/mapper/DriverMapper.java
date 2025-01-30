@@ -10,6 +10,7 @@ import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.data.domain.Page;
@@ -29,9 +30,7 @@ public interface DriverMapper {
 
     Driver mapDtoToEntity(DriverRequest driverRequest);
 
-    @Mapping(target = "driver.isDeleted", defaultValue = "false")
-    Driver mapDtoToEntity(DriverRequest driverRequest, UUID id,
-                             LocalDateTime createdAt, LocalDateTime updatedAt);
+    Driver mapDtoToEntity(DriverRequest driverRequest, LocalDateTime updatedAt, @MappingTarget Driver driver);
 
     @Mapping(target = "carsIds", source = "cars", qualifiedByName = "mapCars")
     DriverResponse mapEntityToResponse(Driver driver);

@@ -11,6 +11,6 @@
     <include file="create-driver-table.sql" relativeToChangelogFile="true"/>
     <include file="create-car-table.sql" relativeToChangelogFile="true"/>
     <include file="add-driversCars-table.sql" relativeToChangelogFile="true"/>
-
+    <include file="add-driversCars-fk.sql" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

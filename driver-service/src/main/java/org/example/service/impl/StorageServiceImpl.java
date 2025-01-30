@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
+import static org.example.utils.constant.DriverServiceConstant.DRIVER_PHOTO_NAME;
+
 @Service
 @RequiredArgsConstructor
 public class StorageServiceImpl implements StorageService {
@@ -54,7 +56,7 @@ public class StorageServiceImpl implements StorageService {
     @Override
     public UUID saveFileReference(MultipartFile photoFile, UUID id) throws IOException, RequestTimeoutException {
         String fileRef = uploadFile(properties.bucket().getPhotoBucketName(),
-                "driver_photo_" + id, photoFile.getInputStream(),
+                DRIVER_PHOTO_NAME.formatted(id), photoFile.getInputStream(),
                 photoFile.getContentType());
         return driverService.addPhoto(id, fileRef);
     }

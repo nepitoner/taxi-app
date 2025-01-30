@@ -23,15 +23,15 @@ public class DriverExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)
-    @ExceptionHandler(RepeatedDataException.class)
-    ErrorResponse handleRepeatedDataException(RepeatedDataException exception) {
+    @ExceptionHandler({RepeatedDataException.class, CarAlreadyTakenException.class})
+    ErrorResponse handleRepeatedDataException(Exception exception) {
         return new ErrorResponse(HttpStatus.CONFLICT, exception.getMessage());
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.REQUEST_TIMEOUT)
     @ExceptionHandler(RequestTimeoutException.class)
     ErrorResponse handleBadRequestException(RequestTimeoutException exception) {
-        return new ErrorResponse(HttpStatus.BAD_REQUEST, exception.getMessage());
+        return new ErrorResponse(HttpStatus.REQUEST_TIMEOUT, exception.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

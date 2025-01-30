@@ -8,15 +8,15 @@ import java.util.UUID;
 
 public interface DriverService {
 
+    PagedResponse<DriverResponse> getAllDrivers(int page, int limit);
+
     UUID registerDriver(DriverRequest driverRequest);
 
     DriverResponse updateDriver(UUID driverId, DriverRequest driverRequest);
 
-    UUID addPhoto(UUID driverId, String fileRef);
-
     void deleteDriver(UUID driverId);
 
-    PagedResponse<DriverResponse> getAllDrivers(int page, int limit);
+    UUID addPhoto(UUID driverId, String fileRef);
 
     DriverResponse addCar(UUID driverId, UUID carId);
 }

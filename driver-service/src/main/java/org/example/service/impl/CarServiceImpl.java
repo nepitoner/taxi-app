@@ -30,20 +30,20 @@ public class CarServiceImpl implements CarService {
     private final CarRepository carRepository;
 
     @Override
+    public CarResponse getCarById(UUID carId) {
+        carValidator.checkExistenceAndPresence(carId);
+        Car car = carRepository.findByIdAndIsDeletedIsFalse(carId);
+        log.info("Car Service. Get car by id {}", carId);
+        return carMapper.mapEntityToResponse(car);
+    }
+
+    @Override
     public PagedResponse<CarResponse> getAllCars(int page, int limit) {
         Pageable pageable = PageRequest.of(page, limit);
         Page<Car> responsePage = carRepository.findByIsDeletedIsFalse(pageable);
         PagedResponse<CarResponse> pagedCarResponse = carMapper.mapPageEntityToPagedDto(page, limit, responsePage);
         log.info("Car Service. Get all cars. Total cars {}", pagedCarResponse.totalAmount());
         return pagedCarResponse;
-    }
-
-    @Override
-    public CarResponse getCarById(UUID carId) {
-        carValidator.checkExistenceAndPresence(carId);
-        Car car = carRepository.findByIdAndIsDeletedIsFalse(carId);
-        log.info("Car Service. Get car by id {}", carId);
-        return carMapper.mapEntityToResponse(car);
     }
 
     @Override
@@ -64,8 +64,9 @@ public class CarServiceImpl implements CarService {
     public CarResponse updateCar(UUID carId, CarRequest carRequest) {
         carValidator.checkExistenceAndPresence(carId);
         carValidator.checkUniqueness(carId, carRequest);
+        Car car = carRepository.findByIdAndIsDeletedIsFalse(carId);
 
-        Car updateCar = carMapper.mapDtoToEntity(carRequest, carId);
+        Car updateCar = carMapper.mapDtoToEntity(carRequest, car);
 
         Car newCar = carRepository.save(updateCar);
         log.info("Car Service. Update car with id {}", carId);
@@ -79,6 +80,7 @@ public class CarServiceImpl implements CarService {
 
         Car car = carRepository.findByIdAndIsDeletedIsFalse(carId);
         car.setIsDeleted(true);
+        car.getDrivers().clear();
         carRepository.save(car);
         log.info("Car Service. Delete car with id {}", carId);
     }

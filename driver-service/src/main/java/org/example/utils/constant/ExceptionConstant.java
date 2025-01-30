@@ -18,4 +18,6 @@ public final class ExceptionConstant {
 
     public final static String REPEATED_CAR_NUMBER_MESSAGE = "Car with number %s already exists";
 
+    public final static String TAKEN_CAR_MESSAGE = "Car with id %s already taken";
+
 }

@@ -9,6 +9,7 @@ import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.data.domain.Page;
@@ -27,8 +28,7 @@ public interface CarMapper {
 
     Car mapDtoToEntity(CarRequest carRequest);
 
-    @Mapping(target = "car.isDeleted", defaultValue = "false")
-    Car mapDtoToEntity(CarRequest carRequest, UUID id);
+    Car mapDtoToEntity(CarRequest carRequest, @MappingTarget Car car);
 
     @Mapping(target = "driversIds", source = "drivers", qualifiedByName = "mapDrivers")
     CarResponse mapEntityToResponse(Car car);

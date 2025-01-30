@@ -27,7 +27,6 @@ public class CarValidatorImpl implements CarValidator {
 
     @Override
     public void checkUniqueness(UUID carId, CarRequest dto) {
-
         if (carRepository.existsByNumberAndIdIsNot(dto.number(), carId)) {
             throw new RepeatedDataException(
                     ExceptionConstant.REPEATED_CAR_NUMBER_MESSAGE.formatted(dto.number()));

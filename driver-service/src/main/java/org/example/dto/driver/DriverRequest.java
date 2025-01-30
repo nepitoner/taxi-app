@@ -36,7 +36,6 @@ public record DriverRequest(
         @Schema(description = "driver.email", example = "driver.email.example")
         String email,
 
-        @NotBlank(message = "incorrect.message")
         @Schema(description = "driver.phoneNumber", example = "driver.phoneNumber.example")
         @Pattern(regexp = PHONE_NUMBER_REGEX, message = "incorrect.message")
         String phoneNumber,

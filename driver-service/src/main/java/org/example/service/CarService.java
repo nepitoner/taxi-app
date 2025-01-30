@@ -8,14 +8,14 @@ import java.util.UUID;
 
 public interface CarService {
 
+    CarResponse getCarById(UUID carId);
+
+    PagedResponse<CarResponse> getAllCars(int page, int limit);
+
     UUID registerCar(CarRequest carRequest);
 
     CarResponse updateCar(UUID carId, CarRequest carRequest);
 
     void deleteCar(UUID carId);
-
-    PagedResponse<CarResponse> getAllCars(int page, int limit);
-
-    CarResponse getCarById(UUID carId);
 
 }

@@ -32,7 +32,6 @@ public class DriverValidatorImpl implements DriverValidator {
 
     @Override
     public void checkUniqueness(UUID driverId, DriverRequest dto) {
-
         if (driverRepository.existsByPhoneNumberAndIdIsNot(dto.phoneNumber(), driverId)) {
             throw new RepeatedDataException(
                     ExceptionConstant.REPEATED_PHONE_NUMBER_MESSAGE.formatted(dto.phoneNumber()));
