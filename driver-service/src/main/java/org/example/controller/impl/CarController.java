@@ -43,9 +43,9 @@ public class CarController implements CarSwagger  {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public SuccessResponse registerCar(@Valid @RequestBody CarRequest carRequest) {
-        UUID registeredCarId = carService.registerCar(carRequest);
-        return new SuccessResponse(registeredCarId.toString());
+    public SuccessResponse createCar(@Valid @RequestBody CarRequest carRequest) {
+        UUID carId = carService.createCar(carRequest);
+        return new SuccessResponse(carId.toString());
     }
 
     @ResponseStatus(HttpStatus.OK)

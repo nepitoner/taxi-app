@@ -33,7 +33,7 @@ public interface CarSwagger {
             @ApiResponse(responseCode = "201", description = "The car was successfully registered"),
             @ApiResponse(responseCode = "400", description = "Validation failed")
     })
-    SuccessResponse registerCar(@Valid @RequestBody CarRequest carRequest);
+    SuccessResponse createCar(@Valid @RequestBody CarRequest carRequest);
 
     @Operation(summary = "Update the car")
     @ApiResponses(value = {

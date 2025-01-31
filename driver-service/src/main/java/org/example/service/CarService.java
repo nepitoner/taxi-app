@@ -12,7 +12,7 @@ public interface CarService {
 
     PagedResponse<CarResponse> getAllCars(int page, int limit);
 
-    UUID registerCar(CarRequest carRequest);
+    UUID createCar(CarRequest carRequest);
 
     CarResponse updateCar(UUID carId, CarRequest carRequest);
 

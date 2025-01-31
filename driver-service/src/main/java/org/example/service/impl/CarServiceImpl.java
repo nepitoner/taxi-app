@@ -48,13 +48,13 @@ public class CarServiceImpl implements CarService {
 
     @Override
     @Transactional
-    public UUID registerCar(CarRequest dto) {
+    public UUID createCar(CarRequest dto) {
         carValidator.checkUniqueness(dto);
 
         Car carToRegister = carMapper.mapDtoToEntity(dto);
         UUID carId = carRepository.save(carToRegister).getId();
 
-        log.info("Car Service. Register car with number {}. Registered car id {}",
+        log.info("Car Service. Create car with number {}. Created car id {}",
                 carToRegister.getNumber(), carId);
         return carId;
     }
