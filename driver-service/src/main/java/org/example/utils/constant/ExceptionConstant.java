@@ -20,4 +20,6 @@ public final class ExceptionConstant {
 
     public final static String TAKEN_CAR_MESSAGE = "Car with id %s already taken";
 
+    public final static String UNKNOWN_CODE_MESSAGE = "Unknown sex type code %d";
+
 }

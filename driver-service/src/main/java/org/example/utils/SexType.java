@@ -3,6 +3,8 @@ package org.example.utils;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import static org.example.utils.constant.ExceptionConstant.UNKNOWN_CODE_MESSAGE;
+
 @Getter
 @RequiredArgsConstructor
 public enum SexType {
@@ -18,7 +20,7 @@ public enum SexType {
                 return type;
             }
         }
-        throw new IllegalArgumentException("Unknown code " + code);
+        throw new IllegalArgumentException(UNKNOWN_CODE_MESSAGE.formatted(code));
     }
 
 }
