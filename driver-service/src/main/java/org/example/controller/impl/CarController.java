@@ -37,7 +37,7 @@ public class CarController implements CarSwagger  {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public PagedResponse<CarResponse> getAllCars(@RequestParam(defaultValue = "0") @Min(value = 0, message = "page.incorrect") int page,
-                                    @RequestParam(defaultValue = "10") @Min(value = 1, message = "limit.incorrect") int limit) {
+                                                 @RequestParam(defaultValue = "10") @Min(value = 1, message = "limit.incorrect") int limit) {
         return carService.getAllCars(page, limit);
     }
 

@@ -51,11 +51,11 @@ public class CarServiceImpl implements CarService {
     public UUID createCar(CarRequest dto) {
         carValidator.checkUniqueness(dto);
 
-        Car carToRegister = carMapper.mapDtoToEntity(dto);
-        UUID carId = carRepository.save(carToRegister).getId();
+        Car carToCreate = carMapper.mapDtoToEntity(dto);
+        UUID carId = carRepository.save(carToCreate).getId();
 
         log.info("Car Service. Create car with number {}. Created car id {}",
-                carToRegister.getNumber(), carId);
+                carToCreate.getNumber(), carId);
         return carId;
     }
 
