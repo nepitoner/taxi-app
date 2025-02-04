@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.2'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'checkstyle'
+}
+
+group = 'org'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+checkstyle {
+    toolVersion = '10.17.0'
+    configFile = file('config/checkstyle/checkstyle.xml')
+    maxErrors = 0
+    maxWarnings = 0
+    showViolations = true
+}
+
+tasks.checkstyleMain {
+    source = fileTree('src/main/java')
+}
+
+tasks.checkstyleTest {
+    source = fileTree('src/test/java')
+}
+
+test {
+    useJUnitPlatform()
+}
