@@ -1,0 +1,17 @@
+server:
+  port: 0
+spring:
+  application:
+    name: ${APPLICATION_NAME:ride-service}
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/ride_db
+
+router:
+  apiKey: ${APIKEY:5b3ce3597851110001cf6248cd77025042f94d81a2ac}
+
+springdoc:
+  api-docs:
+    path: /api/v1/rides/docs
+  swagger-ui:
+    path: /api/v1/rides/swagger-ui.html
