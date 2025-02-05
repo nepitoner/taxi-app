@@ -25,7 +25,7 @@ public class RideExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({DistanceCalculationException.class, RideStatusProcessingException.class,
             IncorrectStatusException.class, IllegalArgumentException.class})
-    public ErrorResponse handleRideStatusProcessingException(Exception exception) {
+    public ErrorResponse handleIllegalArgumentException(Exception exception) {
         return new ErrorResponse(HttpStatus.BAD_REQUEST, exception.getMessage());
     }
 
