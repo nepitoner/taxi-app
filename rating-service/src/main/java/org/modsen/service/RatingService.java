@@ -5,7 +5,6 @@ import org.modsen.dto.request.RideCommentRequest;
 import org.modsen.dto.response.PagedRatingResponse;
 import org.modsen.dto.response.RateResponse;
 import org.modsen.dto.response.RatingResponse;
-
 import java.util.UUID;
 
 public interface RatingService {

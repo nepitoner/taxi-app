@@ -1,7 +1,6 @@
 package org.modsen.utils.validator;
 
 import org.modsen.dto.response.RideResponse;
-
 import java.util.UUID;
 
 public interface RatingValidator {

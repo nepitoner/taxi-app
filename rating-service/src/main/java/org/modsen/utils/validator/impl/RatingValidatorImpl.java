@@ -1,5 +1,9 @@
 package org.modsen.utils.validator.impl;
 
+import static org.modsen.utils.constant.ExceptionConstant.INVALID_RIDE_DATA_MESSAGE;
+import static org.modsen.utils.constant.ExceptionConstant.RATING_NOT_FOUND_MESSAGE;
+import static org.modsen.utils.constant.ExceptionConstant.REPEATED_ATTEMPT_MESSAGE;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modsen.client.RideServiceClient;
@@ -10,12 +14,7 @@ import org.modsen.exception.RepeatedRatingAttemptException;
 import org.modsen.repository.RatingRepository;
 import org.modsen.utils.validator.RatingValidator;
 import org.springframework.stereotype.Component;
-
 import java.util.UUID;
-
-import static org.modsen.utils.constant.ExceptionConstant.INVALID_RIDE_DATA_MESSAGE;
-import static org.modsen.utils.constant.ExceptionConstant.RATING_NOT_FOUND_MESSAGE;
-import static org.modsen.utils.constant.ExceptionConstant.REPEATED_ATTEMPT_MESSAGE;
 
 @Slf4j
 @Component
