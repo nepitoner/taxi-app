@@ -5,7 +5,6 @@ import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
-
 import java.util.UUID;
 
 @Builder
@@ -22,7 +21,7 @@ public record RatingRequest(
         Float rating,
 
         @Schema(description = "Optional comment about the ride", example = "It was cool!")
-        String rideComment
+        String comment
 
 ) {
 }

@@ -16,7 +16,6 @@ import org.modsen.dto.response.RateResponse;
 import org.modsen.dto.response.RatingResponse;
 import org.modsen.entity.Rating;
 import org.springframework.data.domain.Page;
-
 import java.util.List;
 import java.util.UUID;
 

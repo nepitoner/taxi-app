@@ -1,7 +1,6 @@
 package org.modsen.dto.response;
 
 import lombok.Builder;
-
 import java.util.UUID;
 
 @Builder
