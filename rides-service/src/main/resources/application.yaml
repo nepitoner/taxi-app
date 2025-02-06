@@ -9,7 +9,7 @@ spring:
 
 router:
   link: https://api.openrouteservice.org/v2/directions/driving-car/json
-  apiKey: ${APIKEY:key-val}
+  apiKey: ${APIKEY:5b3ce3597851110001cf6248cd77025042f94d81a2ac6a43f20fe7fa}
 
 springdoc:
   api-docs:
