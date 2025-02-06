@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Builder
-@Schema(description = "Dto for getting passenger's information")
+@Schema(description = "Dto for getting ride's information")
 public record RideResponse(
 
         @NotNull(message = "incorrect.message")
@@ -35,7 +35,7 @@ public record RideResponse(
         List<Double> endingCoordinates,
 
         @NotNull(message = "incorrect.message")
-        @Schema(description = "Status of the trip", example = "CREATED")
+        @Schema(description = "Status of the ride", example = "CREATED")
         RideStatus rideStatus,
 
         @NotNull(message = "incorrect.message")
@@ -44,7 +44,7 @@ public record RideResponse(
 
         @NotNull(message = "incorrect.message")
         @DecimalMin(value = "0.0", inclusive = false, message = "Price must be greater than 0")
-        @Schema(description = "Price of the trip", example = "25.50")
+        @Schema(description = "Price of the ride", example = "25.50")
         BigDecimal price,
 
         @NotNull(message = "incorrect.message")
