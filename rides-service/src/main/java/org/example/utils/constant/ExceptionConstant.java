@@ -21,4 +21,6 @@ public final class ExceptionConstant {
 
     public final static String REPEATED_COORDINATES_MESSAGE = "Starting and ending coordinates must not be the same";
 
+    public final static String SERVICE_IS_NOT_AVAILABLE_MESSAGE = "Service isn't available";
+
 }

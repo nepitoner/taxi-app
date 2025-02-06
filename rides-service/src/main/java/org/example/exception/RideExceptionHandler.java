@@ -17,20 +17,28 @@ import java.util.stream.Collectors;
 public class RideExceptionHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(RideNotFoundException.class)
+    @ExceptionHandler({
+            RideNotFoundException.class
+    })
     public ErrorResponse handleRideNotFound(RideNotFoundException exception) {
         return new ErrorResponse(HttpStatus.NOT_FOUND, exception.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({DistanceCalculationException.class, RideStatusProcessingException.class,
-            IncorrectStatusException.class, IllegalArgumentException.class})
+    @ExceptionHandler({
+            DistanceCalculationException.class,
+            RideStatusProcessingException.class,
+            IncorrectStatusException.class,
+            IllegalArgumentException.class
+    })
     public ErrorResponse handleIllegalArgumentException(Exception exception) {
         return new ErrorResponse(HttpStatus.BAD_REQUEST, exception.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(ConstraintViolationException.class)
+    @ExceptionHandler({
+            ConstraintViolationException.class
+    })
     public ValidationErrorResponse handleConstraintViolationException(ConstraintViolationException ex) {
         final List<Violation> violations = ex.getConstraintViolations().stream()
                 .map(violation -> new Violation(
@@ -41,7 +49,9 @@ public class RideExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler({
+            MethodArgumentNotValidException.class
+    })
     ValidationErrorResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         final List<Violation> violations = ex.getBindingResult().getFieldErrors().stream()
                 .map(error -> new Violation(error.getField(), error.getDefaultMessage()))
@@ -50,7 +60,10 @@ public class RideExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler({
+            ServiceIsNotAvailable.class,
+            Exception.class
+    })
     ErrorResponse handleOtherException(Exception exception) {
         return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
     }

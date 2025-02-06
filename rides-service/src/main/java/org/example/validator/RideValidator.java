@@ -9,4 +9,5 @@ public interface RideValidator {
     void checkExistence(UUID rideId);
 
     void checkStatusProcessing(RideStatusRequest request, UUID rideId);
+
 }

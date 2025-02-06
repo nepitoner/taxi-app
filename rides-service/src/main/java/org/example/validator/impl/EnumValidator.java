@@ -3,7 +3,6 @@ package org.example.validator.impl;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.example.validator.ValidEnum;
-
 import java.util.Arrays;
 
 public class EnumValidator implements ConstraintValidator<ValidEnum, String> {

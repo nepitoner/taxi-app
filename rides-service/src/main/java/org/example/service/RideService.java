@@ -4,7 +4,6 @@ import org.example.dto.request.RideRequest;
 import org.example.dto.request.RideStatusRequest;
 import org.example.dto.response.PagedRideResponse;
 import org.example.dto.response.RideResponse;
-
 import java.util.UUID;
 
 public interface RideService {

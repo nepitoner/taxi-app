@@ -1,12 +1,11 @@
 package org.example.dto.response;
 
+import static org.example.utils.constant.ExceptionConstant.INVALID_LOCATION_POINT_MESSAGE;
+
 import lombok.Getter;
 import lombok.Setter;
 import org.example.exception.DistanceCalculationException;
-
 import java.util.List;
-
-import static org.example.utils.constant.ExceptionConstant.INVALID_LOCATION_POINT_MESSAGE;
 
 @Setter
 @Getter
@@ -34,7 +33,6 @@ public class DistanceResponse {
         private double duration;
         private double ascent;
         private double descent;
-
     }
 
 }

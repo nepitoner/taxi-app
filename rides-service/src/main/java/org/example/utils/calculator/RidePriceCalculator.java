@@ -1,15 +1,14 @@
 package org.example.utils.calculator;
 
-import lombok.RequiredArgsConstructor;
-import org.example.exception.DistanceCalculationException;
-import org.springframework.stereotype.Component;
-
-import java.math.BigDecimal;
-import java.util.List;
-
 import static org.example.utils.constant.ExceptionConstant.INVALID_LOCATION_POINT_MESSAGE;
 import static org.example.utils.constant.ExceptionConstant.REPEATED_COORDINATES_MESSAGE;
 import static org.example.utils.constant.RideConstant.RIDE_PRICE_PER_KM;
+
+import lombok.RequiredArgsConstructor;
+import org.example.exception.DistanceCalculationException;
+import org.springframework.stereotype.Component;
+import java.math.BigDecimal;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor

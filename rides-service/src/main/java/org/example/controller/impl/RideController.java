@@ -1,5 +1,7 @@
 package org.example.controller.impl;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.UUID;
-
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Validated
 @RestController
@@ -82,4 +81,5 @@ public class RideController implements RideSwagger {
                                          @Valid @RequestBody RideStatusRequest request) {
         return rideService.changeRideStatus(rideId, request);
     }
+
 }

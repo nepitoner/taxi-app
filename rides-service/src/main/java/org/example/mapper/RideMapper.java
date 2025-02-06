@@ -15,7 +15,6 @@ import org.mapstruct.Named;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.data.domain.Page;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;

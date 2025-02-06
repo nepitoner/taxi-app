@@ -1,16 +1,20 @@
 package org.example.utils.calculator;
 
+import static org.example.utils.constant.ExceptionConstant.SERVICE_IS_NOT_AVAILABLE_MESSAGE;
+import static org.example.utils.constant.RideConstant.COORDINATES_FORMAT;
+
 import lombok.RequiredArgsConstructor;
 import org.example.config.RouterApiProperties;
 import org.example.dto.response.DistanceResponse;
+import org.example.exception.ServiceIsNotAvailable;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-
 import java.util.Objects;
+
 
 @Component
 @RequiredArgsConstructor
@@ -22,25 +26,30 @@ public class DistanceCalculator {
     private final RestTemplate restTemplate;
 
     public double getRoadDistance(Point from, Point to) {
-        String url = "https://api.openrouteservice.org/v2/directions/driving-car/json";
+        String url = properties.link();
 
         String requestBody = String.format(
-                "{\"coordinates\":[[%f,%f],[%f,%f]]}",
+                COORDINATES_FORMAT,
                 from.getLongitude(), from.getLatitude(),
                 to.getLongitude(), to.getLatitude()
         );
-
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", properties.apiKey());
         headers.set("Content-Type", "application/json");
 
         HttpEntity<String> entity = new HttpEntity<>(requestBody, headers);
+        ResponseEntity<DistanceResponse> response;
 
-        ResponseEntity<DistanceResponse> response = restTemplate.postForEntity(url, entity, DistanceResponse.class);
+        try {
+             response = restTemplate.postForEntity(url, entity, DistanceResponse.class);
+        } catch (Exception e) {
+            throw new ServiceIsNotAvailable(SERVICE_IS_NOT_AVAILABLE_MESSAGE);
+        }
 
         return Objects.requireNonNull(response.getBody()).getTotalDistance();
     }
+
 }
 
 

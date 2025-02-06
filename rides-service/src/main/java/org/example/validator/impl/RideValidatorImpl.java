@@ -49,31 +49,33 @@ public class RideValidatorImpl implements RideValidator {
     }
 
     private static void throwIfNewStatusIsCompletedWithoutSequence(RideStatus currentStatus, RideStatus newStatus) {
-        if (newStatus == RideStatus.COMPLETED && currentStatus != RideStatus.ON_WAY_TO_DESTINATION) {
+        if (newStatus.equals(RideStatus.COMPLETED)
+                && !currentStatus.equals(RideStatus.ON_WAY_TO_DESTINATION)) {
             throw new RideStatusProcessingException(INVALID_RIDE_STATUS_MESSAGE.formatted(newStatus));
         }
     }
 
     private static void throwIfNewStatusIsCreated(RideStatus newStatus) {
-        if (newStatus == RideStatus.CREATED) {
-            throw new RideStatusProcessingException(INVALID_RIDE_STATUS_MESSAGE.formatted(RideStatus.CREATED));
+        if (newStatus.equals(RideStatus.CREATED)) {
+            throw new RideStatusProcessingException(INVALID_RIDE_STATUS_MESSAGE.formatted(newStatus));
         }
     }
 
     private static void throwIfCurrentStatusIsCancelled(RideStatus currentStatus) {
-        if (currentStatus == RideStatus.CANCELED) {
+        if (currentStatus.equals(RideStatus.CANCELED)) {
             throw new RideStatusProcessingException(INVALID_RIDE_STATUS_CHANGE_MESSAGE.formatted(currentStatus));
         }
     }
 
     private static void throwIfCurrentStatusIsCompleted(RideStatus currentStatus) {
-        if (currentStatus == RideStatus.COMPLETED) {
+        if (currentStatus.equals(RideStatus.COMPLETED)) {
             throw new RideStatusProcessingException(INVALID_RIDE_STATUS_CHANGE_MESSAGE.formatted(currentStatus));
         }
     }
 
     private static void throwIfInvalidStatusSequence(RideStatus currentStatus, RideStatus newStatus) {
-        if (currentStatus.getCode() + 1 != newStatus.getCode() && newStatus != RideStatus.COMPLETED) {
+        if (currentStatus.getCode() + 100 != newStatus.getCode()
+                && !newStatus.equals(RideStatus.COMPLETED)) {
             throw new RideStatusProcessingException(INVALID_RIDE_STATUS_MESSAGE.formatted(newStatus));
         }
     }

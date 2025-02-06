@@ -5,7 +5,6 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import org.example.entity.RideStatus;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,16 +26,12 @@ public record RideResponse(
         @Schema(description = "Id of the passenger", example = "8e280da2-9e48-4643-ba8f-5c06a6ee848b")
         UUID passengerId,
 
-//        @NotBlank(message = "incorrect.message")
-//        @Schema(description = "Address from where the passenger departs", example = "78 Kolasa St, Minsk")
-//        String departureAddress,
-//
-//        @NotBlank(message = "incorrect.message")
-//        @Schema(description = "Address to which the passenger is heading", example = "6 Antonova St, Homel")
-//        String destinationAddress,
-
+        @NotNull(message = "incorrect.message")
+        @Schema(description = "Coordinates from where the passenger departs", example = "[-49.279708, -25.46005]")
         List<Double> startingCoordinates,
 
+        @NotNull(message = "incorrect.message")
+        @Schema(description = "Coordinates from where the passenger departs", example = "[-49.279708, -25.46005]")
         List<Double> endingCoordinates,
 
         @NotNull(message = "incorrect.message")
