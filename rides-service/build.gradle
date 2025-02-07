@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'checkstyle'
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version "${springDepManVersion}"
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.liquibase.ext:liquibase-mongodb:${liquibase}"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonDatatypesVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-validation"
+    implementation "jakarta.validation:jakarta.validation-api:${validationVersion}"
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springDocVersion}"
+    implementation "org.mapstruct:mapstruct:${mapStructVersion}"
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapStructVersion}"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.mockito:mockito-inline:${mockitoVersion}"
+}
+
+test {
+    useJUnitPlatform()
+}

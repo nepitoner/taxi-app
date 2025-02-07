@@ -1,0 +1,18 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: ${APPLICATION_NAME:ride-service}
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/ride_db
+
+router:
+  link: https://api.openrouteservice.org/v2/directions/driving-car/json
+  apiKey: ${APIKEY:key-val}
+
+springdoc:
+  api-docs:
+    path: /api/v1/rides/docs
+  swagger-ui:
+    path: /api/v1/rides/swagger-ui.html
