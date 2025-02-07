@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -17,6 +18,7 @@ import java.util.UUID;
 @Document(collection = Rating.COLLECTION_NAME)
 @Getter
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 @Setter(AccessLevel.PUBLIC)
 public class Rating {
@@ -27,7 +29,8 @@ public class Rating {
     private Long version;
 
     @Id
-    private UUID ratingId;
+    @Builder.Default
+    private UUID ratingId = UUID.randomUUID();
 
     @Field("from_id")
     private UUID fromId;
@@ -51,9 +54,5 @@ public class Rating {
     @LastModifiedDate
     @Field("updated_at")
     private LocalDateTime updatedAt;
-
-    public Rating() {
-        this.ratingId = UUID.randomUUID();
-    }
 
 }
