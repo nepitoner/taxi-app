@@ -38,8 +38,8 @@ public class RideController implements RideSwagger {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public PagedRideResponse getAllRides(
-            @RequestParam(defaultValue = "0") @Min(value = 0, message = "page.incorrect") int page,
-            @RequestParam(defaultValue = "10") @Min(value = 1, message = "limit.incorrect") int limit,
+            @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
+            @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
             @RequestParam(defaultValue = "createdAt") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDirection
     ) {
@@ -55,8 +55,8 @@ public class RideController implements RideSwagger {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/drivers/{driverId}", produces = APPLICATION_JSON_VALUE)
     public PagedRideResponse getAllRidesByDriverId(
-            @RequestParam(defaultValue = "0") @Min(value = 0, message = "page.incorrect") int page,
-            @RequestParam(defaultValue = "10") @Min(value = 1, message = "limit.incorrect") int limit,
+            @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
+            @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
             @RequestParam(defaultValue = "createdAt") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDirection,
             @PathVariable UUID driverId) {
@@ -72,8 +72,8 @@ public class RideController implements RideSwagger {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/passengers/{passengerId}", produces = APPLICATION_JSON_VALUE)
     public PagedRideResponse getAllRidesByPassengerId(
-            @RequestParam(defaultValue = "0") @Min(value = 0, message = "page.incorrect") int page,
-            @RequestParam(defaultValue = "10") @Min(value = 1, message = "limit.incorrect") int limit,
+            @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
+            @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
             @RequestParam(defaultValue = "createdAt") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDirection,
             @PathVariable UUID passengerId) {

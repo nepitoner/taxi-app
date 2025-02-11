@@ -1,14 +1,15 @@
-package org.example.controller.impl;
+package org.modsen.controller.impl;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
-import org.example.controller.CarSwagger;
-import org.example.dto.PagedResponse;
-import org.example.dto.SuccessResponse;
-import org.example.dto.car.CarRequest;
-import org.example.dto.car.CarResponse;
-import org.example.service.CarService;
+import org.modsen.controller.CarSwagger;
+import org.modsen.dto.PagedResponse;
+import org.modsen.dto.SuccessResponse;
+import org.modsen.dto.car.CarRequest;
+import org.modsen.dto.car.CarResponse;
+import org.modsen.dto.request.RequestParams;
+import org.modsen.service.CarService;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,15 +31,24 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/cars")
-public class CarController implements CarSwagger  {
+public class CarController implements CarSwagger {
 
     private final CarService carService;
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(produces = APPLICATION_JSON_VALUE)
-    public PagedResponse<CarResponse> getAllCars(@RequestParam(defaultValue = "0") @Min(value = 0, message = "page.incorrect") int page,
-                                                 @RequestParam(defaultValue = "10") @Min(value = 1, message = "limit.incorrect") int limit) {
-        return carService.getAllCars(page, limit);
+    public PagedResponse<CarResponse> getAllCars(
+            @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
+            @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
+            @RequestParam(defaultValue = "number") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDirection) {
+        RequestParams requestParams = RequestParams.builder()
+                .page(page)
+                .limit(limit)
+                .sortBy(sortBy)
+                .sortDirection(sortDirection)
+                .build();
+        return carService.getAllCars(requestParams);
     }
 
     @ResponseStatus(HttpStatus.CREATED)

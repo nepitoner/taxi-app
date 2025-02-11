@@ -1,17 +1,18 @@
-package org.example.controller.impl;
+package org.modsen.controller.impl;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
-import org.example.controller.PassengerSwagger;
-import org.example.dto.PagedPassengerResponse;
-import org.example.dto.PassengerRequest;
-import org.example.dto.PassengerResponse;
-import org.example.dto.SuccessResponse;
-import org.example.exception.RequestTimeoutException;
-import org.example.service.PassengerService;
-import org.example.service.StorageService;
-import org.example.validator.annotation.NotEmptyFile;
+import org.modsen.controller.PassengerSwagger;
+import org.modsen.dto.request.RequestParams;
+import org.modsen.dto.response.PagedPassengerResponse;
+import org.modsen.dto.request.PassengerRequest;
+import org.modsen.dto.response.PassengerResponse;
+import org.modsen.dto.response.SuccessResponse;
+import org.modsen.exception.RequestTimeoutException;
+import org.modsen.service.PassengerService;
+import org.modsen.service.StorageService;
+import org.modsen.util.validator.annotation.NotEmptyFile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,10 +45,18 @@ public class PassengerController implements PassengerSwagger {
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<PagedPassengerResponse> getAllPassengers(
-            @RequestParam(defaultValue = "0") @Min(value = 0, message = "page.incorrect") int page,
-            @RequestParam(defaultValue = "10") @Min(value = 1, message = "limit.incorrect") int limit
+            @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
+            @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDirection
     ) {
-        PagedPassengerResponse passengers = passengerService.getAllPassengers(page, limit);
+        RequestParams requestParams = RequestParams.builder()
+                .page(page)
+                .limit(limit)
+                .sortBy(sortBy)
+                .sortDirection(sortDirection)
+                .build();
+        PagedPassengerResponse passengers = passengerService.getAllPassengers(requestParams);
         return ResponseEntity.status(HttpStatus.OK).body(passengers);
     }
 
@@ -75,7 +84,7 @@ public class PassengerController implements PassengerSwagger {
     @PostMapping(value = "/{passengerId}/passenger_photo", consumes = MULTIPART_FORM_DATA_VALUE,
             produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<SuccessResponse> addPassengerPhoto(@PathVariable UUID passengerId,
-                                                             @RequestPart(value = "photoFile.name")
+                                                             @RequestPart(value = "photoFile")
                                                              @NotEmptyFile MultipartFile photoFile) throws IOException, RequestTimeoutException {
         UUID id = storageService.saveFileReference(photoFile, passengerId);
         return ResponseEntity.status(HttpStatus.OK).body(new SuccessResponse(id.toString()));

@@ -1,17 +1,18 @@
-package org.example.controller.impl;
+package org.modsen.controller.impl;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
-import org.example.controller.DriverSwagger;
-import org.example.dto.PagedResponse;
-import org.example.dto.SuccessResponse;
-import org.example.dto.driver.DriverRequest;
-import org.example.dto.driver.DriverResponse;
-import org.example.exception.RequestTimeoutException;
-import org.example.service.DriverService;
-import org.example.service.StorageService;
-import org.example.validator.annotation.NotEmptyFile;
+import org.modsen.controller.DriverSwagger;
+import org.modsen.dto.PagedResponse;
+import org.modsen.dto.SuccessResponse;
+import org.modsen.dto.driver.DriverRequest;
+import org.modsen.dto.driver.DriverResponse;
+import org.modsen.dto.request.RequestParams;
+import org.modsen.exception.RequestTimeoutException;
+import org.modsen.service.DriverService;
+import org.modsen.service.StorageService;
+import org.modsen.validator.annotation.NotEmptyFile;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,9 +47,19 @@ public class DriverController implements DriverSwagger {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(produces = APPLICATION_JSON_VALUE)
-    public PagedResponse<DriverResponse> getAllDrivers(@RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
-                                                       @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit) {
-        return driverService.getAllDrivers(page, limit);
+    public PagedResponse<DriverResponse> getAllDrivers(
+            @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
+            @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDirection) {
+
+        RequestParams requestParams = RequestParams.builder()
+                .page(page)
+                .limit(limit)
+                .sortBy(sortBy)
+                .sortDirection(sortDirection)
+                .build();
+        return driverService.getAllDrivers(requestParams);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
