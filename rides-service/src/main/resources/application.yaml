@@ -6,6 +6,8 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/ride_db
+  messages:
+    basename: message-constant
 
 router:
   link: https://api.openrouteservice.org/v2/directions/driving-car/json

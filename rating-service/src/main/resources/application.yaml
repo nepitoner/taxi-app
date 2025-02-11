@@ -6,6 +6,8 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/rating_db
+  messages:
+    basename: message-constant
 
 rating:
   limit: 20
