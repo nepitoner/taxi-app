@@ -26,8 +26,10 @@ public interface RatingSwagger {
             @ApiResponse(responseCode = "400", description = "Validation failed")
     })
     PagedRatingResponse getAllRatings(
-            @RequestParam(defaultValue = "0") @Min(value = 0, message = "page.incorrect") int page,
-            @RequestParam(defaultValue = "10") @Min(value = 1, message = "limit.incorrect") int limit
+            @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
+            @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDirection
     );
 
     @Operation(summary = "Getting driver's or passenger's rate by his id")
@@ -51,7 +53,6 @@ public interface RatingSwagger {
             @ApiResponse(responseCode = "404", description = "Rating with specified id wasn't found")
     })
     RatingResponse addRideComment(@PathVariable UUID ratingId,
-                                  @PathVariable UUID fromId,
                                   @Valid @RequestBody RideCommentRequest request
     );
 

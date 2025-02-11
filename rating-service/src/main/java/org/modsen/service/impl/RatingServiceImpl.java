@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modsen.config.RatingServiceProperties;
 import org.modsen.dto.request.RatingRequest;
+import org.modsen.dto.request.RequestParams;
 import org.modsen.dto.request.RideCommentRequest;
 import org.modsen.dto.response.PagedRatingResponse;
 import org.modsen.dto.response.RateResponse;
@@ -18,6 +19,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -39,11 +41,14 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     @Transactional(readOnly = true)
-    public PagedRatingResponse getAllRatings(int page, int limit) {
-        Pageable pageable = PageRequest.of(page, limit);
+    public PagedRatingResponse getAllRatings(RequestParams requestParams) {
+        int limit = Math.min(requestParams.limit(), 50);
+        Sort sort = Sort.by(Sort.Direction.fromString(requestParams.sortDirection()), requestParams.sortBy());
+        Pageable pageable = PageRequest.of(requestParams.page(), limit, sort);
         Page<Rating> responsePage = ratingRepository.findAll(pageable);
 
-        PagedRatingResponse pagedRatingResponse = ratingMapper.mapPageEntityToPagedDto(page, limit, responsePage);
+        PagedRatingResponse pagedRatingResponse = ratingMapper
+                .mapPageEntityToPagedDto(requestParams.page(), limit, responsePage);
         log.info("Rating Service. Get all request. Pages amount {}", responsePage.getTotalPages());
         return pagedRatingResponse;
     }
@@ -85,8 +90,8 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     @Transactional
-    public RatingResponse addRideComment(UUID ratingId, RideCommentRequest request, UUID fromId) {
-        ratingValidator.checkRatingExistence(ratingId, fromId);
+    public RatingResponse addRideComment(UUID ratingId, RideCommentRequest request) {
+        ratingValidator.checkRatingExistence(ratingId, request.fromId());
         ratingValidator.checkIfAlreadyCommented(ratingId);
 
         Rating rating = ratingRepository.findById(ratingId).get();
