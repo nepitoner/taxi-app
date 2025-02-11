@@ -25,8 +25,8 @@ public interface RideSwagger {
             @ApiResponse(responseCode = "400", description = "Validation failed")
     })
     PagedRideResponse getAllRides(
-            @RequestParam(defaultValue = "0") @Min(value = 0, message = "page.incorrect") int page,
-            @RequestParam(defaultValue = "10") @Min(value = 1, message = "limit.incorrect") int limit,
+            @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
+            @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
             @RequestParam(defaultValue = "createdAt") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDirection
     );
@@ -37,8 +37,8 @@ public interface RideSwagger {
             @ApiResponse(responseCode = "400", description = "Validation failed")
     })
     PagedRideResponse getAllRidesByDriverId(
-            @RequestParam(defaultValue = "0") @Min(value = 0, message = "page.incorrect") int page,
-            @RequestParam(defaultValue = "10") @Min(value = 1, message = "limit.incorrect") int limit,
+            @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
+            @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
             @RequestParam(defaultValue = "createdAt") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDirection,
             @PathVariable UUID driverId
@@ -50,8 +50,8 @@ public interface RideSwagger {
             @ApiResponse(responseCode = "400", description = "Validation failed")
     })
     PagedRideResponse getAllRidesByPassengerId(
-            @RequestParam(defaultValue = "0") @Min(value = 0, message = "page.incorrect") int page,
-            @RequestParam(defaultValue = "10") @Min(value = 1, message = "limit.incorrect") int limit,
+            @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
+            @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
             @RequestParam(defaultValue = "createdAt") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDirection,
             @PathVariable UUID passengerId
