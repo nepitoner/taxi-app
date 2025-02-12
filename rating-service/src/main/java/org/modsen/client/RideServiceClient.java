@@ -8,8 +8,8 @@ public interface RideServiceClient {
     default RideResponse getRideById(UUID rideId, UUID participantId) {
         return RideResponse.builder()
                 .rideId(rideId)
-                .passengerId(participantId)
-                .driverId(UUID.randomUUID())
+                .passengerId(UUID.fromString("4f9ee4c1-fc0e-43d7-8300-fd1d32bc0e51"))
+                .driverId(participantId)
                 .build();
     }
 
