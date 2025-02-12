@@ -19,4 +19,6 @@ public interface PassengerService {
 
     PagedPassengerResponse getAllPassengers(RequestParams requestParams);
 
+    void updatePassengerRating(UUID id);
+
 }
