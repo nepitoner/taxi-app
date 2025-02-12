@@ -5,7 +5,6 @@ import org.modsen.dto.driver.DriverRequest;
 import org.modsen.dto.driver.DriverResponse;
 import org.modsen.entity.Car;
 import org.modsen.entity.Driver;
-import org.modsen.utils.SexType;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -49,12 +48,9 @@ public interface DriverMapper {
     @Named("mapCars")
     default Set<UUID> mapCars(Set<Car> cars) {
         return cars.stream()
+                .filter(car -> !car.getIsDeleted())
                 .map(Car::getId)
                 .collect(Collectors.toSet());
-    }
-
-    default SexType map(Integer value) {
-        return SexType.fromCode(value);
     }
 
 }
