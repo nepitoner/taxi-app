@@ -8,6 +8,12 @@ spring:
       uri: mongodb://localhost:27017/rating_db
   messages:
     basename: message-constant
+  kafka:
+    bootstrap-servers: ${KAFKA_URL:localhost:9092}
+    producer:
+      group-id: passenger
+      topic:
+        passengerTopic: rating-passenger-service-topic
 
 rating:
   limit: 20
