@@ -2,7 +2,7 @@ package org.modsen.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modsen.config.RatingServiceProperties;
+import org.modsen.config.properties.RatingServiceProperties;
 import org.modsen.dto.request.RatingRequest;
 import org.modsen.dto.request.RequestParams;
 import org.modsen.dto.request.RideCommentRequest;
@@ -10,8 +10,10 @@ import org.modsen.dto.response.PagedRatingResponse;
 import org.modsen.dto.response.RateResponse;
 import org.modsen.dto.response.RatingResponse;
 import org.modsen.dto.response.RideResponse;
+import org.modsen.entity.Outbox;
 import org.modsen.entity.Rating;
 import org.modsen.mapper.RatingMapper;
+import org.modsen.repository.OutboxRepository;
 import org.modsen.repository.RatingRepository;
 import org.modsen.service.RatingService;
 import org.modsen.utils.validator.RatingValidator;
@@ -38,6 +40,8 @@ public class RatingServiceImpl implements RatingService {
     private final RatingRepository ratingRepository;
 
     private final RatingServiceProperties properties;
+
+    private final OutboxRepository outboxRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -74,13 +78,21 @@ public class RatingServiceImpl implements RatingService {
         ratingValidator.checkIfAlreadyRated(participantId, request.rideId());
 
         Rating ratingToCreate;
+        UUID toId;
         if (participantId == rideResponse.driverId()) {
+            toId = rideResponse.passengerId();
             ratingToCreate = ratingMapper.mapRequestToEntity(request, rideResponse.driverId(),
                     rideResponse.passengerId());
         } else {
+            toId = rideResponse.driverId();
             ratingToCreate = ratingMapper.mapRequestToEntity(request, rideResponse.passengerId(),
                     rideResponse.driverId());
         }
+
+        outboxRepository.save(Outbox.builder()
+                .participantId(toId)
+                .build());
+        log.info("Rating for {} was successfully stored to outbox", toId);
 
         UUID ratingId = ratingRepository.save(ratingToCreate).getRatingId();
 
