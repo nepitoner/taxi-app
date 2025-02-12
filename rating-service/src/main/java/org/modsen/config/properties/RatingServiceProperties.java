@@ -1,4 +1,4 @@
-package org.modsen.config;
+package org.modsen.config.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
