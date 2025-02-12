@@ -12,6 +12,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.springframework.kafka:spring-kafka'
     implementation "org.liquibase.ext:liquibase-mongodb:${liquibase}"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonDatatypesVersion}"
     implementation "org.springframework.boot:spring-boot-starter-web"
