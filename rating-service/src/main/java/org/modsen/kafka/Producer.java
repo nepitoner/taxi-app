@@ -6,6 +6,7 @@ import org.modsen.dto.response.RateResponse;
 import org.modsen.entity.Outbox;
 import org.modsen.repository.OutboxRepository;
 import org.modsen.service.KafkaMessagingService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -21,12 +22,13 @@ public class Producer {
 
     private final KafkaMessagingService messagingService;
 
+    @Value(value = "${spring.kafka.batch-size}")
+    int batchSize;
+
     @Scheduled(fixedDelay = 60000)
     public void forwardEventsToKafka() {
 
-        int BATCH_SIZE = 5;
-
-        List<Outbox> entities = outboxRepository.findAllByOrderByOutboxIdAsc(Pageable.ofSize(BATCH_SIZE)).toList();
+        List<Outbox> entities = outboxRepository.findAllByOrderByOutboxIdAsc(Pageable.ofSize(batchSize)).toList();
         if (!entities.isEmpty()) {
             for (Outbox entity : entities) {
                 messagingService.sendMessage(RateResponse.builder()
