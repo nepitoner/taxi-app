@@ -3,6 +3,7 @@ package org.modsen.client;
 import org.modsen.dto.response.RideResponse;
 import java.util.UUID;
 
+// todo: delete mock, add feign client to get real data
 public interface RideServiceClient {
 
     default RideResponse getRideById(UUID rideId, UUID participantId) {
