@@ -14,8 +14,10 @@ spring:
       group-id: passenger-driver
       topic:
         passenger-driver-topic: rating-passenger-driver-topic
+    batch-size: 5
   integration:
     ride-url: http://localhost:8083/api/v1/rides
+
 
 rating:
   limit: 20
