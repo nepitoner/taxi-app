@@ -64,21 +64,14 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     @Transactional
-    public UUID createRating(RatingRequest request, UUID participantId) {
-        RideResponse rideResponse = ratingValidator.checkRideExistenceAndPresence(request.rideId(), participantId);
-        ratingValidator.checkIfAlreadyRated(participantId, request.rideId());
+    public UUID createRating(RatingRequest request, UUID fromId) {
+        RideResponse rideResponse = ratingValidator.checkRideExistenceAndPresence(request.rideId(), fromId);
+        ratingValidator.checkIfAlreadyRated(fromId, request.rideId());
 
-        Rating ratingToCreate;
-        if (participantId == rideResponse.driverId()) {
-            ratingToCreate = ratingMapper.mapRequestToEntity(request, rideResponse.driverId(),
-                    rideResponse.passengerId());
-        } else {
-            ratingToCreate = ratingMapper.mapRequestToEntity(request, rideResponse.passengerId(),
-                    rideResponse.driverId());
-        }
+        UUID toId = (fromId == rideResponse.driverId()) ? rideResponse.passengerId() : rideResponse.driverId();
+        Rating ratingToCreate = ratingMapper.mapRequestToEntity(request, fromId, toId);
 
         UUID ratingId = ratingRepository.save(ratingToCreate).getRatingId();
-
         log.info("Rating Service. Create new rating. New rating id {}", ratingId);
         return ratingId;
     }

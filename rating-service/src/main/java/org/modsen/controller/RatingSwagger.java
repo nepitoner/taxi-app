@@ -42,7 +42,7 @@ public interface RatingSwagger {
             @ApiResponse(responseCode = "201", description = "The rating was successfully created"),
             @ApiResponse(responseCode = "400", description = "Validation failed")
     })
-    SuccessResponse createRating(@Valid @RequestBody RatingRequest request, @PathVariable UUID participantId);
+    SuccessResponse createRating(@Valid @RequestBody RatingRequest request, @PathVariable UUID fromId);
 
     @Operation(summary = "Add comment about the ride")
     @ApiResponses(value = {

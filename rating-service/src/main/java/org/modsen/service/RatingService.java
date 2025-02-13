@@ -13,7 +13,7 @@ public interface RatingService {
 
     RateResponse getRateById(UUID participantId);
 
-    UUID createRating(RatingRequest request, UUID participantId);
+    UUID createRating(RatingRequest request, UUID fromId);
 
     RatingResponse addRideComment(UUID ratingId, RideCommentRequest request, UUID fromId);
 

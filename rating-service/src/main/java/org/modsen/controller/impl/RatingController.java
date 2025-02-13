@@ -50,12 +50,12 @@ public class RatingController implements RatingSwagger {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(value = "/{participantId}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/{fromId}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public SuccessResponse createRating(
             @Valid @RequestBody RatingRequest request,
-            @PathVariable UUID participantId
+            @PathVariable UUID fromId
     ) {
-        UUID createdRatingId = ratingService.createRating(request, participantId);
+        UUID createdRatingId = ratingService.createRating(request, fromId);
         return new SuccessResponse(createdRatingId.toString());
     }
 
