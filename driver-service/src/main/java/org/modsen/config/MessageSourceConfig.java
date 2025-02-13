@@ -5,8 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
-import java.util.Locale;
-
 public class MessageSourceConfig {
 
     @Bean
@@ -14,7 +12,6 @@ public class MessageSourceConfig {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("classpath:messages");
         messageSource.setDefaultEncoding("UTF-8");
-        messageSource.setDefaultLocale(Locale.ENGLISH);
         return messageSource;
     }
 
