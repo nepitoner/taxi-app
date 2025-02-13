@@ -1,13 +1,9 @@
-package org.modsen.dto.response;
+package org.modsen.dto;
 
 import lombok.Builder;
 
-import java.util.UUID;
-
 @Builder
 public record RateResponse(
-
-        String eventId,
 
         String  toId,
 
