@@ -14,6 +14,7 @@ spring:
       group-id: passenger-driver
       topic:
         passenger-driver-topic: rating-passenger-driver-topic
+    batch-size: 5
 
 rating:
   limit: 20
