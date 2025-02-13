@@ -11,9 +11,9 @@ spring:
   kafka:
     bootstrap-servers: ${KAFKA_URL:localhost:9092}
     producer:
-      group-id: passenger
+      group-id: passenger-driver
       topic:
-        passengerTopic: rating-passenger-service-topic
+        passenger-driver-topic: rating-passenger-driver-topic
 
 rating:
   limit: 20

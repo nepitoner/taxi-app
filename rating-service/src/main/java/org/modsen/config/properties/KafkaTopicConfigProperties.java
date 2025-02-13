@@ -16,7 +16,8 @@ public record KafkaTopicConfigProperties(
     @Getter
     @Setter
     public static class Topic {
-        private String passengerTopic;
+        private String passengerDriverTopic;
     }
+
 }
 
