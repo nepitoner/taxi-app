@@ -4,6 +4,7 @@ import org.modsen.dto.request.RideRequest;
 import org.modsen.dto.request.RideStatusRequest;
 import org.modsen.dto.response.PagedRideResponse;
 import org.modsen.dto.response.RideResponse;
+import org.modsen.dto.response.ShortRideResponse;
 import org.modsen.entity.Ride;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Builder;
@@ -36,6 +37,8 @@ public interface RideMapper {
     Ride mapDtoToEntityStatusUpdate(RideStatusRequest rideStatusRequest, @MappingTarget Ride ride);
 
     RideResponse mapEntityToResponse(Ride ride);
+
+    ShortRideResponse mapEntityToShortResponse(Ride ride);
 
     @Mapping(target = "rides", source = "responsePage", qualifiedByName = "mapRides")
     @Mapping(target = "totalRides", source = "responsePage.totalElements")

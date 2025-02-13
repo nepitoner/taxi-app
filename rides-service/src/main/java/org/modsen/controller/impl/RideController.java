@@ -11,6 +11,7 @@ import org.modsen.dto.request.RideRequestParams;
 import org.modsen.dto.request.RideStatusRequest;
 import org.modsen.dto.response.PagedRideResponse;
 import org.modsen.dto.response.RideResponse;
+import org.modsen.dto.response.ShortRideResponse;
 import org.modsen.dto.response.SuccessResponse;
 import org.modsen.service.RideService;
 import org.springframework.http.HttpStatus;
@@ -84,6 +85,14 @@ public class RideController implements RideApi {
                 .sortDirection(sortDirection)
                 .build();
         return rideService.getAllRidesByPassengerId(requestParams, passengerId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = "/{rideId}/{participantId}", produces = APPLICATION_JSON_VALUE)
+    public ShortRideResponse getRideByIdWithParticipantExistenceCheck(
+            @PathVariable UUID rideId,
+            @PathVariable UUID participantId) {
+        return rideService.getRideByIdWithParticipantExistenceCheck(rideId, participantId);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
