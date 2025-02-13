@@ -17,9 +17,10 @@ public class RatingExceptionHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler({
-            RatingNotFoundException.class
+            RatingNotFoundException.class,
+            ParticipantNotFoundException.class
     })
-    public ErrorResponse handleRatingNotFound(RatingNotFoundException exception) {
+    public ErrorResponse handleRatingNotFound(Exception exception) {
         return new ErrorResponse(HttpStatus.NOT_FOUND, exception.getMessage());
     }
 

@@ -17,9 +17,10 @@ public class RideExceptionHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler({
-            RideNotFoundException.class
+            RideNotFoundException.class,
+            ParticipantNotFoundException.class
     })
-    public ErrorResponse handleRideNotFound(RideNotFoundException exception) {
+    public ErrorResponse handleRideNotFound(Exception exception) {
         return new ErrorResponse(HttpStatus.NOT_FOUND, exception.getMessage());
     }
 
