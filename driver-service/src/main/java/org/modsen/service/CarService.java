@@ -1,6 +1,6 @@
 package org.modsen.service;
 
-import org.modsen.dto.PagedResponse;
+import org.modsen.dto.response.PagedResponse;
 import org.modsen.dto.car.CarRequest;
 import org.modsen.dto.car.CarResponse;
 import org.modsen.dto.request.RequestParams;

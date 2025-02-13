@@ -2,7 +2,7 @@ package org.modsen.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modsen.dto.PagedResponse;
+import org.modsen.dto.response.PagedResponse;
 import org.modsen.dto.car.CarRequest;
 import org.modsen.dto.car.CarResponse;
 import org.modsen.dto.request.RequestParams;

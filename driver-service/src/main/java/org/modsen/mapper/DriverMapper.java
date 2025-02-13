@@ -1,6 +1,6 @@
 package org.modsen.mapper;
 
-import org.modsen.dto.PagedResponse;
+import org.modsen.dto.response.PagedResponse;
 import org.modsen.dto.driver.DriverRequest;
 import org.modsen.dto.driver.DriverResponse;
 import org.modsen.entity.Car;
