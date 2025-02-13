@@ -1,10 +1,10 @@
 package org.modsen.service;
 
+import org.modsen.dto.response.RateResponse;
 
-import java.util.UUID;
 
 public interface KafkaMessagingService {
 
-    void sendPassengerMessage(UUID message);
+    void sendMessage(RateResponse rateResponse);
 
 }

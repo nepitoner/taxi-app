@@ -4,6 +4,7 @@ import org.modsen.dto.request.RequestParams;
 import org.modsen.dto.response.PagedPassengerResponse;
 import org.modsen.dto.request.PassengerRequest;
 import org.modsen.dto.response.PassengerResponse;
+import org.modsen.dto.response.RateResponse;
 
 import java.util.UUID;
 
@@ -19,6 +20,6 @@ public interface PassengerService {
 
     PagedPassengerResponse getAllPassengers(RequestParams requestParams);
 
-    void updatePassengerRating(UUID id);
+    void updatePassengerRating(RateResponse rateResponse);
 
 }

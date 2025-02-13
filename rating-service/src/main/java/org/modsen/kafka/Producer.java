@@ -2,6 +2,7 @@ package org.modsen.kafka;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modsen.dto.response.RateResponse;
 import org.modsen.entity.Outbox;
 import org.modsen.repository.OutboxRepository;
 import org.modsen.service.KafkaMessagingService;
@@ -28,7 +29,10 @@ public class Producer {
         List<Outbox> entities = outboxRepository.findAllByOrderByOutboxIdAsc(Pageable.ofSize(BATCH_SIZE)).toList();
         if (!entities.isEmpty()) {
             for (Outbox entity : entities) {
-                messagingService.sendPassengerMessage(entity.getParticipantId());
+                messagingService.sendMessage(RateResponse.builder()
+                        .toId(entity.getParticipantId().toString())
+                        .rating(entity.getRating())
+                        .build());
             }
             outboxRepository.deleteAll(entities);
             log.info("Outboxes {} were successfully sent", entities);

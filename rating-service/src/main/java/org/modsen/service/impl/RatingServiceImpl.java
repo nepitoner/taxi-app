@@ -61,7 +61,7 @@ public class RatingServiceImpl implements RatingService {
     @Transactional(readOnly = true)
     public RateResponse getRateById(UUID toId) {
         List<Rating> ratings = ratingRepository.findTopNByToId(toId, properties.limit());
-
+        System.out.println("!!!!!!" + ratings);
         float rating = (float) ratings.stream()
                 .mapToDouble(Rating::getRating)
                 .average()
@@ -73,30 +73,21 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     @Transactional
-    public UUID createRating(RatingRequest request, UUID participantId) {
-        RideResponse rideResponse = ratingValidator.checkRideExistenceAndPresence(request.rideId(), participantId);
-        ratingValidator.checkIfAlreadyRated(participantId, request.rideId());
+    public UUID createRating(RatingRequest request, UUID fromId) {
+        RideResponse rideResponse = ratingValidator.checkRideExistenceAndPresence(request.rideId(), fromId);
+        ratingValidator.checkIfAlreadyRated(fromId, request.rideId());
 
-        Rating ratingToCreate;
-        UUID toId;
-        if (participantId == rideResponse.driverId()) {
-            toId = rideResponse.passengerId();
-            ratingToCreate = ratingMapper.mapRequestToEntity(request, rideResponse.driverId(),
-                    rideResponse.passengerId());
-        } else {
-            toId = rideResponse.driverId();
-            ratingToCreate = ratingMapper.mapRequestToEntity(request, rideResponse.passengerId(),
-                    rideResponse.driverId());
-        }
+        UUID toId = (fromId == rideResponse.driverId()) ? rideResponse.passengerId() : rideResponse.driverId();
+        Rating ratingToCreate = ratingMapper.mapRequestToEntity(request, fromId, toId);
+
+        UUID ratingId = ratingRepository.save(ratingToCreate).getRatingId();
+        log.info("Rating Service. Create new rating. New rating id {}", ratingId);
 
         outboxRepository.save(Outbox.builder()
                 .participantId(toId)
+                .rating(getRateById(toId).rating())
                 .build());
         log.info("Rating for {} was successfully stored to outbox", toId);
-
-        UUID ratingId = ratingRepository.save(ratingToCreate).getRatingId();
-
-        log.info("Rating Service. Create new rating. New rating id {}", ratingId);
         return ratingId;
     }
 

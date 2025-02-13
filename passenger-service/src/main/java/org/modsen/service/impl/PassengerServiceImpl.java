@@ -2,11 +2,11 @@ package org.modsen.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modsen.client.RatingClient;
 import org.modsen.dto.request.RequestParams;
 import org.modsen.dto.response.PagedPassengerResponse;
 import org.modsen.dto.request.PassengerRequest;
 import org.modsen.dto.response.PassengerResponse;
+import org.modsen.dto.response.RateResponse;
 import org.modsen.entity.Passenger;
 import org.modsen.mapper.PassengerMapper;
 import org.modsen.repository.PassengerRepository;
@@ -35,8 +35,6 @@ public class PassengerServiceImpl implements PassengerService {
     private final PassengerRepository passengerRepository;
 
     private final Clock clock;
-
-    private final RatingClient ratingClient;
 
     @Override
     @Transactional(readOnly = true)
@@ -103,15 +101,15 @@ public class PassengerServiceImpl implements PassengerService {
     }
 
     @Override
-    public void updatePassengerRating(UUID passengerId) {
+    public void updatePassengerRating(RateResponse rateResponse) {
+        UUID passengerId = UUID.fromString(rateResponse.toId());
         passengerValidator.checkExistenceAndPresence(passengerId);
 
         Passenger passenger = passengerRepository.findByPassengerIdAndIsDeletedIsFalse(passengerId);
-        float rating = ratingClient.getRating(passengerId).rating();
-        passenger.setRating(rating);
+        passenger.setRating(rateResponse.rating());
         passengerRepository.save(passenger);
 
-        log.info("Passenger Service. Update rating. Passenger id {}", passengerId);
+        log.info("Passenger Service. Update rating. Passenger id {}", rateResponse.toId());
     }
 
 }
