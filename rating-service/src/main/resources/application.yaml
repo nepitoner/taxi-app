@@ -14,6 +14,8 @@ spring:
       group-id: passenger-driver
       topic:
         passenger-driver-topic: rating-passenger-driver-topic
+  integration:
+    ride-url: http://localhost:8083/api/v1/rides
 
 rating:
   limit: 20
@@ -23,3 +25,7 @@ springdoc:
     path: /api/v1/ratings/docs
   swagger-ui:
     path: /api/v1/ratings/swagger-ui.html
+
+logging:
+  level:
+    org.modsen.client: DEBUG
