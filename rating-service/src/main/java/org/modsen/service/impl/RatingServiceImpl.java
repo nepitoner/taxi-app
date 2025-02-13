@@ -61,7 +61,7 @@ public class RatingServiceImpl implements RatingService {
     @Transactional(readOnly = true)
     public RateResponse getRateById(UUID toId) {
         List<Rating> ratings = ratingRepository.findTopNByToId(toId, properties.limit());
-        System.out.println("!!!!!!" + ratings);
+
         float rating = (float) ratings.stream()
                 .mapToDouble(Rating::getRating)
                 .average()
