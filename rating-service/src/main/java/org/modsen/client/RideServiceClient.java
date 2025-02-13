@@ -1,16 +1,16 @@
 package org.modsen.client;
 
 import org.modsen.dto.response.RideResponse;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import java.util.UUID;
 
+@FeignClient(name = "ride-service", url = "${spring.integration.ride-url}")
 public interface RideServiceClient {
 
-    default RideResponse getRideById(UUID rideId, UUID participantId) {
-        return RideResponse.builder()
-                .rideId(rideId)
-                .passengerId(UUID.fromString("4f9ee4c1-fc0e-43d7-8300-fd1d32bc0e51"))
-                .driverId(participantId)
-                .build();
-    }
+    @GetMapping("/{rideId}/{participantId}")
+    RideResponse getRideById(@PathVariable UUID rideId, @PathVariable UUID participantId);
 
 }

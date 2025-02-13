@@ -10,6 +10,7 @@ import org.modsen.dto.request.RideRequest;
 import org.modsen.dto.request.RideStatusRequest;
 import org.modsen.dto.response.PagedRideResponse;
 import org.modsen.dto.response.RideResponse;
+import org.modsen.dto.response.ShortRideResponse;
 import org.modsen.dto.response.SuccessResponse;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -56,6 +57,15 @@ public interface RideSwagger {
             @RequestParam(defaultValue = "asc") String sortDirection,
             @PathVariable UUID passengerId
     );
+
+    @Operation(description = "Getting ride by id with checking if passenger or driver participates in this ride")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "The ride was successfully sent"),
+            @ApiResponse(responseCode = "400", description = "Validation failed")
+    })
+    ShortRideResponse getRideByIdWithParticipantExistenceCheck(
+            @PathVariable UUID rideId,
+            @PathVariable UUID participantId);
 
     @Operation(summary = "Create a new ride")
     @ApiResponses(value = {
