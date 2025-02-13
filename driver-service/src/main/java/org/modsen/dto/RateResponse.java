@@ -1,4 +1,4 @@
-package org.modsen.dto.response;
+package org.modsen.dto;
 
 import lombok.Builder;
 

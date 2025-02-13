@@ -6,6 +6,7 @@ import org.modsen.dto.PagedResponse;
 import org.modsen.dto.driver.DriverRequest;
 import org.modsen.dto.driver.DriverResponse;
 import org.modsen.dto.request.RequestParams;
+import org.modsen.dto.RateResponse;
 import org.modsen.entity.Car;
 import org.modsen.entity.Driver;
 import org.modsen.exception.CarAlreadyTakenException;
@@ -131,6 +132,18 @@ public class DriverServiceImpl implements DriverService {
 
         log.info("Driver Service. Add car. Car id {} and driver id {}", carId, driverId);
         return driverMapper.mapEntityToResponse(driverWithCar);
+    }
+
+    @Override
+    public void updateDriverRating(RateResponse rateResponse) {
+        UUID driverId = UUID.fromString(rateResponse.toId());
+        driverValidator.checkExistenceAndPresence(driverId);
+
+        Driver driver = driverRepository.findByIdAndIsDeletedIsFalse(driverId);
+        driver.setRating(rateResponse.rating());
+        driverRepository.save(driver);
+
+        log.info("Driver Service. Update rating. Driver id {}", rateResponse.toId());
     }
 
 }
