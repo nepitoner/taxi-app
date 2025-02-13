@@ -10,7 +10,7 @@ import java.util.UUID;
 @FeignClient(name = "ride-service", url = "${spring.integration.ride-url}")
 public interface RideServiceClient {
 
-    @GetMapping("/{rideId}/{participantId}")
-    RideResponse getRideById(@PathVariable UUID rideId, @PathVariable UUID participantId);
+    @GetMapping("/{rideId}")
+    RideResponse getRideById(@PathVariable UUID rideId);
 
 }
