@@ -28,4 +28,7 @@ public class Outbox {
     @Field("participant_id")
     private UUID participantId;
 
+    @Field("rating")
+    private float rating;
+
 }
