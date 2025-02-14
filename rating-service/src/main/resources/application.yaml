@@ -1,0 +1,17 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: ${APPLICATION_NAME:rating-service}
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/rating_db
+
+rating:
+  limit: 20
+
+springdoc:
+  api-docs:
+    path: /api/v1/ratings/docs
+  swagger-ui:
+    path: /api/v1/ratings/swagger-ui.html
