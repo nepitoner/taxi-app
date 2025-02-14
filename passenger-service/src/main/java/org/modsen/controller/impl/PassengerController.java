@@ -3,7 +3,7 @@ package org.modsen.controller.impl;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
-import org.modsen.controller.PassengerSwagger;
+import org.modsen.controller.PassengerApi;
 import org.modsen.dto.request.RequestParams;
 import org.modsen.dto.response.PagedPassengerResponse;
 import org.modsen.dto.request.PassengerRequest;
@@ -37,7 +37,7 @@ import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/passengers")
-public class PassengerController implements PassengerSwagger {
+public class PassengerController implements PassengerApi {
 
     private final PassengerService passengerService;
 

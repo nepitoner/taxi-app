@@ -5,7 +5,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
-import org.modsen.controller.RatingSwagger;
+import org.modsen.controller.RatingApi;
 import org.modsen.dto.request.RatingRequest;
 import org.modsen.dto.request.RequestParams;
 import org.modsen.dto.request.RideCommentRequest;
@@ -31,7 +31,7 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/ratings")
-public class RatingController implements RatingSwagger {
+public class RatingController implements RatingApi {
 
     private final RatingService ratingService;
 

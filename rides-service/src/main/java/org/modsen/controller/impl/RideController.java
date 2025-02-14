@@ -5,7 +5,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
-import org.modsen.controller.RideSwagger;
+import org.modsen.controller.RideApi;
 import org.modsen.dto.request.RideRequest;
 import org.modsen.dto.request.RideRequestParams;
 import org.modsen.dto.request.RideStatusRequest;
@@ -31,7 +31,7 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/rides")
-public class RideController implements RideSwagger {
+public class RideController implements RideApi {
 
     private final RideService rideService;
 

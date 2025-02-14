@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 @Tag(name = "Driver", description = "Methods for managing drivers activity")
-public interface DriverSwagger {
+public interface DriverApi {
 
     @Operation(summary = "Getting all drivers")
     @ApiResponses(value = {

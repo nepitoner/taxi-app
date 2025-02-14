@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.UUID;
 
 @Tag(name = "Rating", description = "Methods for managing ratings")
-public interface RatingSwagger {
+public interface RatingApi {
 
     @Operation(summary = "Getting paged ratings")
     @ApiResponses(value = {

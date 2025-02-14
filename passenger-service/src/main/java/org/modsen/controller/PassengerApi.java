@@ -25,7 +25,7 @@ import java.util.UUID;
 
 @Validated
 @Tag(name = "Passenger", description = "Methods for managing passengers activity")
-public interface PassengerSwagger {
+public interface PassengerApi {
 
     @Operation(summary = "Getting all passengers")
     @ApiResponses(value = {

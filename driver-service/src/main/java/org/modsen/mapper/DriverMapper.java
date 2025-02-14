@@ -48,7 +48,6 @@ public interface DriverMapper {
     @Named("mapCars")
     default Set<UUID> mapCars(Set<Car> cars) {
         return cars.stream()
-                .filter(car -> !car.getIsDeleted())
                 .map(Car::getId)
                 .collect(Collectors.toSet());
     }

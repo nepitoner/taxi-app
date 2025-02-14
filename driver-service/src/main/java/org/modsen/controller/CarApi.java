@@ -18,7 +18,7 @@ import java.util.UUID;
 
 
 @Tag(name = "Car", description = "Methods for managing cars activity")
-public interface CarSwagger {
+public interface CarApi {
 
     @Operation(summary = "Getting all cars")
     @ApiResponses(value = {

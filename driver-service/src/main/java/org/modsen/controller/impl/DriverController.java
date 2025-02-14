@@ -3,7 +3,7 @@ package org.modsen.controller.impl;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
-import org.modsen.controller.DriverSwagger;
+import org.modsen.controller.DriverApi;
 import org.modsen.dto.response.PagedResponse;
 import org.modsen.dto.response.SuccessResponse;
 import org.modsen.dto.driver.DriverRequest;
@@ -39,7 +39,7 @@ import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/drivers")
-public class DriverController implements DriverSwagger {
+public class DriverController implements DriverApi {
 
     private final DriverService driverService;
 

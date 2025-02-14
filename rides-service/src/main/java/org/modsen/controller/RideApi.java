@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.UUID;
 
 @Tag(name = "Ride", description = "Methods for managing rides")
-public interface RideSwagger {
+public interface RideApi {
 
     @Operation(summary = "Getting paged rides")
     @ApiResponses(value = {

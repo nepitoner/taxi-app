@@ -3,7 +3,7 @@ package org.modsen.controller.impl;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
-import org.modsen.controller.CarSwagger;
+import org.modsen.controller.CarApi;
 import org.modsen.dto.response.PagedResponse;
 import org.modsen.dto.response.SuccessResponse;
 import org.modsen.dto.car.CarRequest;
@@ -31,7 +31,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/cars")
-public class CarController implements CarSwagger {
+public class CarController implements CarApi {
 
     private final CarService carService;
 

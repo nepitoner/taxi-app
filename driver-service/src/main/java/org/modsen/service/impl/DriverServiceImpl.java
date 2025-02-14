@@ -95,7 +95,7 @@ public class DriverServiceImpl implements DriverService {
         driverValidator.checkExistenceAndPresence(driverId);
 
         Driver driver = driverRepository.findByIdAndIsDeletedIsFalse(driverId);
-        driver.getCars().clear();
+        driver.getCars().forEach(car -> car.getDrivers().remove(driver));
         driver.setIsDeleted(true);
         driverRepository.save(driver);
         log.info("Driver Service. Delete driver with id {}", driverId);

@@ -89,7 +89,7 @@ public class CarServiceImpl implements CarService {
 
         Car car = carRepository.findByIdAndIsDeletedIsFalse(carId);
         car.setIsDeleted(true);
-        car.getDrivers().clear();
+        car.getDrivers().forEach(driver -> driver.getCars().remove(car));
         carRepository.save(car);
         log.info("Car Service. Delete car with id {}", carId);
     }
