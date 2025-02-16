@@ -11,11 +11,11 @@ import java.util.UUID;
 @Schema(description = "Dto for getting rating's information")
 public record RatingRequest(
 
-        @NotNull(message = "incorrect.message")
+        @NotNull(message = "{incorrect.message}")
         @Schema(description = "Id of the ride", example = "8e280da2-9e48-4643-ba8f-5c06a6ee848b")
         UUID rideId,
 
-        @NotNull(message = "incorrect.message")
+        @NotNull(message = "{incorrect.message}")
         @DecimalMin(value = "0.0", message = "Rate must be more than 0")
         @DecimalMax(value = "10.0", message = "Rate must be less then 10")
         Float rating,

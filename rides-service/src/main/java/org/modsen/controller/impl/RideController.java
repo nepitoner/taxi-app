@@ -5,7 +5,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
-import org.modsen.controller.RideSwagger;
+import org.modsen.controller.RideApi;
 import org.modsen.dto.request.RideRequest;
 import org.modsen.dto.request.RideRequestParams;
 import org.modsen.dto.request.RideStatusRequest;
@@ -31,15 +31,15 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/rides")
-public class RideController implements RideSwagger {
+public class RideController implements RideApi {
 
     private final RideService rideService;
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public PagedRideResponse getAllRides(
-            @RequestParam(defaultValue = "0") @Min(value = 0, message = "page.incorrect") int page,
-            @RequestParam(defaultValue = "10") @Min(value = 1, message = "limit.incorrect") int limit,
+            @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
+            @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
             @RequestParam(defaultValue = "createdAt") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDirection
     ) {
@@ -55,8 +55,8 @@ public class RideController implements RideSwagger {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/drivers/{driverId}", produces = APPLICATION_JSON_VALUE)
     public PagedRideResponse getAllRidesByDriverId(
-            @RequestParam(defaultValue = "0") @Min(value = 0, message = "page.incorrect") int page,
-            @RequestParam(defaultValue = "10") @Min(value = 1, message = "limit.incorrect") int limit,
+            @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
+            @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
             @RequestParam(defaultValue = "createdAt") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDirection,
             @PathVariable UUID driverId) {
@@ -72,8 +72,8 @@ public class RideController implements RideSwagger {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/passengers/{passengerId}", produces = APPLICATION_JSON_VALUE)
     public PagedRideResponse getAllRidesByPassengerId(
-            @RequestParam(defaultValue = "0") @Min(value = 0, message = "page.incorrect") int page,
-            @RequestParam(defaultValue = "10") @Min(value = 1, message = "limit.incorrect") int limit,
+            @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
+            @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
             @RequestParam(defaultValue = "createdAt") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDirection,
             @PathVariable UUID passengerId) {

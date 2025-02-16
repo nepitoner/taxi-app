@@ -43,8 +43,9 @@ public class RideServiceImpl implements RideService {
     @Override
     @Transactional(readOnly = true)
     public PagedRideResponse getAllRides(RideRequestParams requestParams) {
+        int limit = Math.min(requestParams.limit(), 50);
         Sort sort = Sort.by(Sort.Direction.fromString(requestParams.sortDirection()), requestParams.sortBy());
-        Pageable pageable = PageRequest.of(requestParams.page(), requestParams.limit(), sort);
+        Pageable pageable = PageRequest.of(requestParams.page(), limit, sort);
         Page<Ride> responsePage = rideRepository.findAll(pageable);
 
         PagedRideResponse pagedRideResponse = rideMapper
@@ -56,8 +57,9 @@ public class RideServiceImpl implements RideService {
     @Override
     @Transactional(readOnly = true)
     public PagedRideResponse getAllRidesByDriverId(RideRequestParams requestParams, UUID driverId) {
+        int limit = Math.min(requestParams.limit(), 50);
         Sort sort = Sort.by(Sort.Direction.fromString(requestParams.sortDirection()), requestParams.sortBy());
-        Pageable pageable = PageRequest.of(requestParams.page(), requestParams.limit(), sort);
+        Pageable pageable = PageRequest.of(requestParams.page(), limit, sort);
         Page<Ride> responsePage = rideRepository.findByDriverId(driverId, pageable);
 
         PagedRideResponse pagedRideResponse = rideMapper
@@ -69,8 +71,9 @@ public class RideServiceImpl implements RideService {
     @Override
     @Transactional(readOnly = true)
     public PagedRideResponse getAllRidesByPassengerId(RideRequestParams requestParams, UUID passengerId) {
+        int limit = Math.min(requestParams.limit(), 50);
         Sort sort = Sort.by(Sort.Direction.fromString(requestParams.sortDirection()), requestParams.sortBy());
-        Pageable pageable = PageRequest.of(requestParams.page(), requestParams.limit(), sort);
+        Pageable pageable = PageRequest.of(requestParams.page(), limit, sort);
         Page<Ride> responsePage = rideRepository.findByPassengerId(passengerId, pageable);
 
         PagedRideResponse pagedRideResponse = rideMapper

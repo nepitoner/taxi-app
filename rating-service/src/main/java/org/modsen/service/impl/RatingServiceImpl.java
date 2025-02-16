@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modsen.config.RatingServiceProperties;
 import org.modsen.dto.request.RatingRequest;
+import org.modsen.dto.request.RequestParams;
 import org.modsen.dto.request.RideCommentRequest;
 import org.modsen.dto.response.PagedRatingResponse;
 import org.modsen.dto.response.RateResponse;
@@ -18,6 +19,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -39,11 +41,14 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     @Transactional(readOnly = true)
-    public PagedRatingResponse getAllRatings(int page, int limit) {
-        Pageable pageable = PageRequest.of(page, limit);
+    public PagedRatingResponse getAllRatings(RequestParams requestParams) {
+        int limit = Math.min(requestParams.limit(), 50);
+        Sort sort = Sort.by(Sort.Direction.fromString(requestParams.sortDirection()), requestParams.sortBy());
+        Pageable pageable = PageRequest.of(requestParams.page(), limit, sort);
         Page<Rating> responsePage = ratingRepository.findAll(pageable);
 
-        PagedRatingResponse pagedRatingResponse = ratingMapper.mapPageEntityToPagedDto(page, limit, responsePage);
+        PagedRatingResponse pagedRatingResponse = ratingMapper
+                .mapPageEntityToPagedDto(requestParams.page(), limit, responsePage);
         log.info("Rating Service. Get all request. Pages amount {}", responsePage.getTotalPages());
         return pagedRatingResponse;
     }
@@ -64,22 +69,29 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     @Transactional
-    public UUID createRating(RatingRequest request, UUID fromId) {
-        RideResponse rideResponse = ratingValidator.checkRideExistenceAndPresence(request.rideId(), fromId);
-        ratingValidator.checkIfAlreadyRated(fromId, request.rideId());
+    public UUID createRating(RatingRequest request, UUID participantId) {
+        RideResponse rideResponse = ratingValidator.checkRideExistenceAndPresence(request.rideId(), participantId);
+        ratingValidator.checkIfAlreadyRated(participantId, request.rideId());
 
-        UUID toId = (fromId == rideResponse.driverId()) ? rideResponse.passengerId() : rideResponse.driverId();
-        Rating ratingToCreate = ratingMapper.mapRequestToEntity(request, fromId, toId);
+        Rating ratingToCreate;
+        if (participantId == rideResponse.driverId()) {
+            ratingToCreate = ratingMapper.mapRequestToEntity(request, rideResponse.driverId(),
+                    rideResponse.passengerId());
+        } else {
+            ratingToCreate = ratingMapper.mapRequestToEntity(request, rideResponse.passengerId(),
+                    rideResponse.driverId());
+        }
 
         UUID ratingId = ratingRepository.save(ratingToCreate).getRatingId();
+
         log.info("Rating Service. Create new rating. New rating id {}", ratingId);
         return ratingId;
     }
 
     @Override
     @Transactional
-    public RatingResponse addRideComment(UUID ratingId, RideCommentRequest request, UUID fromId) {
-        ratingValidator.checkRatingExistence(ratingId, fromId);
+    public RatingResponse addRideComment(UUID ratingId, RideCommentRequest request) {
+        ratingValidator.checkRatingExistence(ratingId, request.fromId());
         ratingValidator.checkIfAlreadyCommented(ratingId);
 
         Rating rating = ratingRepository.findById(ratingId).get();

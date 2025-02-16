@@ -1,5 +1,5 @@
 server:
-  port: 0
+  port: 8082
 spring:
   application:
     name: ${APPLICATION_NAME:driver-service}
@@ -12,6 +12,8 @@ spring:
     enabled: true
     change-log: classpath:db\changelog\db.changelog-master.xml
     drop-first: true
+  messages:
+    basename: message-constant
 
 minio:
   url: ${MINIO_URL:http://localhost:9000}

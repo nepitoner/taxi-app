@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/changelog/changeset/add_passengers_table_changeset.sql
+  - include:
+      file: db/changelog/changeset/add_sex_column_passengers_table_changeset.sql

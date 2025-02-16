@@ -5,8 +5,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
-import org.modsen.controller.RatingSwagger;
+import org.modsen.controller.RatingApi;
 import org.modsen.dto.request.RatingRequest;
+import org.modsen.dto.request.RequestParams;
 import org.modsen.dto.request.RideCommentRequest;
 import org.modsen.dto.response.PagedRatingResponse;
 import org.modsen.dto.response.RateResponse;
@@ -30,17 +31,25 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/ratings")
-public class RatingController implements RatingSwagger {
+public class RatingController implements RatingApi {
 
     private final RatingService ratingService;
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public PagedRatingResponse getAllRatings(
-            @RequestParam(defaultValue = "0") @Min(value = 0, message = "page.incorrect") int page,
-            @RequestParam(defaultValue = "10") @Min(value = 1, message = "limit.incorrect") int limit
+            @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
+            @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDirection
     ) {
-        return ratingService.getAllRatings(page, limit);
+        RequestParams requestParams = RequestParams.builder()
+                .page(page)
+                .limit(limit)
+                .sortBy(sortBy)
+                .sortDirection(sortDirection)
+                .build();
+        return ratingService.getAllRatings(requestParams);
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -60,11 +69,10 @@ public class RatingController implements RatingSwagger {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PatchMapping(value = "/comments/{ratingId}/{fromId}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    @PatchMapping(value = "/comments/{ratingId}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public RatingResponse addRideComment(@PathVariable UUID ratingId,
-                                         @PathVariable UUID fromId,
                                          @Valid @RequestBody RideCommentRequest request) {
-        return ratingService.addRideComment(ratingId, request, fromId);
+        return ratingService.addRideComment(ratingId, request);
     }
 
 }
