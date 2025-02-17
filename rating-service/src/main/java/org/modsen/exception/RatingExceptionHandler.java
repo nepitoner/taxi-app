@@ -21,7 +21,7 @@ public class RatingExceptionHandler {
             RideNotFoundException.class,
             ParticipantNotFoundException.class
     })
-    public ErrorResponse handleRatingNotFound(Exception exception) {
+    public ErrorResponse handleNotFound(Exception exception) {
         return new ErrorResponse(HttpStatus.NOT_FOUND, exception.getMessage());
     }
 
