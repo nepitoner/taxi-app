@@ -1,5 +1,7 @@
 package org.modsen.exception;
 
+import static feign.FeignException.errorStatus;
+
 import feign.FeignException;
 import feign.Response;
 import feign.codec.ErrorDecoder;
@@ -12,7 +14,7 @@ public class MessageErrorDecoder implements ErrorDecoder {
 
     @Override
     public Exception decode(String methodKey, Response response) {
-        FeignException exception = feign.FeignException.errorStatus(methodKey, response);
+        FeignException exception = errorStatus(methodKey, response);
         String message = parse(exception.getMessage());
 
         return switch (response.status()) {
