@@ -88,11 +88,9 @@ public class RideController implements RideApi {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/{rideId}/{participantId}", produces = APPLICATION_JSON_VALUE)
-    public ShortRideResponse getRideByIdWithParticipantExistenceCheck(
-            @PathVariable UUID rideId,
-            @PathVariable UUID participantId) {
-        return rideService.getRideByIdWithParticipantExistenceCheck(rideId, participantId);
+    @GetMapping(value = "/{rideId}", produces = APPLICATION_JSON_VALUE)
+    public ShortRideResponse getRideById(@PathVariable UUID rideId) {
+        return rideService.getRideById(rideId);
     }
 
     @ResponseStatus(HttpStatus.CREATED)

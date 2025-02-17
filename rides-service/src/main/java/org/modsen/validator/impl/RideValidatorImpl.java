@@ -2,7 +2,6 @@ package org.modsen.validator.impl;
 
 import static org.modsen.utils.constant.ExceptionConstant.INVALID_RIDE_STATUS_CHANGE_MESSAGE;
 import static org.modsen.utils.constant.ExceptionConstant.INVALID_RIDE_STATUS_MESSAGE;
-import static org.modsen.utils.constant.ExceptionConstant.PARTICIPANT_NOT_FOUND_MESSAGE;
 import static org.modsen.utils.constant.ExceptionConstant.RIDE_NOT_FOUND_MESSAGE;
 
 import lombok.RequiredArgsConstructor;
@@ -10,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.modsen.dto.request.RideStatusRequest;
 import org.modsen.entity.Ride;
 import org.modsen.entity.RideStatus;
-import org.modsen.exception.ParticipantNotFoundException;
 import org.modsen.exception.RideNotFoundException;
 import org.modsen.exception.RideStatusProcessingException;
 import org.modsen.repository.RideRepository;
@@ -45,16 +43,6 @@ public class RideValidatorImpl implements RideValidator {
         throwIfNewStatusIsCreated(newStatus);
         throwIfCurrentStatusIsCancelledOrCompleted(currentStatus);
         throwIfInvalidStatusSequence(currentStatus, newStatus);
-    }
-
-    @Override
-    public void checkParticipating(UUID rideId, UUID participantId) {
-        Ride ride = rideRepository.findById(rideId)
-                .orElseThrow(() -> new RideNotFoundException(RIDE_NOT_FOUND_MESSAGE.formatted(rideId)));
-
-        if (!participantId.equals(ride.getPassengerId()) && !participantId.equals(ride.getDriverId())) {
-            throw new ParticipantNotFoundException(PARTICIPANT_NOT_FOUND_MESSAGE.formatted(participantId, rideId));
-        }
     }
 
     private static void throwIfNewStatusIsCreated(RideStatus newStatus) {
