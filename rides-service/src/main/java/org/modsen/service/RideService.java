@@ -17,7 +17,7 @@ public interface RideService {
 
     PagedRideResponse getAllRidesByPassengerId(RideRequestParams requestParams, UUID passengerId);
 
-    ShortRideResponse getRideByIdWithParticipantExistenceCheck(UUID rideId, UUID participantId);
+    ShortRideResponse getRideById(UUID rideId);
 
     UUID createRide(RideRequest request);
 

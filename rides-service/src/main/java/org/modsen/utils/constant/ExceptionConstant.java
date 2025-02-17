@@ -23,7 +23,4 @@ public final class ExceptionConstant {
 
     public final static String SERVICE_IS_NOT_AVAILABLE_MESSAGE = "Service isn't available";
 
-    public final static String PARTICIPANT_NOT_FOUND_MESSAGE = "Neither passenger and driver with id %s " +
-            "participated in ride with id %s";
-
 }

@@ -10,5 +10,4 @@ public interface RideValidator {
 
     void checkStatusProcessing(RideStatusRequest request, UUID rideId);
 
-    void checkParticipating(UUID rideId, UUID participantId);
 }

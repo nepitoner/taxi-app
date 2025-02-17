@@ -1,6 +1,6 @@
 package org.modsen.utils.validator.impl;
 
-import static org.modsen.utils.constant.ExceptionConstant.INVALID_RIDE_DATA_MESSAGE;
+import static org.modsen.utils.constant.ExceptionConstant.PARTICIPANT_NOT_FOUND_MESSAGE;
 import static org.modsen.utils.constant.ExceptionConstant.RATING_NOT_FOUND_MESSAGE;
 import static org.modsen.utils.constant.ExceptionConstant.REPEATED_ATTEMPT_MESSAGE;
 
@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modsen.client.RideServiceClient;
 import org.modsen.dto.response.RideResponse;
-import org.modsen.exception.InvalidRideDataException;
+import org.modsen.exception.ParticipantNotFoundException;
 import org.modsen.exception.RatingNotFoundException;
 import org.modsen.exception.RepeatedRatingAttemptException;
 import org.modsen.repository.RatingRepository;
@@ -27,10 +27,10 @@ public class RatingValidatorImpl implements RatingValidator {
 
     @Override
     public RideResponse checkRideExistenceAndPresence(UUID rideId, UUID fromId) {
-        RideResponse rideResponse = rideServiceClient.getRideById(rideId, fromId);
+        RideResponse rideResponse = rideServiceClient.getRideById(rideId);
         if (!rideResponse.passengerId().equals(fromId) &&
                 !rideResponse.driverId().equals(fromId)) {
-            throw new InvalidRideDataException(INVALID_RIDE_DATA_MESSAGE);
+            throw new ParticipantNotFoundException(PARTICIPANT_NOT_FOUND_MESSAGE.formatted(fromId, rideId));
         }
         return rideResponse;
     }

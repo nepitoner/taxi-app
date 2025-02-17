@@ -18,6 +18,7 @@ public class RatingExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler({
             RatingNotFoundException.class,
+            RideNotFoundException.class,
             ParticipantNotFoundException.class
     })
     public ErrorResponse handleRatingNotFound(Exception exception) {
@@ -26,7 +27,6 @@ public class RatingExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({
-            InvalidRideDataException.class,
             IllegalArgumentException.class
     })
     public ErrorResponse handleIllegalArgumentException(Exception exception) {

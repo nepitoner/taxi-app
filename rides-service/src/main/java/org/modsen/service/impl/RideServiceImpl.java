@@ -85,14 +85,13 @@ public class RideServiceImpl implements RideService {
 
     @Override
     @Transactional(readOnly = true)
-    public ShortRideResponse getRideByIdWithParticipantExistenceCheck(UUID rideId, UUID participantId) {
-        rideValidator.checkParticipating(rideId, participantId);
+    public ShortRideResponse getRideById(UUID rideId) {
+        rideValidator.checkExistence(rideId);
 
         Ride ride = rideRepository.findById(rideId).get();
         ShortRideResponse shortRideResponse = rideMapper.mapEntityToShortResponse(ride);
 
-        log.info("Ride Service. Get ride by id with participant check. Ride id {}, participant id {}",
-                rideId, participantId);
+        log.info("Ride Service. Get ride by id. Ride id {}", rideId);
         return shortRideResponse;
     }
 

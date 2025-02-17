@@ -58,14 +58,13 @@ public interface RideSwagger {
             @PathVariable UUID passengerId
     );
 
-    @Operation(description = "Getting ride by id with checking if passenger or driver participates in this ride")
+    @Operation(description = "Getting the ride by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "The ride was successfully sent"),
-            @ApiResponse(responseCode = "400", description = "Validation failed")
+            @ApiResponse(responseCode = "400", description = "Validation failed"),
+            @ApiResponse(responseCode = "404", description = "The ride wasn't found"),
     })
-    ShortRideResponse getRideByIdWithParticipantExistenceCheck(
-            @PathVariable UUID rideId,
-            @PathVariable UUID participantId);
+    ShortRideResponse getRideById(@PathVariable UUID rideId);
 
     @Operation(summary = "Create a new ride")
     @ApiResponses(value = {
