@@ -16,14 +16,13 @@ public class MessageErrorDecoder implements ErrorDecoder {
         String message = parse(exception.getMessage());
 
         return switch (response.status()) {
-            case 400 -> new IllegalArgumentException(!message.isBlank() ? message : "Bad Request");
+            case 400 -> new IllegalArgumentException(!message.isBlank() ? message : "Bad request");
             case 404 -> new RideNotFoundException(!message.isBlank() ? message : "Not found");
             default -> errorDecoder.decode(methodKey, response);
         };
-
     }
 
-    public static String  parse(String errorMessage) {
+    public static String parse(String errorMessage) {
         String regex = "\"message\":\"(.*?)\"";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(errorMessage);
