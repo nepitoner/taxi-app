@@ -24,6 +24,9 @@ spring:
           json:
             trusted:
               packages: "org.modsen.dto"
+  redis:
+    host: localhost
+    port: 6379
 
 minio:
   url: ${MINIO_URL:http://localhost:9000}

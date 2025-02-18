@@ -10,10 +10,10 @@ import org.modsen.dto.response.PagedRatingResponse;
 import org.modsen.dto.response.RateResponse;
 import org.modsen.dto.response.RatingResponse;
 import org.modsen.dto.response.RideResponse;
-import org.modsen.entity.Outbox;
+import org.modsen.entity.RatingChangeEvent;
 import org.modsen.entity.Rating;
 import org.modsen.mapper.RatingMapper;
-import org.modsen.repository.OutboxRepository;
+import org.modsen.repository.RatingChangeEventRepository;
 import org.modsen.repository.RatingRepository;
 import org.modsen.service.RatingService;
 import org.modsen.utils.validator.RatingValidator;
@@ -41,7 +41,7 @@ public class RatingServiceImpl implements RatingService {
 
     private final RatingServiceProperties properties;
 
-    private final OutboxRepository outboxRepository;
+    private final RatingChangeEventRepository ratingChangeEventRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -83,7 +83,7 @@ public class RatingServiceImpl implements RatingService {
         UUID ratingId = ratingRepository.save(ratingToCreate).getRatingId();
         log.info("Rating Service. Create new rating. New rating id {}", ratingId);
 
-        outboxRepository.save(Outbox.builder()
+        ratingChangeEventRepository.save(RatingChangeEvent.builder()
                 .participantId(toId)
                 .rating(getRateById(toId).rating())
                 .build());
