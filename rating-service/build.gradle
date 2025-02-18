@@ -12,6 +12,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.springframework.kafka:spring-kafka'
     implementation "org.liquibase.ext:liquibase-mongodb:${liquibase}"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonDatatypesVersion}"
     implementation "org.springframework.boot:spring-boot-starter-web"
@@ -20,6 +21,8 @@ dependencies {
     implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springDocVersion}"
     implementation "org.mapstruct:mapstruct:${mapStructVersion}"
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation "net.javacrumbs.shedlock:shedlock-provider-mongo:${shedlockProviderVersion}"
+    implementation "net.javacrumbs.shedlock:shedlock-spring:${shedlockVersion}"
 
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
 

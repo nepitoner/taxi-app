@@ -7,7 +7,7 @@ public record RateResponse(
 
         String eventId,
 
-        String toId,
+        String  toId,
 
         float rating
 

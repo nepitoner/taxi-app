@@ -6,6 +6,7 @@ import org.modsen.dto.request.RequestParams;
 import org.modsen.dto.response.PagedPassengerResponse;
 import org.modsen.dto.request.PassengerRequest;
 import org.modsen.dto.response.PassengerResponse;
+import org.modsen.dto.response.RateResponse;
 import org.modsen.entity.Passenger;
 import org.modsen.mapper.PassengerMapper;
 import org.modsen.repository.PassengerRepository;
@@ -97,6 +98,18 @@ public class PassengerServiceImpl implements PassengerService {
         passenger.setProfilePictureRef(fileRef);
         log.info("Passenger Service. Add photo. Passenger id {}", passengerId);
         return passengerRepository.save(passenger).getPassengerId();
+    }
+
+    @Override
+    public void updatePassengerRating(RateResponse rateResponse) {
+        UUID passengerId = UUID.fromString(rateResponse.toId());
+        passengerValidator.checkExistenceAndPresence(passengerId);
+
+        Passenger passenger = passengerRepository.findByPassengerIdAndIsDeletedIsFalse(passengerId);
+        passenger.setRating(rateResponse.rating());
+        passengerRepository.save(passenger);
+
+        log.info("Passenger Service. Update rating. Passenger id {}", rateResponse.toId());
     }
 
 }

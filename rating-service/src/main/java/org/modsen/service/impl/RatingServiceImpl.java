@@ -2,7 +2,7 @@ package org.modsen.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modsen.config.RatingServiceProperties;
+import org.modsen.config.properties.RatingServiceProperties;
 import org.modsen.dto.request.RatingRequest;
 import org.modsen.dto.request.RequestParams;
 import org.modsen.dto.request.RideCommentRequest;
@@ -10,8 +10,10 @@ import org.modsen.dto.response.PagedRatingResponse;
 import org.modsen.dto.response.RateResponse;
 import org.modsen.dto.response.RatingResponse;
 import org.modsen.dto.response.RideResponse;
+import org.modsen.entity.RatingChangeEvent;
 import org.modsen.entity.Rating;
 import org.modsen.mapper.RatingMapper;
+import org.modsen.repository.RatingChangeEventRepository;
 import org.modsen.repository.RatingRepository;
 import org.modsen.service.RatingService;
 import org.modsen.utils.validator.RatingValidator;
@@ -38,6 +40,8 @@ public class RatingServiceImpl implements RatingService {
     private final RatingRepository ratingRepository;
 
     private final RatingServiceProperties properties;
+
+    private final RatingChangeEventRepository ratingChangeEventRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -69,22 +73,21 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     @Transactional
-    public UUID createRating(RatingRequest request, UUID participantId) {
-        RideResponse rideResponse = ratingValidator.checkRideExistenceAndPresence(request.rideId(), participantId);
-        ratingValidator.checkIfAlreadyRated(participantId, request.rideId());
+    public UUID createRating(RatingRequest request, UUID fromId) {
+        RideResponse rideResponse = ratingValidator.checkRideExistenceAndPresence(request.rideId(), fromId);
+        ratingValidator.checkIfAlreadyRated(fromId, request.rideId());
 
-        Rating ratingToCreate;
-        if (participantId == rideResponse.driverId()) {
-            ratingToCreate = ratingMapper.mapRequestToEntity(request, rideResponse.driverId(),
-                    rideResponse.passengerId());
-        } else {
-            ratingToCreate = ratingMapper.mapRequestToEntity(request, rideResponse.passengerId(),
-                    rideResponse.driverId());
-        }
+        UUID toId = (fromId == rideResponse.driverId()) ? rideResponse.passengerId() : rideResponse.driverId();
+        Rating ratingToCreate = ratingMapper.mapRequestToEntity(request, fromId, toId);
 
         UUID ratingId = ratingRepository.save(ratingToCreate).getRatingId();
-
         log.info("Rating Service. Create new rating. New rating id {}", ratingId);
+
+        ratingChangeEventRepository.save(RatingChangeEvent.builder()
+                .participantId(toId)
+                .rating(getRateById(toId).rating())
+                .build());
+        log.info("Rating for {} was successfully stored to outbox", toId);
         return ratingId;
     }
 

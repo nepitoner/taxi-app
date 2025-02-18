@@ -5,9 +5,15 @@ spring:
     name: ${APPLICATION_NAME:rating-service}
   data:
     mongodb:
-      uri: mongodb://localhost:27017/rating_db
+      uri: mongodb://localhost:28017/rating_db
   messages:
     basename: message-constant
+  kafka:
+    bootstrap-servers: ${KAFKA_URL:localhost:9092}
+    producer:
+      group-id: passenger-driver
+      topic:
+        passenger-driver-topic: rating-passenger-driver-topic
 
 rating:
   limit: 20
