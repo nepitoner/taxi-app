@@ -27,8 +27,6 @@ spring:
   redis:
     host: localhost
     port: 6379
-  integration:
-    rating-url: http://localhost:8084/api/v1/ratings
 
 minio:
   url: ${MINIO_URL:http://localhost:9000}
