@@ -3,7 +3,7 @@ package org.modsen.controller.impl;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
-import org.modsen.controller.CarApi;
+import org.modsen.controller.CarSwagger;
 import org.modsen.dto.response.PagedResponse;
 import org.modsen.dto.response.SuccessResponse;
 import org.modsen.dto.car.CarRequest;
