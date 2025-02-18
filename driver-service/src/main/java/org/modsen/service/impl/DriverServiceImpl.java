@@ -2,11 +2,11 @@ package org.modsen.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modsen.dto.PagedResponse;
+import org.modsen.dto.response.PagedResponse;
 import org.modsen.dto.driver.DriverRequest;
 import org.modsen.dto.driver.DriverResponse;
 import org.modsen.dto.request.RequestParams;
-import org.modsen.dto.RateResponse;
+import org.modsen.dto.response.RateResponse;
 import org.modsen.entity.Car;
 import org.modsen.entity.Driver;
 import org.modsen.exception.CarAlreadyTakenException;
