@@ -8,6 +8,14 @@ spring:
       uri: mongodb://localhost:27017/ride_db
   messages:
     basename: message-constant
+  integration:
+    passenger-url: http://localhost:8081/api/v1/passengers
+  kafka:
+    bootstrap-servers: ${KAFKA_URL:localhost:9092}
+    producer:
+      group-id: driver
+      topic:
+        driver-topic: ride-driver-topic
 
 router:
   link: https://api.openrouteservice.org/v2/directions/driving-car/json
@@ -18,3 +26,7 @@ springdoc:
     path: /api/v1/rides/docs
   swagger-ui:
     path: /api/v1/rides/swagger-ui.html
+
+logging:
+  level:
+    org.modsen.client: DEBUG

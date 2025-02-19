@@ -2,15 +2,19 @@ package org.modsen.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modsen.client.PassengerClient;
+import org.modsen.dto.request.RideAvailableEvent;
 import org.modsen.dto.request.RideRequest;
 import org.modsen.dto.request.RideRequestParams;
 import org.modsen.dto.request.RideStatusRequest;
 import org.modsen.dto.response.PagedRideResponse;
+import org.modsen.dto.response.PassengerResponse;
 import org.modsen.dto.response.RideResponse;
 import org.modsen.entity.Ride;
 import org.modsen.entity.RideStatus;
 import org.modsen.mapper.RideMapper;
 import org.modsen.repository.RideRepository;
+import org.modsen.service.KafkaMessagingService;
 import org.modsen.service.RideService;
 import org.modsen.utils.calculator.RidePriceCalculator;
 import org.modsen.validator.RideValidator;
@@ -38,7 +42,11 @@ public class RideServiceImpl implements RideService {
 
     private final RideValidator rideValidator;
 
+    private final PassengerClient passengerClient;
+
     private final RidePriceCalculator ridePriceCalculator;
+
+    private final KafkaMessagingService kafkaMessagingService;
 
     @Override
     @Transactional(readOnly = true)
@@ -85,10 +93,21 @@ public class RideServiceImpl implements RideService {
     @Override
     @Transactional
     public UUID createRide(RideRequest request) {
+        PassengerResponse passengerResponse = passengerClient.getPassengerById(request.passengerId());
+
         BigDecimal price = ridePriceCalculator
                 .calculateRidePrice(request.startingCoordinates(), request.endingCoordinates());
         Ride rideToCreate = rideMapper.mapRequestToEntity(request, LocalDateTime.now(clock), price);
         UUID rideId = rideRepository.save(rideToCreate).getRideId();
+
+        RideAvailableEvent rideAvailableEvent = RideAvailableEvent.builder()
+            .rideId(rideId.toString())
+            .rating(passengerResponse.rating())
+            .startingCoordinates(request.startingCoordinates())
+            .endingCoordinates(request.endingCoordinates())
+            .build();
+
+        kafkaMessagingService.sendMessage(rideAvailableEvent);
 
         log.info("Ride Service. Create new ride. New ride id {}", rideId);
         return rideId;
@@ -113,7 +132,7 @@ public class RideServiceImpl implements RideService {
         rideValidator.checkExistence(rideId);
         if (RideStatus.valueOf(request.rideStatus()) != RideStatus.CANCELED) {
             rideValidator.checkStatusProcessing(request, rideId);
-        } 
+        }
 
         Ride ride = rideRepository.findById(rideId).get();
         Ride rideSave = rideMapper.mapDtoToEntityStatusUpdate(request, ride);
@@ -121,6 +140,24 @@ public class RideServiceImpl implements RideService {
 
         log.info("Ride Service. Change ride status to {}. Ride id {}", updatedRide.getRideStatus(), rideId);
         return rideMapper.mapEntityToResponse(updatedRide);
+    }
+
+    @Override
+    @Transactional
+    public RideResponse acceptRide(UUID rideId, UUID driverId) {
+        rideValidator.checkExistence(rideId);
+        Ride ride = rideRepository.findById(rideId).get();
+
+        ride.setDriverId(driverId);
+        rideRepository.save(ride);
+        log.info("Ride Service. Accept ride. Ride id {}", rideId);
+        return changeRideStatus(rideId, RideStatusRequest.builder().rideStatus("ACCEPTED").build());
+    }
+
+    @Override
+    public RideResponse declineRide(UUID rideId, UUID driverId) {
+        log.info("Ride Service. Decline ride. Ride id {}", rideId);
+        return changeRideStatus(rideId, RideStatusRequest.builder().rideStatus("CANCELED").build());
     }
 
 }

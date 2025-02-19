@@ -82,4 +82,22 @@ public interface RideApi {
     RideResponse changeRideStatus(@PathVariable UUID rideId,
                                   @Valid @RequestBody RideStatusRequest request);
 
+    @Operation(summary = "Add driver for the ride")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "The ride's status was successfully changed"),
+        @ApiResponse(responseCode = "400", description = "Validation failed"),
+        @ApiResponse(responseCode = "404", description = "Ride with specified id wasn't found")
+    })
+    RideResponse acceptRide(@RequestParam UUID rideId,
+                            @RequestParam UUID driverId);
+
+    @Operation(summary = "Decline the ride")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "The ride's status was successfully changed"),
+        @ApiResponse(responseCode = "400", description = "Validation failed"),
+        @ApiResponse(responseCode = "404", description = "Ride with specified id wasn't found")
+    })
+    RideResponse declineRide(@RequestParam UUID rideId,
+                             @RequestParam UUID driverId);
+
 }

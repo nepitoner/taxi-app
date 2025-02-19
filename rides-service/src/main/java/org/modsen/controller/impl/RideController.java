@@ -107,4 +107,18 @@ public class RideController implements RideApi {
         return rideService.changeRideStatus(rideId, request);
     }
 
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PatchMapping(value = "/accept", produces = APPLICATION_JSON_VALUE)
+    public RideResponse acceptRide(@RequestParam UUID rideId,
+                           @RequestParam UUID driverId) {
+        return rideService.acceptRide(rideId, driverId);
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @PatchMapping(value = "/decline", produces = APPLICATION_JSON_VALUE)
+    public RideResponse declineRide(@RequestParam UUID rideId,
+                            @RequestParam UUID driverId) {
+        return rideService.declineRide(rideId, driverId);
+    }
+
 }
