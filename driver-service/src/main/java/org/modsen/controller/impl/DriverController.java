@@ -62,18 +62,6 @@ public class DriverController implements DriverApi {
         return driverService.getAllDrivers(requestParams);
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/available", produces = APPLICATION_JSON_VALUE)
-    public PagedResponse<DriverResponse> getAvailableDrivers(int page, int limit, String sortBy, String sortDirection) {
-        RequestParams requestParams = RequestParams.builder()
-                .page(page)
-                .limit(limit)
-                .sortBy(sortBy)
-                .sortDirection(sortDirection)
-                .build();
-        return driverService.getAvailableDrivers(requestParams);
-    }
-
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public SuccessResponse registerDriver(@Valid @RequestBody DriverRequest driverRequest) {

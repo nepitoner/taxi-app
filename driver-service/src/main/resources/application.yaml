@@ -16,8 +16,16 @@ spring:
     basename: message-constant
   kafka:
     bootstrap-servers: ${KAFKA_URL:localhost:9092}
-    consumer:
-      group-id: passenger-driver
+    rating-consumer:
+      rating-group-id: passenger-driver
+      auto-offset-reset: earliest
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "org.modsen.dto"
+    ride-consumer:
+      ride-group-id: driver
       auto-offset-reset: earliest
       properties:
         spring:
@@ -35,6 +43,10 @@ minio:
     secret: ${MINIO_USER_PASS:Gi3gZbAzWOqnO2FY6U6D9aWauG3oo5Yh1zOtTQwQ}
   bucket:
     photo_bucket_name: drivers-photo-files
+
+resend:
+  from: taxi-app@resend.dev
+  apiKey: ${APIKEY:api-key}
 
 springdoc:
   api-docs:

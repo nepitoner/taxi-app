@@ -35,17 +35,6 @@ public interface DriverApi {
             @RequestParam(defaultValue = "createdAt") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDirection);
 
-    @Operation(summary = "Getting available drivers")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "All available drivers were successfully sent"),
-            @ApiResponse(responseCode = "400", description = "Validation failed")
-    })
-    PagedResponse<DriverResponse> getAvailableDrivers(
-            @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
-            @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
-            @RequestParam(defaultValue = "createdAt") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDirection);
-
     @Operation(summary = "Register new driver")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "The driver was successfully registered"),

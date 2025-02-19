@@ -5,7 +5,7 @@ import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
 import lombok.RequiredArgsConstructor;
-import org.modsen.config.MinioConfigProperties;
+import org.modsen.config.properties.MinioConfigProperties;
 import org.modsen.exception.RequestTimeoutException;
 import org.modsen.service.DriverService;
 import org.modsen.service.StorageService;
