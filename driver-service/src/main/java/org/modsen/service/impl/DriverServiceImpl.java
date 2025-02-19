@@ -65,20 +65,6 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public PagedResponse<DriverResponse> getAvailableDrivers(RequestParams requestParams) {
-        int limit = Math.min(requestParams.limit(), 50);
-        Sort sort = Sort.by(Sort.Direction.fromString(requestParams.sortDirection()), requestParams.sortBy());
-        Pageable pageable = PageRequest.of(requestParams.page(), limit, sort);
-
-        Page<Driver> responsePage = driverRepository.findByIsDeletedIsFalseAndIsAvailableIsTrue(pageable);
-        PagedResponse<DriverResponse> pagedResponse = driverMapper.mapPageEntityToPagedDto(
-                requestParams.page(), limit, responsePage);
-
-        log.info("Driver Service. Get available drivers. Total drivers {}", pagedResponse.totalAmount());
-        return pagedResponse;
-    }
-
-    @Override
     @Transactional
     public UUID registerDriver(DriverRequest dto) {
         driverValidator.checkUniqueness(dto);
