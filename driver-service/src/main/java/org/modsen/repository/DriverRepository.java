@@ -24,5 +24,8 @@ public interface DriverRepository extends JpaRepository<Driver, UUID> {
 
     Driver findByIdAndIsDeletedIsFalse(UUID id);
 
-    Optional<Driver> findByIsDeletedIsFalseAndIsAvailableIsTrue(Pageable pageable);
+    Optional<Driver> findFirstByIsAvailableTrue();
+
+    Optional<Driver> findByEmail(String email);
+
 }
