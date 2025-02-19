@@ -146,4 +146,16 @@ public class DriverServiceImpl implements DriverService {
         log.info("Driver Service. Update rating. Driver id {}", rateResponse.toId());
     }
 
+    @Override
+    public void changeDriverAvailableStatus(UUID driverId) {
+        driverValidator.checkExistenceAndPresence(driverId);
+
+        Driver driver = driverRepository.findByIdAndIsDeletedIsFalse(driverId);
+        driver.setIsAvailable(!driver.getIsAvailable());
+        driverRepository.save(driver);
+
+        log.info("Driver Service. Change available status. Driver id {}, new status {}",
+            driverId, driver.getIsAvailable());
+    }
+
 }

@@ -2,6 +2,7 @@ package org.modsen.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modsen.client.DriverClient;
 import org.modsen.client.PassengerClient;
 import org.modsen.dto.request.RideAvailableEvent;
 import org.modsen.dto.request.RideRequest;
@@ -43,6 +44,8 @@ public class RideServiceImpl implements RideService {
     private final RideValidator rideValidator;
 
     private final PassengerClient passengerClient;
+
+    private final DriverClient driverClient;
 
     private final RidePriceCalculator ridePriceCalculator;
 
@@ -150,6 +153,7 @@ public class RideServiceImpl implements RideService {
 
         ride.setDriverId(driverId);
         rideRepository.save(ride);
+        driverClient.changeDriverAvailableStatus(driverId);
         log.info("Ride Service. Accept ride. Ride id {}", rideId);
         return changeRideStatus(rideId, RideStatusRequest.builder().rideStatus("ACCEPTED").build());
     }
