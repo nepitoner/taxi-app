@@ -12,8 +12,6 @@ public interface DriverService {
 
     PagedResponse<DriverResponse> getAllDrivers(RequestParams requestParams);
 
-    PagedResponse<DriverResponse> getAvailableDrivers(RequestParams requestParams);
-
     UUID registerDriver(DriverRequest driverRequest);
 
     DriverResponse updateDriver(UUID driverId, DriverRequest driverRequest);

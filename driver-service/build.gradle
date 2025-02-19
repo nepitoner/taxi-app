@@ -23,6 +23,7 @@ dependencies {
     implementation "org.mapstruct:mapstruct:${mapStructVersion}"
     implementation "io.minio:minio:${minioVersion}"
     implementation 'org.springframework.kafka:spring-kafka'
+    implementation "com.resend:resend-java:${resendVersion}"
 
     runtimeOnly "org.postgresql:postgresql:${postgresqlVersion}"
 
