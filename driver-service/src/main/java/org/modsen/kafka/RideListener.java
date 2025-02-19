@@ -22,7 +22,9 @@ public class RideListener {
 
     private final DriverRepository driverRepository;
 
-    @KafkaListener(topics = "ride-driver-topic", groupId = "driver",
+    @KafkaListener(
+        topics = "${spring.ride-consumer.ride-topic}",
+        groupId = "${spring.ride-consumer.ride-group-id}",
         containerFactory = "kafkaRideListenerContainerFactory")
     public void onMessage(RideAvailableEvent rideAvailableEvent) throws RequestTimeoutException {
 

@@ -18,6 +18,7 @@ spring:
     bootstrap-servers: ${KAFKA_URL:localhost:9092}
     rating-consumer:
       rating-group-id: passenger-driver
+      rating-topic: rating-passenger-driver-topic
       auto-offset-reset: earliest
       properties:
         spring:
@@ -26,6 +27,7 @@ spring:
               packages: "org.modsen.dto"
     ride-consumer:
       ride-group-id: driver
+      ride-topic: ride-driver-topic
       auto-offset-reset: earliest
       properties:
         spring:

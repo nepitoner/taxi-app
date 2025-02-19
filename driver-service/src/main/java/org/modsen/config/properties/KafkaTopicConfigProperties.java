@@ -6,6 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "spring.kafka")
 public record KafkaTopicConfigProperties(
+
     String bootstrapServers,
 
     RatingConsumer ratingConsumer,
