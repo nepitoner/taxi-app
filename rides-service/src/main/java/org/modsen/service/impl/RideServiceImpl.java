@@ -2,9 +2,9 @@ package org.modsen.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modsen.client.DriverClient;
 import org.modsen.client.PassengerClient;
 import org.modsen.dto.request.RideAvailableEvent;
+import org.modsen.client.DriverClient;
 import org.modsen.dto.request.RideRequest;
 import org.modsen.dto.request.RideRequestParams;
 import org.modsen.dto.request.RideStatusRequest;
