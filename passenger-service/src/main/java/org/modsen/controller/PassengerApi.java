@@ -9,6 +9,7 @@ import jakarta.validation.constraints.Min;
 import org.modsen.dto.response.PagedPassengerResponse;
 import org.modsen.dto.request.PassengerRequest;
 import org.modsen.dto.response.PassengerResponse;
+import org.modsen.dto.response.PassengerWithRatingResponse;
 import org.modsen.dto.response.SuccessResponse;
 import org.modsen.exception.RequestTimeoutException;
 import org.modsen.util.validator.annotation.NotEmptyFile;
@@ -38,6 +39,14 @@ public interface PassengerApi {
             @RequestParam(defaultValue = "createdAt") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDirection
     );
+
+    @Operation(summary = "Getting passenger by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "The passenger was successfully sent"),
+            @ApiResponse(responseCode = "404", description = "The passenger with specified id wasn't found"),
+            @ApiResponse(responseCode = "400", description = "Validation failed")
+    })
+    ResponseEntity<PassengerWithRatingResponse> getPassengerById(@PathVariable UUID passengerId);
 
     @Operation(summary = "Register new passenger")
     @ApiResponses(value = {

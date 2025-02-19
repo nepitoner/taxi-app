@@ -6,6 +6,7 @@ import org.modsen.dto.request.RequestParams;
 import org.modsen.dto.response.PagedPassengerResponse;
 import org.modsen.dto.request.PassengerRequest;
 import org.modsen.dto.response.PassengerResponse;
+import org.modsen.dto.response.PassengerWithRatingResponse;
 import org.modsen.dto.response.RateResponse;
 import org.modsen.entity.Passenger;
 import org.modsen.mapper.PassengerMapper;
@@ -48,6 +49,18 @@ public class PassengerServiceImpl implements PassengerService {
                 .mapPageEntityToPagedDto(requestParams.page(), limit, responsePage);
         log.info("Passenger Service. Get all request. Pages amount {}", responsePage.getTotalPages());
         return pagedPassengerResponse;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PassengerWithRatingResponse getPassengerById(UUID passengerId) {
+        passengerValidator.checkExistenceAndPresence(passengerId);
+
+        Passenger passenger = passengerRepository.findById(passengerId).get();
+        PassengerWithRatingResponse passengerResponse = passengerMapper.mapEntityToPassengerIdWithRating(passenger);
+
+        log.info("Passenger Service. Get by id. Passenger id {}", passengerId);
+        return passengerResponse;
     }
 
     @Override
