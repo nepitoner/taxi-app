@@ -24,4 +24,6 @@ public interface DriverService {
 
     void updateDriverRating(RateResponse rateResponse);
 
+    void changeDriverAvailableStatus(UUID driverId);
+
 }
