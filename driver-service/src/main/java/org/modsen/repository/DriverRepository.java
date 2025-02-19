@@ -26,6 +26,4 @@ public interface DriverRepository extends JpaRepository<Driver, UUID> {
 
     Optional<Driver> findFirstByIsAvailableTrue();
 
-    Optional<Driver> findByEmail(String email);
-
 }
