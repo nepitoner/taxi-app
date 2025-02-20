@@ -3,6 +3,7 @@ package org.modsen.mapper;
 import org.modsen.dto.response.PagedPassengerResponse;
 import org.modsen.dto.request.PassengerRequest;
 import org.modsen.dto.response.PassengerResponse;
+import org.modsen.dto.response.PassengerWithRatingResponse;
 import org.modsen.entity.Passenger;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
@@ -29,6 +30,8 @@ public interface PassengerMapper {
                              LocalDateTime createdAt, LocalDateTime updatedAt);
 
     PassengerResponse mapEntityToDto(Passenger passenger);
+
+    PassengerWithRatingResponse mapEntityToPassengerIdWithRating(Passenger passenger);
 
     @Mapping(target = "passengers", source = "responsePage", qualifiedByName = "mapPassengers")
     @Mapping(target = "totalPassengers", source = "responsePage.totalElements")

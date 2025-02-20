@@ -72,6 +72,10 @@ public class Driver {
     private Boolean isDeleted = false;
 
     @Builder.Default
+    @Column(name = "is_available", nullable = false)
+    private Boolean isAvailable = true;
+
+    @Builder.Default
     @Column(name = "rating", nullable = false)
     private float rating = 0;
 

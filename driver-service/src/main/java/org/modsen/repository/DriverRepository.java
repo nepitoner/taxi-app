@@ -1,5 +1,6 @@
 package org.modsen.repository;
 
+import java.util.Optional;
 import org.modsen.entity.Driver;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,5 +23,7 @@ public interface DriverRepository extends JpaRepository<Driver, UUID> {
     Page<Driver> findByIsDeletedIsFalse(Pageable pageable);
 
     Driver findByIdAndIsDeletedIsFalse(UUID id);
+
+    Optional<Driver> findFirstByIsAvailableTrue();
 
 }

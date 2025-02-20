@@ -25,4 +25,8 @@ public interface RideService {
 
     RideResponse changeRideStatus(UUID rideId, RideStatusRequest request);
 
+    RideResponse acceptRide(UUID rideId, UUID driverId);
+
+    RideResponse declineRide(UUID rideId, UUID driverId);
+
 }

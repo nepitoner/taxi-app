@@ -4,7 +4,7 @@ import static org.modsen.utils.constant.ExceptionConstant.SERVICE_IS_NOT_AVAILAB
 import static org.modsen.utils.constant.RideConstant.COORDINATES_FORMAT;
 
 import lombok.RequiredArgsConstructor;
-import org.modsen.config.RouterApiProperties;
+import org.modsen.config.properties.RouterApiProperties;
 import org.modsen.dto.response.DistanceResponse;
 import org.modsen.exception.ServiceIsNotAvailable;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

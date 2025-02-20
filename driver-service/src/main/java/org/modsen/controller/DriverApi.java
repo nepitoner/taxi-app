@@ -12,6 +12,7 @@ import org.modsen.dto.driver.DriverRequest;
 import org.modsen.dto.driver.DriverResponse;
 import org.modsen.exception.RequestTimeoutException;
 import org.modsen.validator.annotation.NotEmptyFile;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -75,5 +76,13 @@ public interface DriverApi {
     })
     DriverResponse addCar(@PathVariable UUID driverId,
                           @PathVariable UUID carId);
+
+    @Operation(summary = "Change driver status")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Status was successfully changed"),
+        @ApiResponse(responseCode = "400", description = "Validation failed"),
+        @ApiResponse(responseCode = "404", description = "Driver with specified id wasn't found")
+    })
+    void changeDriverAvailableStatus(@PathVariable UUID driverId);
 
 }

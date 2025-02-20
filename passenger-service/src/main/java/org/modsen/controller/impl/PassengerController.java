@@ -8,6 +8,7 @@ import org.modsen.dto.request.RequestParams;
 import org.modsen.dto.response.PagedPassengerResponse;
 import org.modsen.dto.request.PassengerRequest;
 import org.modsen.dto.response.PassengerResponse;
+import org.modsen.dto.response.PassengerWithRatingResponse;
 import org.modsen.dto.response.SuccessResponse;
 import org.modsen.exception.RequestTimeoutException;
 import org.modsen.service.PassengerService;
@@ -58,6 +59,12 @@ public class PassengerController implements PassengerApi {
                 .build();
         PagedPassengerResponse passengers = passengerService.getAllPassengers(requestParams);
         return ResponseEntity.status(HttpStatus.OK).body(passengers);
+    }
+
+    @GetMapping(value = "/{passengerId}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<PassengerWithRatingResponse> getPassengerById(@PathVariable UUID passengerId) {
+        PassengerWithRatingResponse passengerResponse = passengerService.getPassengerById(passengerId);
+        return ResponseEntity.status(HttpStatus.OK).body(passengerResponse);
     }
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)

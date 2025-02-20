@@ -52,6 +52,10 @@ public record DriverResponse(
         @Schema(description = "Indicates whether the driver record is deleted", example = "false")
         boolean isDeleted,
 
+        @NotNull(message = "{incorrect.message}")
+        @Schema(description = "Indicates whether the driver is available", example = "true")
+        boolean isAvailable,
+
         @Convert(converter = SexTypeConverter.class)
         @NotNull(message = "{incorrect.message}")
         @Schema(description = "Driver's sex", example = "FEMALE")

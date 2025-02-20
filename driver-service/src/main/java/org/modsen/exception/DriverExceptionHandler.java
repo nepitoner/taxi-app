@@ -19,7 +19,8 @@ public class DriverExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler({
             DriverNotFoundException.class,
-            CarNotFoundException.class
+            CarNotFoundException.class,
+            NoAvailableDriversException.class
     })
     public ErrorResponse handleNotFoundException(Exception exception) {
         return new ErrorResponse(HttpStatus.NOT_FOUND, exception.getMessage());
@@ -36,7 +37,8 @@ public class DriverExceptionHandler {
 
     @ResponseStatus(HttpStatus.REQUEST_TIMEOUT)
     @ExceptionHandler({
-            RequestTimeoutException.class
+            RequestTimeoutException.class,
+            ServiceIsNotAvailable.class
     })
     ErrorResponse handleBadRequestException(RequestTimeoutException exception) {
         return new ErrorResponse(HttpStatus.REQUEST_TIMEOUT, exception.getMessage());

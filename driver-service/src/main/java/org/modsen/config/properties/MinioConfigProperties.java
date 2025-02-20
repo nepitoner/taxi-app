@@ -1,4 +1,4 @@
-package org.modsen.config;
+package org.modsen.config.properties;
 
 import lombok.Builder;
 import lombok.Getter;
