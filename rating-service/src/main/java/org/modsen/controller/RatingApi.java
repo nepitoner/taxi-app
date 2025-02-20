@@ -42,7 +42,8 @@ public interface RatingApi {
     @Operation(summary = "Create a new rating")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "The rating was successfully created"),
-            @ApiResponse(responseCode = "400", description = "Validation failed")
+            @ApiResponse(responseCode = "400", description = "Validation failed"),
+            @ApiResponse(responseCode = "404", description = "Ride or participant with specified id wasn't found")
     })
     SuccessResponse createRating(@Valid @RequestBody RatingRequest request, @PathVariable UUID participantId);
 

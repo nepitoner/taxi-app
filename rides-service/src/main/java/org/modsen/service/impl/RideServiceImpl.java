@@ -7,6 +7,7 @@ import org.modsen.dto.request.RideRequestParams;
 import org.modsen.dto.request.RideStatusRequest;
 import org.modsen.dto.response.PagedRideResponse;
 import org.modsen.dto.response.RideResponse;
+import org.modsen.dto.response.ShortRideResponse;
 import org.modsen.entity.Ride;
 import org.modsen.entity.RideStatus;
 import org.modsen.mapper.RideMapper;
@@ -80,6 +81,18 @@ public class RideServiceImpl implements RideService {
                 .mapPageEntityToPagedDto(requestParams.page(), requestParams.limit(), responsePage);
         log.info("Ride Service. Get all by passenger id request. Pages amount {}", responsePage.getTotalPages());
         return pagedRideResponse;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ShortRideResponse getRideById(UUID rideId) {
+        rideValidator.checkExistence(rideId);
+
+        Ride ride = rideRepository.findById(rideId).get();
+        ShortRideResponse shortRideResponse = rideMapper.mapEntityToShortResponse(ride);
+
+        log.info("Ride Service. Get ride by id. Ride id {}", rideId);
+        return shortRideResponse;
     }
 
     @Override

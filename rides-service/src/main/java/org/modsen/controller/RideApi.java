@@ -10,6 +10,7 @@ import org.modsen.dto.request.RideRequest;
 import org.modsen.dto.request.RideStatusRequest;
 import org.modsen.dto.response.PagedRideResponse;
 import org.modsen.dto.response.RideResponse;
+import org.modsen.dto.response.ShortRideResponse;
 import org.modsen.dto.response.SuccessResponse;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -56,6 +57,14 @@ public interface RideApi {
             @RequestParam(defaultValue = "asc") String sortDirection,
             @PathVariable UUID passengerId
     );
+
+    @Operation(description = "Getting the ride by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "The ride was successfully sent"),
+            @ApiResponse(responseCode = "400", description = "Validation failed"),
+            @ApiResponse(responseCode = "404", description = "The ride wasn't found"),
+    })
+    ShortRideResponse getRideById(@PathVariable UUID rideId);
 
     @Operation(summary = "Create a new ride")
     @ApiResponses(value = {
