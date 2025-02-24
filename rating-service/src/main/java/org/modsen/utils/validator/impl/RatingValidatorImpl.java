@@ -4,6 +4,7 @@ import static org.modsen.utils.constant.ExceptionConstant.PARTICIPANT_NOT_FOUND_
 import static org.modsen.utils.constant.ExceptionConstant.RATING_NOT_FOUND_MESSAGE;
 import static org.modsen.utils.constant.ExceptionConstant.REPEATED_ATTEMPT_MESSAGE;
 
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modsen.client.RideServiceClient;
@@ -14,7 +15,6 @@ import org.modsen.exception.RepeatedRatingAttemptException;
 import org.modsen.repository.RatingRepository;
 import org.modsen.utils.validator.RatingValidator;
 import org.springframework.stereotype.Component;
-import java.util.UUID;
 
 @Slf4j
 @Component
@@ -29,7 +29,7 @@ public class RatingValidatorImpl implements RatingValidator {
     public RideResponse checkRideExistenceAndPresence(UUID rideId, UUID fromId) {
         RideResponse rideResponse = rideServiceClient.getRideById(rideId);
         if (!rideResponse.passengerId().equals(fromId) &&
-                !rideResponse.driverId().equals(fromId)) {
+            !rideResponse.driverId().equals(fromId)) {
             throw new ParticipantNotFoundException(PARTICIPANT_NOT_FOUND_MESSAGE.formatted(fromId, rideId));
         }
         return rideResponse;
@@ -39,7 +39,7 @@ public class RatingValidatorImpl implements RatingValidator {
     public void checkIfAlreadyRated(UUID participantId, UUID rideId) {
         if (ratingRepository.existsByFromIdAndRideId(participantId, rideId)) {
             throw new RepeatedRatingAttemptException(
-                    REPEATED_ATTEMPT_MESSAGE.formatted(participantId , "rate"));
+                REPEATED_ATTEMPT_MESSAGE.formatted(participantId, "rate"));
         }
     }
 
@@ -54,7 +54,7 @@ public class RatingValidatorImpl implements RatingValidator {
     public void checkIfAlreadyCommented(UUID ratingId) {
         if (ratingRepository.existsByRatingIdAndCommentNotNull(ratingId).get()) {
             throw new RepeatedRatingAttemptException(
-                    REPEATED_ATTEMPT_MESSAGE.formatted(ratingId, "comment"));
+                REPEATED_ATTEMPT_MESSAGE.formatted(ratingId, "comment"));
         }
     }
 

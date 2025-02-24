@@ -4,11 +4,11 @@ import static org.modsen.utils.constant.ExceptionConstant.INVALID_LOCATION_POINT
 import static org.modsen.utils.constant.ExceptionConstant.REPEATED_COORDINATES_MESSAGE;
 import static org.modsen.utils.constant.RideConstant.RIDE_PRICE_PER_KM;
 
+import java.math.BigDecimal;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.modsen.exception.DistanceCalculationException;
 import org.springframework.stereotype.Component;
-import java.math.BigDecimal;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -32,16 +32,16 @@ public class RidePriceCalculator {
         }
 
         if (startingCoordinates.get(0).equals(endingCoordinates.get(0)) &&
-                startingCoordinates.get(1).equals(endingCoordinates.get(1))) {
+            startingCoordinates.get(1).equals(endingCoordinates.get(1))) {
             throw new DistanceCalculationException(REPEATED_COORDINATES_MESSAGE);
         }
     }
 
     private Point createPoint(List<Double> coordinates) {
         return Point.builder()
-                .longitude(coordinates.get(0))
-                .latitude(coordinates.get(1))
-                .build();
+            .longitude(coordinates.get(0))
+            .latitude(coordinates.get(1))
+            .build();
     }
 
 }

@@ -1,5 +1,6 @@
 package org.modsen.kafka;
 
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modsen.dto.response.RateResponse;
@@ -8,8 +9,6 @@ import org.modsen.service.PassengerService;
 import org.modsen.service.RedisEventService;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
-
-import java.util.UUID;
 
 @Slf4j
 @Component

@@ -1,6 +1,8 @@
 package org.modsen.exception;
 
 import jakarta.validation.ConstraintViolationException;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.modsen.dto.exception.ErrorResponse;
 import org.modsen.dto.exception.ValidationErrorResponse;
 import org.modsen.dto.exception.Violation;
@@ -10,58 +12,55 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @RestControllerAdvice
 public class PassengerExceptionHandler {
 
     @ExceptionHandler({
-            PassengerNotFoundException.class
+        PassengerNotFoundException.class
     })
     public ResponseEntity<ErrorResponse> handleNotFound(PassengerNotFoundException exception) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(new ErrorResponse(HttpStatus.NOT_FOUND, exception.getMessage()));
+            .body(new ErrorResponse(HttpStatus.NOT_FOUND, exception.getMessage()));
     }
 
     @ExceptionHandler({
-            RepeatedDataException.class
+        RepeatedDataException.class
     })
     ResponseEntity<ErrorResponse> handleRepeatedDataException(RepeatedDataException exception) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
-                .body(new ErrorResponse(HttpStatus.CONFLICT, exception.getMessage()));
+            .body(new ErrorResponse(HttpStatus.CONFLICT, exception.getMessage()));
     }
 
     @ExceptionHandler({
-            RequestTimeoutException.class
+        RequestTimeoutException.class
     })
     ResponseEntity<ErrorResponse> handleBadRequestException(RequestTimeoutException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(new ErrorResponse(HttpStatus.BAD_REQUEST, exception.getMessage()));
+            .body(new ErrorResponse(HttpStatus.BAD_REQUEST, exception.getMessage()));
     }
 
     @ExceptionHandler({
-            ConstraintViolationException.class
+        ConstraintViolationException.class
     })
     ResponseEntity<ValidationErrorResponse> handleConstraintViolationException(ConstraintViolationException ex) {
         final List<Violation> violations = ex.getConstraintViolations().stream()
-                .map(violation -> new Violation(
-                        violation.getPropertyPath().toString(),
-                        violation.getMessage()))
-                .collect(Collectors.toList());
+            .map(violation -> new Violation(
+                violation.getPropertyPath().toString(),
+                violation.getMessage()))
+            .collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(new ValidationErrorResponse(violations));
+            .body(new ValidationErrorResponse(violations));
     }
 
     @ExceptionHandler({
-            MethodArgumentNotValidException.class
+        MethodArgumentNotValidException.class
     })
     ResponseEntity<ValidationErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         final List<Violation> violations = ex.getBindingResult().getFieldErrors().stream()
-                .map(error -> new Violation(error.getField(), error.getDefaultMessage()))
-                .collect(Collectors.toList());
+            .map(error -> new Violation(error.getField(), error.getDefaultMessage()))
+            .collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(new ValidationErrorResponse(violations));
+            .body(new ValidationErrorResponse(violations));
     }
 
 }

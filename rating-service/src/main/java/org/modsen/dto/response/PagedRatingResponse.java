@@ -1,18 +1,18 @@
 package org.modsen.dto.response;
 
-import lombok.Builder;
 import java.util.List;
+import lombok.Builder;
 
 @Builder
 public record PagedRatingResponse(
 
-        int page,
+    int page,
 
-        int limit,
+    int limit,
 
-        long totalRatings,
+    long totalRatings,
 
-        List<RatingResponse> ratings
+    List<RatingResponse> ratings
 
 ) {
 }

@@ -1,11 +1,16 @@
 package org.modsen.service.impl;
 
+import static org.modsen.utils.constant.ExceptionConstant.TAKEN_CAR_MESSAGE;
+
+import java.time.Clock;
+import java.time.LocalDateTime;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modsen.dto.response.PagedResponse;
 import org.modsen.dto.driver.DriverRequest;
 import org.modsen.dto.driver.DriverResponse;
 import org.modsen.dto.request.RequestParams;
+import org.modsen.dto.response.PagedResponse;
 import org.modsen.dto.response.RateResponse;
 import org.modsen.entity.Car;
 import org.modsen.entity.Driver;
@@ -23,12 +28,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.Clock;
-import java.time.LocalDateTime;
-import java.util.UUID;
-
-import static org.modsen.utils.constant.ExceptionConstant.TAKEN_CAR_MESSAGE;
 
 @Slf4j
 @Service
@@ -58,7 +57,7 @@ public class DriverServiceImpl implements DriverService {
 
         Page<Driver> responsePage = driverRepository.findByIsDeletedIsFalse(pageable);
         PagedResponse<DriverResponse> pagedResponse = driverMapper.mapPageEntityToPagedDto(
-                requestParams.page(), limit, responsePage);
+            requestParams.page(), limit, responsePage);
 
         log.info("Driver Service. Get all drivers. Total drivers {}", pagedResponse.totalAmount());
         return pagedResponse;
@@ -72,7 +71,7 @@ public class DriverServiceImpl implements DriverService {
         UUID driverId = driverRepository.save(driverToRegister).getId();
 
         log.info("Driver Service. Register driver with email {}. Registered driver id {}",
-                driverToRegister.getEmail(), driverId);
+            driverToRegister.getEmail(), driverId);
         return driverId;
     }
 

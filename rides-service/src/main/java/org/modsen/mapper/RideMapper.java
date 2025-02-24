@@ -1,11 +1,8 @@
 package org.modsen.mapper;
 
-import org.modsen.dto.request.RideRequest;
-import org.modsen.dto.request.RideStatusRequest;
-import org.modsen.dto.response.PagedRideResponse;
-import org.modsen.dto.response.RideResponse;
-import org.modsen.dto.response.ShortRideResponse;
-import org.modsen.entity.Ride;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
@@ -15,15 +12,18 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
+import org.modsen.dto.request.RideRequest;
+import org.modsen.dto.request.RideStatusRequest;
+import org.modsen.dto.response.PagedRideResponse;
+import org.modsen.dto.response.RideResponse;
+import org.modsen.dto.response.ShortRideResponse;
+import org.modsen.entity.Ride;
 import org.springframework.data.domain.Page;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Mapper(
-        unmappedTargetPolicy = ReportingPolicy.IGNORE,
-        builder = @Builder(disableBuilder = true),
-        componentModel = MappingConstants.ComponentModel.SPRING
+    unmappedTargetPolicy = ReportingPolicy.IGNORE,
+    builder = @Builder(disableBuilder = true),
+    componentModel = MappingConstants.ComponentModel.SPRING
 )
 public interface RideMapper {
 
@@ -47,8 +47,8 @@ public interface RideMapper {
     @Named("mapRides")
     default List<RideResponse> mapRides(Page<Ride> responsePage) {
         return responsePage.get()
-                .map(this::mapEntityToResponse)
-                .toList();
+            .map(this::mapEntityToResponse)
+            .toList();
     }
 
 }

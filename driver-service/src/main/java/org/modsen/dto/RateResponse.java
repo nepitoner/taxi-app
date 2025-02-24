@@ -5,9 +5,9 @@ import lombok.Builder;
 @Builder
 public record RateResponse(
 
-        String  toId,
+    String toId,
 
-        float rating
+    float rating
 
 ) {
 }

@@ -1,5 +1,9 @@
 package org.modsen.service.impl;
 
+import java.math.BigDecimal;
+import java.time.Clock;
+import java.time.LocalDateTime;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modsen.client.DriverClient;
@@ -26,10 +30,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.math.BigDecimal;
-import java.time.Clock;
-import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Slf4j
 @Service
@@ -61,7 +61,7 @@ public class RideServiceImpl implements RideService {
         Page<Ride> responsePage = rideRepository.findAll(pageable);
 
         PagedRideResponse pagedRideResponse = rideMapper
-                .mapPageEntityToPagedDto(requestParams.page(), requestParams.limit(), responsePage);
+            .mapPageEntityToPagedDto(requestParams.page(), requestParams.limit(), responsePage);
         log.info("Ride Service. Get all request. Pages amount {}", responsePage.getTotalPages());
         return pagedRideResponse;
     }
@@ -75,7 +75,7 @@ public class RideServiceImpl implements RideService {
         Page<Ride> responsePage = rideRepository.findByDriverId(driverId, pageable);
 
         PagedRideResponse pagedRideResponse = rideMapper
-                .mapPageEntityToPagedDto(requestParams.page(), requestParams.limit(), responsePage);
+            .mapPageEntityToPagedDto(requestParams.page(), requestParams.limit(), responsePage);
         log.info("Ride Service. Get all by driver id request. Pages amount {}", responsePage.getTotalPages());
         return pagedRideResponse;
     }
@@ -89,7 +89,7 @@ public class RideServiceImpl implements RideService {
         Page<Ride> responsePage = rideRepository.findByPassengerId(passengerId, pageable);
 
         PagedRideResponse pagedRideResponse = rideMapper
-                .mapPageEntityToPagedDto(requestParams.page(), requestParams.limit(), responsePage);
+            .mapPageEntityToPagedDto(requestParams.page(), requestParams.limit(), responsePage);
         log.info("Ride Service. Get all by passenger id request. Pages amount {}", responsePage.getTotalPages());
         return pagedRideResponse;
     }
@@ -112,7 +112,7 @@ public class RideServiceImpl implements RideService {
         PassengerResponse passengerResponse = passengerClient.getPassengerById(request.passengerId());
 
         BigDecimal price = ridePriceCalculator
-                .calculateRidePrice(request.startingCoordinates(), request.endingCoordinates());
+            .calculateRidePrice(request.startingCoordinates(), request.endingCoordinates());
         Ride rideToCreate = rideMapper.mapRequestToEntity(request, LocalDateTime.now(clock), price);
         UUID rideId = rideRepository.save(rideToCreate).getRideId();
 

@@ -1,11 +1,10 @@
 package org.modsen.service;
 
-import org.modsen.dto.response.PagedResponse;
+import java.util.UUID;
 import org.modsen.dto.car.CarRequest;
 import org.modsen.dto.car.CarResponse;
 import org.modsen.dto.request.RequestParams;
-
-import java.util.UUID;
+import org.modsen.dto.response.PagedResponse;
 
 public interface CarService {
 

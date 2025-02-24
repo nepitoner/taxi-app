@@ -1,13 +1,12 @@
 package org.modsen.service;
 
+import java.util.UUID;
 import org.modsen.dto.request.RideRequest;
 import org.modsen.dto.request.RideRequestParams;
 import org.modsen.dto.request.RideStatusRequest;
 import org.modsen.dto.response.PagedRideResponse;
 import org.modsen.dto.response.RideResponse;
 import org.modsen.dto.response.ShortRideResponse;
-
-import java.util.UUID;
 
 public interface RideService {
 

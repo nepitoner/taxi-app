@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import java.util.UUID;
 import org.modsen.dto.request.RatingRequest;
 import org.modsen.dto.request.RideCommentRequest;
 import org.modsen.dto.response.PagedRatingResponse;
@@ -15,43 +16,42 @@ import org.modsen.dto.response.SuccessResponse;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import java.util.UUID;
 
 @Tag(name = "Rating", description = "Methods for managing ratings")
 public interface RatingApi {
 
     @Operation(summary = "Getting paged ratings")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "All the ratings were successfully sent"),
-            @ApiResponse(responseCode = "400", description = "Validation failed")
+        @ApiResponse(responseCode = "200", description = "All the ratings were successfully sent"),
+        @ApiResponse(responseCode = "400", description = "Validation failed")
     })
     PagedRatingResponse getAllRatings(
-            @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
-            @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
-            @RequestParam(defaultValue = "createdAt") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDirection
+        @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
+        @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
+        @RequestParam(defaultValue = "createdAt") String sortBy,
+        @RequestParam(defaultValue = "asc") String sortDirection
     );
 
     @Operation(summary = "Getting driver's or passenger's rate by his id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "The rating was successfully sent"),
-            @ApiResponse(responseCode = "400", description = "Validation failed")
+        @ApiResponse(responseCode = "200", description = "The rating was successfully sent"),
+        @ApiResponse(responseCode = "400", description = "Validation failed")
     })
     RateResponse getRateById(@PathVariable UUID participantId);
 
     @Operation(summary = "Create a new rating")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "The rating was successfully created"),
-            @ApiResponse(responseCode = "400", description = "Validation failed"),
-            @ApiResponse(responseCode = "404", description = "Ride or participant with specified id wasn't found")
+        @ApiResponse(responseCode = "201", description = "The rating was successfully created"),
+        @ApiResponse(responseCode = "400", description = "Validation failed"),
+        @ApiResponse(responseCode = "404", description = "Ride or participant with specified id wasn't found")
     })
     SuccessResponse createRating(@Valid @RequestBody RatingRequest request, @PathVariable UUID participantId);
 
     @Operation(summary = "Add comment about the ride")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "The comment was successfully added"),
-            @ApiResponse(responseCode = "400", description = "Validation failed"),
-            @ApiResponse(responseCode = "404", description = "Rating with specified id wasn't found")
+        @ApiResponse(responseCode = "200", description = "The comment was successfully added"),
+        @ApiResponse(responseCode = "400", description = "Validation failed"),
+        @ApiResponse(responseCode = "404", description = "Rating with specified id wasn't found")
     })
     RatingResponse addRideComment(@PathVariable UUID ratingId,
                                   @Valid @RequestBody RideCommentRequest request
