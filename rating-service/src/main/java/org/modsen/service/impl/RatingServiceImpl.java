@@ -77,7 +77,7 @@ public class RatingServiceImpl implements RatingService {
         RideResponse rideResponse = ratingValidator.checkRideExistenceAndPresence(request.rideId(), fromId);
         ratingValidator.checkIfAlreadyRated(fromId, request.rideId());
 
-        UUID toId = (fromId == rideResponse.driverId()) ? rideResponse.passengerId() : rideResponse.driverId();
+        UUID toId = (fromId.equals(rideResponse.driverId())) ? rideResponse.passengerId() : rideResponse.driverId();
         Rating ratingToCreate = ratingMapper.mapRequestToEntity(request, fromId, toId);
 
         UUID ratingId = ratingRepository.save(ratingToCreate).getRatingId();
