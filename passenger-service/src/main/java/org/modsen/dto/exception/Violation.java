@@ -2,9 +2,9 @@ package org.modsen.dto.exception;
 
 public record Violation(
 
-        String fieldName,
+    String fieldName,
 
-        String message
+    String message
 
 ) {
 }

@@ -1,13 +1,12 @@
 package org.modsen.service;
 
+import java.util.UUID;
+import org.modsen.dto.request.PassengerRequest;
 import org.modsen.dto.request.RequestParams;
 import org.modsen.dto.response.PagedPassengerResponse;
-import org.modsen.dto.request.PassengerRequest;
 import org.modsen.dto.response.PassengerResponse;
 import org.modsen.dto.response.PassengerWithRatingResponse;
 import org.modsen.dto.response.RateResponse;
-
-import java.util.UUID;
 
 public interface PassengerService {
 

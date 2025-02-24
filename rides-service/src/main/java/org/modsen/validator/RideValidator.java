@@ -1,8 +1,7 @@
 package org.modsen.validator;
 
-import org.modsen.dto.request.RideStatusRequest;
-
 import java.util.UUID;
+import org.modsen.dto.request.RideStatusRequest;
 
 public interface RideValidator {
 

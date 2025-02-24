@@ -5,6 +5,7 @@ import static feign.FeignException.errorStatus;
 import feign.FeignException;
 import feign.Response;
 import feign.codec.ErrorDecoder;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,8 +30,9 @@ public class MessageErrorDecoder implements ErrorDecoder {
 
         return switch (response.status()) {
             case 400 -> new IllegalArgumentException(!message.isBlank() ? message : "Bad request");
-            case 404 -> new PassengerNotFoundException(!message.isBlank() ? message : "Not found");
+            case 404 -> new RideNotFoundException(!message.isBlank() ? message : "Not found");
             default -> errorDecoder.decode(methodKey, response);
         };
     }
+
 }

@@ -2,8 +2,8 @@ package org.modsen.validator.impl;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.modsen.validator.ValidEnum;
 import java.util.Arrays;
+import org.modsen.validator.ValidEnum;
 
 public class EnumValidator implements ConstraintValidator<ValidEnum, String> {
 
@@ -17,7 +17,7 @@ public class EnumValidator implements ConstraintValidator<ValidEnum, String> {
     @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
         return Arrays.stream(enumConstants)
-                .anyMatch(enumConstant -> enumConstant.name().equals(value));
+            .anyMatch(enumConstant -> enumConstant.name().equals(value));
     }
 
 }

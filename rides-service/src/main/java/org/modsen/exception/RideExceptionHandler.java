@@ -1,6 +1,8 @@
 package org.modsen.exception;
 
 import jakarta.validation.ConstraintViolationException;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.modsen.dto.exception.ErrorResponse;
 import org.modsen.dto.exception.ValidationErrorResponse;
 import org.modsen.dto.exception.Violation;
@@ -9,8 +11,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class RideExceptionHandler {
@@ -26,10 +26,10 @@ public class RideExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({
-            DistanceCalculationException.class,
-            RideStatusProcessingException.class,
-            IncorrectStatusException.class,
-            IllegalArgumentException.class
+        DistanceCalculationException.class,
+        RideStatusProcessingException.class,
+        IncorrectStatusException.class,
+        IllegalArgumentException.class
     })
     public ErrorResponse handleIllegalArgumentException(Exception exception) {
         return new ErrorResponse(HttpStatus.BAD_REQUEST, exception.getMessage());
@@ -37,32 +37,32 @@ public class RideExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({
-            ConstraintViolationException.class
+        ConstraintViolationException.class
     })
     public ValidationErrorResponse handleConstraintViolationException(ConstraintViolationException ex) {
         final List<Violation> violations = ex.getConstraintViolations().stream()
-                .map(violation -> new Violation(
-                        violation.getPropertyPath().toString(),
-                        violation.getMessage()))
-                .collect(Collectors.toList());
+            .map(violation -> new Violation(
+                violation.getPropertyPath().toString(),
+                violation.getMessage()))
+            .collect(Collectors.toList());
         return new ValidationErrorResponse(violations);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({
-            MethodArgumentNotValidException.class
+        MethodArgumentNotValidException.class
     })
     ValidationErrorResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         final List<Violation> violations = ex.getBindingResult().getFieldErrors().stream()
-                .map(error -> new Violation(error.getField(), error.getDefaultMessage()))
-                .collect(Collectors.toList());
+            .map(error -> new Violation(error.getField(), error.getDefaultMessage()))
+            .collect(Collectors.toList());
         return new ValidationErrorResponse(violations);
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler({
-            ServiceIsNotAvailable.class,
-            Exception.class
+        ServiceIsNotAvailable.class,
+        Exception.class
     })
     ErrorResponse handleOtherException(Exception exception) {
         return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());

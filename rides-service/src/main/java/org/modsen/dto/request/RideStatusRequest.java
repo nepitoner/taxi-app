@@ -10,10 +10,10 @@ import org.modsen.validator.ValidEnum;
 @Schema(description = "Dto for getting ride's status")
 public record RideStatusRequest(
 
-        @NotNull(message = "{incorrect.message}")
-        @ValidEnum(enumClass = RideStatus.class)
-        @Schema(description = "Status of the ride", example = "ACCEPTED")
-        String rideStatus
+    @NotNull(message = "{incorrect.message}")
+    @ValidEnum(enumClass = RideStatus.class)
+    @Schema(description = "Status of the ride", example = "ACCEPTED")
+    String rideStatus
 
 ) {
 }

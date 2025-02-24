@@ -4,7 +4,7 @@ import java.util.List;
 
 public record ValidationErrorResponse(
 
-        List<Violation> violationList
+    List<Violation> violationList
 
 ) {
 }

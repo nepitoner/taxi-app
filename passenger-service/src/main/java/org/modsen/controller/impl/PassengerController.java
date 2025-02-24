@@ -1,12 +1,17 @@
 package org.modsen.controller.impl;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
+
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import java.io.IOException;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.modsen.controller.PassengerApi;
+import org.modsen.dto.request.PassengerRequest;
 import org.modsen.dto.request.RequestParams;
 import org.modsen.dto.response.PagedPassengerResponse;
-import org.modsen.dto.request.PassengerRequest;
 import org.modsen.dto.response.PassengerResponse;
 import org.modsen.dto.response.PassengerWithRatingResponse;
 import org.modsen.dto.response.SuccessResponse;
@@ -28,12 +33,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.UUID;
-
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
-
 
 @RestController
 @RequiredArgsConstructor
@@ -46,17 +45,17 @@ public class PassengerController implements PassengerApi {
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<PagedPassengerResponse> getAllPassengers(
-            @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
-            @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
-            @RequestParam(defaultValue = "createdAt") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDirection
+        @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
+        @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
+        @RequestParam(defaultValue = "createdAt") String sortBy,
+        @RequestParam(defaultValue = "asc") String sortDirection
     ) {
         RequestParams requestParams = RequestParams.builder()
-                .page(page)
-                .limit(limit)
-                .sortBy(sortBy)
-                .sortDirection(sortDirection)
-                .build();
+            .page(page)
+            .limit(limit)
+            .sortBy(sortBy)
+            .sortDirection(sortDirection)
+            .build();
         PagedPassengerResponse passengers = passengerService.getAllPassengers(requestParams);
         return ResponseEntity.status(HttpStatus.OK).body(passengers);
     }
@@ -71,7 +70,7 @@ public class PassengerController implements PassengerApi {
     public ResponseEntity<SuccessResponse> registerPassenger(@Valid @RequestBody PassengerRequest passengerRequest) {
         UUID registeredPassengerId = passengerService.registerPassenger(passengerRequest);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new SuccessResponse(registeredPassengerId.toString()));
+            .body(new SuccessResponse(registeredPassengerId.toString()));
     }
 
     @PutMapping(value = "/{passengerId}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
@@ -79,7 +78,7 @@ public class PassengerController implements PassengerApi {
                                                              @Valid @RequestBody PassengerRequest passengerRequest) {
         PassengerResponse passengerResponse = passengerService.updatePassenger(passengerId, passengerRequest);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(passengerResponse);
+            .body(passengerResponse);
     }
 
     @DeleteMapping(value = "/{passengerId}", produces = APPLICATION_JSON_VALUE)
@@ -89,10 +88,11 @@ public class PassengerController implements PassengerApi {
     }
 
     @PostMapping(value = "/{passengerId}/passenger_photo", consumes = MULTIPART_FORM_DATA_VALUE,
-            produces = APPLICATION_JSON_VALUE)
+        produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<SuccessResponse> addPassengerPhoto(@PathVariable UUID passengerId,
                                                              @RequestPart(value = "photoFile")
-                                                             @NotEmptyFile MultipartFile photoFile) throws IOException, RequestTimeoutException {
+                                                             @NotEmptyFile MultipartFile photoFile)
+        throws IOException, RequestTimeoutException {
         UUID id = storageService.saveFileReference(photoFile, passengerId);
         return ResponseEntity.status(HttpStatus.OK).body(new SuccessResponse(id.toString()));
     }

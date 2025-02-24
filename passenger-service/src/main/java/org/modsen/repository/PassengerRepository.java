@@ -1,11 +1,10 @@
 package org.modsen.repository;
 
+import java.util.UUID;
 import org.modsen.entity.Passenger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.UUID;
 
 public interface PassengerRepository extends JpaRepository<Passenger, UUID> {
 

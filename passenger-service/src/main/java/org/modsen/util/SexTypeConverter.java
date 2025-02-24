@@ -2,9 +2,8 @@ package org.modsen.util;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import org.modsen.entity.SexType;
-
 import java.util.Objects;
+import org.modsen.entity.SexType;
 
 @Converter
 public class SexTypeConverter implements AttributeConverter<SexType, Integer> {

@@ -5,8 +5,8 @@ import java.util.UUID;
 import lombok.Builder;
 
 @Builder
-@Schema(description = "Dto for getting ride's information")
-public record RideResponse(
+@Schema(description = "Dto for getting ride's information for rating service")
+public record ShortRideResponse(
 
     @Schema(description = "Id of the ride", example = "8e280da2-9e48-4643-ba8f-5c06a6ee848b")
     UUID rideId,

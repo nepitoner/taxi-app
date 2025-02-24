@@ -1,11 +1,12 @@
 package org.modsen.service.impl;
 
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modsen.dto.response.PagedResponse;
 import org.modsen.dto.car.CarRequest;
 import org.modsen.dto.car.CarResponse;
 import org.modsen.dto.request.RequestParams;
+import org.modsen.dto.response.PagedResponse;
 import org.modsen.entity.Car;
 import org.modsen.mapper.CarMapper;
 import org.modsen.repository.CarRepository;
@@ -17,8 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.UUID;
 
 @Slf4j
 @Service
@@ -49,7 +48,7 @@ public class CarServiceImpl implements CarService {
 
         Page<Car> responsePage = carRepository.findByIsDeletedIsFalse(pageable);
         PagedResponse<CarResponse> pagedCarResponse = carMapper.mapPageEntityToPagedDto(
-                requestParams.page(), limit, responsePage);
+            requestParams.page(), limit, responsePage);
 
         log.info("Car Service. Get all cars. Total cars {}", pagedCarResponse.totalAmount());
         return pagedCarResponse;
@@ -64,7 +63,7 @@ public class CarServiceImpl implements CarService {
         UUID carId = carRepository.save(carToCreate).getId();
 
         log.info("Car Service. Create car with number {}. Created car id {}",
-                carToCreate.getNumber(), carId);
+            carToCreate.getNumber(), carId);
         return carId;
     }
 

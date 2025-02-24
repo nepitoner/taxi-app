@@ -10,6 +10,9 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.persistence.UniqueConstraint;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,10 +23,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.modsen.util.SexTypeConverter;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.UUID;
-
 @Entity
 @Getter
 @Builder
@@ -31,8 +30,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @Setter(AccessLevel.PUBLIC)
 @Table(name = Passenger.TABLE_NAME, uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"phoneNumber"}),
-        @UniqueConstraint(columnNames = {"email"})
+    @UniqueConstraint(columnNames = {"phoneNumber"}),
+    @UniqueConstraint(columnNames = {"email"})
 })
 public class Passenger {
 
@@ -68,7 +67,7 @@ public class Passenger {
     @Column(name = "rating", nullable = false)
     private Float rating;
 
-    @Convert(converter= SexTypeConverter.class)
+    @Convert(converter = SexTypeConverter.class)
     @Column(name = "sex", nullable = false)
     private SexType sex;
 

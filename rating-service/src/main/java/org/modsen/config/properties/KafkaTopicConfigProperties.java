@@ -9,14 +9,26 @@ public record KafkaTopicConfigProperties(
 
     Topic topic,
 
-    String groupId
+    Group group
 
 ) {
 
     @Getter
     @Setter
     public static class Topic {
+
         private String passengerDriverTopic;
+
+    }
+
+    @Getter
+    @Setter
+    public static class Group {
+
+        private String passengerGroup;
+
+        private String driverGroup;
+
     }
 
 }

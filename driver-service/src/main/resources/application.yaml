@@ -17,7 +17,7 @@ spring:
   kafka:
     bootstrap-servers: ${KAFKA_URL:localhost:9092}
     rating-consumer:
-      rating-group-id: passenger-driver
+      rating-group-id: driver
       rating-topic: rating-passenger-driver-topic
       auto-offset-reset: earliest
       properties:

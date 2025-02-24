@@ -1,19 +1,18 @@
 package org.modsen.dto.response;
 
-import lombok.Builder;
-
 import java.util.List;
+import lombok.Builder;
 
 @Builder
 public record PagedPassengerResponse(
 
-        int page,
+    int page,
 
-        int limit,
+    int limit,
 
-        long totalPassengers,
+    long totalPassengers,
 
-        List<PassengerResponse> passengers
+    List<PassengerResponse> passengers
 
 ) {
 }

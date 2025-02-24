@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.config.EnableMongoAuditing;
 
 @Configuration
 @EnableMongoAuditing
-public class MongoConfig extends AbstractMongoClientConfiguration{
+public class MongoConfig extends AbstractMongoClientConfiguration {
 
     @Value(value = "${spring.data.mongodb.uri}")
     String uri;

@@ -4,6 +4,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.modsen.controller.RatingApi;
 import org.modsen.dto.request.RatingRequest;
@@ -25,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.UUID;
 
 @Validated
 @RestController
@@ -38,17 +38,17 @@ public class RatingController implements RatingApi {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public PagedRatingResponse getAllRatings(
-            @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
-            @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
-            @RequestParam(defaultValue = "createdAt") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDirection
+        @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
+        @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
+        @RequestParam(defaultValue = "createdAt") String sortBy,
+        @RequestParam(defaultValue = "asc") String sortDirection
     ) {
         RequestParams requestParams = RequestParams.builder()
-                .page(page)
-                .limit(limit)
-                .sortBy(sortBy)
-                .sortDirection(sortDirection)
-                .build();
+            .page(page)
+            .limit(limit)
+            .sortBy(sortBy)
+            .sortDirection(sortDirection)
+            .build();
         return ratingService.getAllRatings(requestParams);
     }
 
@@ -61,8 +61,8 @@ public class RatingController implements RatingApi {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/{fromId}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public SuccessResponse createRating(
-            @Valid @RequestBody RatingRequest request,
-            @PathVariable UUID fromId
+        @Valid @RequestBody RatingRequest request,
+        @PathVariable UUID fromId
     ) {
         UUID createdRatingId = ratingService.createRating(request, fromId);
         return new SuccessResponse(createdRatingId.toString());

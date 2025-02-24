@@ -17,16 +17,17 @@ public class RatingExceptionHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler({
-            RatingNotFoundException.class
+        RatingNotFoundException.class,
+        RideNotFoundException.class,
+        ParticipantNotFoundException.class
     })
-    public ErrorResponse handleRatingNotFound(RatingNotFoundException exception) {
+    public ErrorResponse handleNotFound(Exception exception) {
         return new ErrorResponse(HttpStatus.NOT_FOUND, exception.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({
-            InvalidRideDataException.class,
-            IllegalArgumentException.class
+        IllegalArgumentException.class
     })
     public ErrorResponse handleIllegalArgumentException(Exception exception) {
         return new ErrorResponse(HttpStatus.BAD_REQUEST, exception.getMessage());
@@ -34,31 +35,31 @@ public class RatingExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({
-            ConstraintViolationException.class
+        ConstraintViolationException.class
     })
     public ValidationErrorResponse handleConstraintViolationException(ConstraintViolationException ex) {
         final List<Violation> violations = ex.getConstraintViolations().stream()
-                .map(violation -> new Violation(
-                        violation.getPropertyPath().toString(),
-                        violation.getMessage()))
-                .collect(Collectors.toList());
+            .map(violation -> new Violation(
+                violation.getPropertyPath().toString(),
+                violation.getMessage()))
+            .collect(Collectors.toList());
         return new ValidationErrorResponse(violations);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({
-            MethodArgumentNotValidException.class
+        MethodArgumentNotValidException.class
     })
     ValidationErrorResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         final List<Violation> violations = ex.getBindingResult().getFieldErrors().stream()
-                .map(error -> new Violation(error.getField(), error.getDefaultMessage()))
-                .collect(Collectors.toList());
+            .map(error -> new Violation(error.getField(), error.getDefaultMessage()))
+            .collect(Collectors.toList());
         return new ValidationErrorResponse(violations);
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler({
-            Exception.class
+        Exception.class
     })
     ErrorResponse handleOtherException(Exception exception) {
         return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());

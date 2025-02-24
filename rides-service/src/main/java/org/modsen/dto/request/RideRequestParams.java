@@ -5,13 +5,13 @@ import lombok.Builder;
 @Builder
 public record RideRequestParams(
 
-        int page,
+    int page,
 
-        int limit,
+    int limit,
 
-        String sortBy,
+    String sortBy,
 
-        String sortDirection
+    String sortDirection
 
 ) {
 }

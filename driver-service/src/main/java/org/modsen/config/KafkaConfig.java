@@ -55,7 +55,8 @@ public class KafkaConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, RideAvailableEvent> kafkaRideListenerContainerFactory(KafkaTopicConfigProperties properties) {
+    public ConcurrentKafkaListenerContainerFactory<String, RideAvailableEvent> kafkaRideListenerContainerFactory(
+        KafkaTopicConfigProperties properties) {
         ConcurrentKafkaListenerContainerFactory<String, RideAvailableEvent> factory =
             new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(rideConsumerFactory(properties));

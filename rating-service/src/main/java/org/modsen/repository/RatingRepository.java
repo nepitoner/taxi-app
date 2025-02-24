@@ -1,12 +1,12 @@
 package org.modsen.repository;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import org.modsen.entity.Rating;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Repository
 public interface RatingRepository extends MongoRepository<Rating, UUID> {
