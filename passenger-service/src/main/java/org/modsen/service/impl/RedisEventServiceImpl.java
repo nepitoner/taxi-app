@@ -17,12 +17,12 @@ public class RedisEventServiceImpl implements RedisEventService {
     @Override
     public void addEventId(String eventId) {
         redisTemplate.opsForValue().set(eventId, "exists", 3, TimeUnit.DAYS);
-        log.info("RedisEventService. Event with id {} stored to redis", eventId);
+        log.info("Redis Event Service. Event with id {} stored to redis", eventId);
     }
 
     @Override
     public boolean existsByEventId(String eventId) {
-        log.info("RedisEventService. Check event existence by id {}", eventId);
+        log.info("Redis Event Service. Check event existence by id {}", eventId);
         return Boolean.TRUE.equals(redisTemplate.hasKey(eventId));
     }
 
