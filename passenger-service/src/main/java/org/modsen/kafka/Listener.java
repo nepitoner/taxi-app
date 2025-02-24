@@ -21,7 +21,8 @@ public class Listener {
 
     private final RedisEventService redisEventService;
 
-    @KafkaListener(topics = "rating-passenger-driver-topic", groupId = "passenger-driver")
+    @KafkaListener(topics = "${spring.kafka.consumer.topic}",
+        groupId = "spring.kafka.consumer.group-id")
     public void onMessage(RateResponse rateResponse) {
 
         if (redisEventService.existsByEventId(rateResponse.eventId())) {

@@ -22,8 +22,8 @@ public class RatingListener {
     private final RedisEventService redisEventService;
 
     @KafkaListener(
-        topics = "${spring.rating-consumer.rating-topic}",
-        groupId = "${spring.rating-consumer.rating-group-id}",
+        topics = "${spring.kafka.rating-consumer.rating-topic}",
+        groupId = "${spring.kafka.rating-consumer.rating-group-id}",
         containerFactory = "kafkaRatingListenerContainerFactory"
     )
     public void onMessage(RateResponse rateResponse) {
