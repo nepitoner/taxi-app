@@ -30,12 +30,13 @@ public class RatingListener {
     public void onMessage(RateResponse rateResponse) {
 
         if (redisEventService.existsByEventId(rateResponse.eventId())) {
-            log.info("Event with id {} was already processed", rateResponse.eventId());
+            log.info("Driver Listener. Event with id {} was already processed", rateResponse.eventId());
             return;
         }
 
         if (driverRepository.existsByIdAndIsDeletedIsFalse(UUID.fromString(rateResponse.toId()))) {
-            log.info("Information about rating being updated {} successfully obtained", rateResponse.toId());
+            log.info("Driver Listener. Information about rating being updated {} successfully obtained",
+                rateResponse.toId());
             driverService.updateDriverRating(rateResponse);
             redisEventService.addEventId(rateResponse.eventId());
         }

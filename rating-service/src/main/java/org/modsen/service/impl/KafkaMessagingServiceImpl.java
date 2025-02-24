@@ -26,7 +26,7 @@ public class KafkaMessagingServiceImpl implements KafkaMessagingService {
                 properties.topic()
                         .getPassengerDriverTopic(),
                 properties.groupId(), rateResponse);
-        log.info("Message {} was successfully sent", rateResponse);
+        log.info("Kafka Messaging Service. Message {} was sent", rateResponse);
     }
 
 }

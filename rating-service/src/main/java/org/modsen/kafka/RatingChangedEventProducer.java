@@ -39,7 +39,7 @@ public class RatingChangedEventProducer {
             for (RatingChangeEvent event : events) {
                 processEvent(event);
             }
-            log.info("{} outboxes were successfully sent", events.size());
+            log.info("Rating Changed Event Producer. {} outboxes were successfully sent", events.size());
         }
     }
 
@@ -51,6 +51,7 @@ public class RatingChangedEventProducer {
                 .rating(ratingChangeEvent.getRating())
             .build());
 
+        log.info("Rating Changed Event Producer. Process event with id {}", ratingChangeEvent.getEventId());
         ratingChangeEventRepository.delete(ratingChangeEvent);
     }
 

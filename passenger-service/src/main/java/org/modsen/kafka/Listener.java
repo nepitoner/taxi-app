@@ -26,12 +26,13 @@ public class Listener {
     public void onMessage(RateResponse rateResponse) {
 
         if (redisEventService.existsByEventId(rateResponse.eventId())) {
-            log.info("Event with id {} was already processed", rateResponse.eventId());
+            log.info("Passenger Listener. Event with id {} was already processed", rateResponse.eventId());
             return;
         }
 
         if (passengerRepository.existsByPassengerIdAndIsDeletedIsFalse(UUID.fromString(rateResponse.toId()))) {
-            log.info("Information about rating being updated {} successfully obtained", rateResponse.toId());
+            log.info("Passenger Listener. Information about rating being updated {} successfully obtained",
+                rateResponse.toId());
             passengerService.updatePassengerRating(rateResponse);
             redisEventService.addEventId(rateResponse.eventId());
         }
