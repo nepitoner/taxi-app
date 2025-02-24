@@ -1,5 +1,7 @@
 package org.modsen.mapper;
 
+import java.util.List;
+import java.util.UUID;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
@@ -16,13 +18,11 @@ import org.modsen.dto.response.RateResponse;
 import org.modsen.dto.response.RatingResponse;
 import org.modsen.entity.Rating;
 import org.springframework.data.domain.Page;
-import java.util.List;
-import java.util.UUID;
 
 @Mapper(
-        unmappedTargetPolicy = ReportingPolicy.IGNORE,
-        builder = @Builder(disableBuilder = true),
-        componentModel = MappingConstants.ComponentModel.SPRING
+    unmappedTargetPolicy = ReportingPolicy.IGNORE,
+    builder = @Builder(disableBuilder = true),
+    componentModel = MappingConstants.ComponentModel.SPRING
 )
 public interface RatingMapper {
 
@@ -42,8 +42,8 @@ public interface RatingMapper {
     @Named("mapRatings")
     default List<RatingResponse> mapRatings(Page<Rating> responsePage) {
         return responsePage.get()
-                .map(this::mapEntityToResponse)
-                .toList();
+            .map(this::mapEntityToResponse)
+            .toList();
     }
 
 }

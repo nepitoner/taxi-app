@@ -1,8 +1,7 @@
 package org.modsen.validator;
 
-import org.modsen.dto.driver.DriverRequest;
-
 import java.util.UUID;
+import org.modsen.dto.driver.DriverRequest;
 
 public interface DriverValidator {
 

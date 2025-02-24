@@ -1,9 +1,9 @@
 package org.modsen.utils;
 
+import static org.modsen.utils.constant.ExceptionConstant.UNKNOWN_CODE_MESSAGE;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
-import static org.modsen.utils.constant.ExceptionConstant.UNKNOWN_CODE_MESSAGE;
 
 @Getter
 @RequiredArgsConstructor

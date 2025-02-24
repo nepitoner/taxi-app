@@ -1,5 +1,7 @@
 package org.modsen.service.impl;
 
+import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modsen.config.properties.RatingServiceProperties;
@@ -10,8 +12,8 @@ import org.modsen.dto.response.PagedRatingResponse;
 import org.modsen.dto.response.RateResponse;
 import org.modsen.dto.response.RatingResponse;
 import org.modsen.dto.response.RideResponse;
-import org.modsen.entity.RatingChangeEvent;
 import org.modsen.entity.Rating;
+import org.modsen.entity.RatingChangeEvent;
 import org.modsen.mapper.RatingMapper;
 import org.modsen.repository.RatingChangeEventRepository;
 import org.modsen.repository.RatingRepository;
@@ -24,8 +26,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @Service
@@ -52,7 +52,7 @@ public class RatingServiceImpl implements RatingService {
         Page<Rating> responsePage = ratingRepository.findAll(pageable);
 
         PagedRatingResponse pagedRatingResponse = ratingMapper
-                .mapPageEntityToPagedDto(requestParams.page(), limit, responsePage);
+            .mapPageEntityToPagedDto(requestParams.page(), limit, responsePage);
         log.info("Rating Service. Get all request. Pages amount {}", responsePage.getTotalPages());
         return pagedRatingResponse;
     }
@@ -63,9 +63,9 @@ public class RatingServiceImpl implements RatingService {
         List<Rating> ratings = ratingRepository.findTopNByToId(toId, properties.limit());
 
         float rating = (float) ratings.stream()
-                .mapToDouble(Rating::getRating)
-                .average()
-                .orElse(0.0);
+            .mapToDouble(Rating::getRating)
+            .average()
+            .orElse(0.0);
 
         log.info("Rating Service. Get rating by id. Rating {}", rating);
         return ratingMapper.mapToRateResponse(toId, rating);
@@ -84,9 +84,9 @@ public class RatingServiceImpl implements RatingService {
         log.info("Rating Service. Create new rating. New rating id {}", ratingId);
 
         ratingChangeEventRepository.save(RatingChangeEvent.builder()
-                .participantId(toId)
-                .rating(getRateById(toId).rating())
-                .build());
+            .participantId(toId)
+            .rating(getRateById(toId).rating())
+            .build());
         log.info("Rating for {} was successfully stored to outbox", toId);
         return ratingId;
     }

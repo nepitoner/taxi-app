@@ -1,8 +1,7 @@
 package org.modsen.validator;
 
-import org.modsen.dto.car.CarRequest;
-
 import java.util.UUID;
+import org.modsen.dto.car.CarRequest;
 
 public interface CarValidator {
 

@@ -2,6 +2,7 @@ package org.modsen.kafka;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
@@ -12,8 +13,6 @@ import org.modsen.service.KafkaMessagingService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
@@ -46,9 +45,9 @@ public class RatingChangedEventProducer {
     @Transactional
     public void processEvent(RatingChangeEvent ratingChangeEvent) {
         messagingService.sendMessage(RateResponse.builder()
-                .eventId(ratingChangeEvent.getEventId())
-                .toId(ratingChangeEvent.getParticipantId().toString())
-                .rating(ratingChangeEvent.getRating())
+            .eventId(ratingChangeEvent.getEventId())
+            .toId(ratingChangeEvent.getParticipantId().toString())
+            .rating(ratingChangeEvent.getRating())
             .build());
 
         log.info("Rating Changed Event Producer. Process event with id {}", ratingChangeEvent.getEventId());
