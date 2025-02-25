@@ -22,11 +22,14 @@ public class KafkaConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     String bootstrapServers;
 
+    @Value("${spring.kafka.producer.partitions}")
+    Integer partitions;
+
     @Bean
     NewTopic newTopic(KafkaTopicConfigProperties properties) {
         return new NewTopic(properties.topic()
             .getDriverTopic(),
-            1,
+            partitions,
             (short) 1);
     }
 
