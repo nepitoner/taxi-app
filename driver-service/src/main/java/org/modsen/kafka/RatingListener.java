@@ -14,7 +14,7 @@ import java.util.UUID;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class Listener {
+public class RatingListener {
 
     private final DriverService driverService;
 
@@ -22,7 +22,11 @@ public class Listener {
 
     private final RedisEventService redisEventService;
 
-    @KafkaListener(topics = "rating-passenger-driver-topic", groupId = "passenger-driver")
+    @KafkaListener(
+        topics = "${spring.rating-consumer.rating-topic}",
+        groupId = "${spring.rating-consumer.rating-group-id}",
+        containerFactory = "kafkaRatingListenerContainerFactory"
+    )
     public void onMessage(RateResponse rateResponse) {
 
         if (redisEventService.existsByEventId(rateResponse.eventId())) {

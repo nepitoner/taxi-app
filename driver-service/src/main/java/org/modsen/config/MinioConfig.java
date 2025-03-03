@@ -1,6 +1,7 @@
 package org.modsen.config;
 
 import io.minio.MinioClient;
+import org.modsen.config.properties.MinioConfigProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

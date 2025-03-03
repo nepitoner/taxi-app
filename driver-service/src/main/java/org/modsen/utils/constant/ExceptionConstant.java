@@ -22,4 +22,8 @@ public final class ExceptionConstant {
 
     public final static String UNKNOWN_CODE_MESSAGE = "Unknown sex type code %d";
 
+    public final static String NO_AVAILABLE_DRIVERS_MESSAGE = "There no available drivers now";
+
+    public final static String MESSAGE_CAN_T_BE_SENT_RIGHT_NOW = "Message can't be sent right now";
+
 }
