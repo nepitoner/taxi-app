@@ -1,10 +1,13 @@
 package org.modsen.service.impl;
 
+import java.time.Clock;
+import java.time.LocalDateTime;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modsen.dto.request.PassengerRequest;
 import org.modsen.dto.request.RequestParams;
 import org.modsen.dto.response.PagedPassengerResponse;
-import org.modsen.dto.request.PassengerRequest;
 import org.modsen.dto.response.PassengerResponse;
 import org.modsen.dto.response.PassengerWithRatingResponse;
 import org.modsen.dto.response.RateResponse;
@@ -12,17 +15,13 @@ import org.modsen.entity.Passenger;
 import org.modsen.mapper.PassengerMapper;
 import org.modsen.repository.PassengerRepository;
 import org.modsen.service.PassengerService;
-import org.modsen.util.validator.PassengerValidator;
+import org.modsen.validator.PassengerValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.Clock;
-import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Slf4j
 @Service
@@ -46,7 +45,7 @@ public class PassengerServiceImpl implements PassengerService {
         Page<Passenger> responsePage = passengerRepository.findByIsDeletedIsFalse(pageable);
 
         PagedPassengerResponse pagedPassengerResponse = passengerMapper
-                .mapPageEntityToPagedDto(requestParams.page(), limit, responsePage);
+            .mapPageEntityToPagedDto(requestParams.page(), limit, responsePage);
         log.info("Passenger Service. Get all request. Pages amount {}", responsePage.getTotalPages());
         return pagedPassengerResponse;
     }
@@ -72,7 +71,7 @@ public class PassengerServiceImpl implements PassengerService {
         UUID passengerId = passengerRepository.save(passengerToRegister).getPassengerId();
 
         log.info("Passenger Service. Register new passenger with email {}. New passenger id {}",
-                passengerToRegister.getEmail(), passengerId);
+            passengerToRegister.getEmail(), passengerId);
         return passengerId;
     }
 
@@ -84,7 +83,7 @@ public class PassengerServiceImpl implements PassengerService {
 
         Passenger passenger = passengerRepository.findByPassengerIdAndIsDeletedIsFalse(passengerId);
         Passenger updatePassenger = passengerMapper.mapDtoToEntity(passengerRequest, passengerId,
-                passenger.getCreatedAt(), LocalDateTime.now(clock));
+            passenger.getCreatedAt(), LocalDateTime.now(clock));
 
         Passenger newPassenger = passengerRepository.save(updatePassenger);
         log.info("Passenger Service. Update passenger with id {}", passengerId);

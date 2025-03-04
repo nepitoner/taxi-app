@@ -4,6 +4,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.modsen.controller.RideApi;
 import org.modsen.dto.request.RideRequest;
@@ -26,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.UUID;
 
 @Validated
 @RestController
@@ -39,51 +39,51 @@ public class RideController implements RideApi {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public PagedRideResponse getAllRides(
-            @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
-            @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
-            @RequestParam(defaultValue = "createdAt") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDirection
+        @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
+        @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
+        @RequestParam(defaultValue = "createdAt") String sortBy,
+        @RequestParam(defaultValue = "asc") String sortDirection
     ) {
         RideRequestParams requestParams = RideRequestParams.builder()
-                .page(page)
-                .limit(limit)
-                .sortBy(sortBy)
-                .sortDirection(sortDirection)
-                .build();
+            .page(page)
+            .limit(limit)
+            .sortBy(sortBy)
+            .sortDirection(sortDirection)
+            .build();
         return rideService.getAllRides(requestParams);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/drivers/{driverId}", produces = APPLICATION_JSON_VALUE)
     public PagedRideResponse getAllRidesByDriverId(
-            @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
-            @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
-            @RequestParam(defaultValue = "createdAt") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDirection,
-            @PathVariable UUID driverId) {
+        @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
+        @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
+        @RequestParam(defaultValue = "createdAt") String sortBy,
+        @RequestParam(defaultValue = "asc") String sortDirection,
+        @PathVariable UUID driverId) {
         RideRequestParams requestParams = RideRequestParams.builder()
-                .page(page)
-                .limit(limit)
-                .sortBy(sortBy)
-                .sortDirection(sortDirection)
-                .build();
+            .page(page)
+            .limit(limit)
+            .sortBy(sortBy)
+            .sortDirection(sortDirection)
+            .build();
         return rideService.getAllRidesByDriverId(requestParams, driverId);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/passengers/{passengerId}", produces = APPLICATION_JSON_VALUE)
     public PagedRideResponse getAllRidesByPassengerId(
-            @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
-            @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
-            @RequestParam(defaultValue = "createdAt") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDirection,
-            @PathVariable UUID passengerId) {
+        @RequestParam(defaultValue = "0") @Min(value = 0, message = "{page.incorrect}") int page,
+        @RequestParam(defaultValue = "10") @Min(value = 1, message = "{limit.incorrect}") int limit,
+        @RequestParam(defaultValue = "createdAt") String sortBy,
+        @RequestParam(defaultValue = "asc") String sortDirection,
+        @PathVariable UUID passengerId) {
         RideRequestParams requestParams = RideRequestParams.builder()
-                .page(page)
-                .limit(limit)
-                .sortBy(sortBy)
-                .sortDirection(sortDirection)
-                .build();
+            .page(page)
+            .limit(limit)
+            .sortBy(sortBy)
+            .sortDirection(sortDirection)
+            .build();
         return rideService.getAllRidesByPassengerId(requestParams, passengerId);
     }
 
@@ -117,14 +117,14 @@ public class RideController implements RideApi {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PatchMapping(value = "/accept", produces = APPLICATION_JSON_VALUE)
     public RideResponse acceptRide(@RequestParam UUID rideId,
-                           @RequestParam UUID driverId) {
+                                   @RequestParam UUID driverId) {
         return rideService.acceptRide(rideId, driverId);
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @PatchMapping(value = "/decline", produces = APPLICATION_JSON_VALUE)
     public RideResponse declineRide(@RequestParam UUID rideId,
-                            @RequestParam UUID driverId) {
+                                    @RequestParam UUID driverId) {
         return rideService.declineRide(rideId, driverId);
     }
 

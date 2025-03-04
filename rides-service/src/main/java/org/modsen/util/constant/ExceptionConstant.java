@@ -1,4 +1,4 @@
-package org.modsen.utils.constant;
+package org.modsen.util.constant;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -17,7 +17,7 @@ public final class ExceptionConstant {
     public final static String INVALID_RIDE_STATUS_CHANGE_MESSAGE = "You can't change status from %s";
 
     public final static String INVALID_LOCATION_POINT_MESSAGE =
-            "Coordinates must contain at least two values (longitude and latitude)";
+        "Coordinates must contain at least two values (longitude and latitude)";
 
     public final static String REPEATED_COORDINATES_MESSAGE = "Starting and ending coordinates must not be the same";
 

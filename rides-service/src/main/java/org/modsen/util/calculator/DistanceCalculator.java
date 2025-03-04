@@ -1,8 +1,9 @@
-package org.modsen.utils.calculator;
+package org.modsen.util.calculator;
 
-import static org.modsen.utils.constant.ExceptionConstant.SERVICE_IS_NOT_AVAILABLE_MESSAGE;
-import static org.modsen.utils.constant.RideConstant.COORDINATES_FORMAT;
+import static org.modsen.util.constant.ExceptionConstant.SERVICE_IS_NOT_AVAILABLE_MESSAGE;
+import static org.modsen.util.constant.RideConstant.COORDINATES_FORMAT;
 
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.modsen.config.properties.RouterApiProperties;
 import org.modsen.dto.response.DistanceResponse;
@@ -13,7 +14,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import java.util.Objects;
 
 
 @Component
@@ -29,9 +29,9 @@ public class DistanceCalculator {
         String url = properties.link();
 
         String requestBody = String.format(
-                COORDINATES_FORMAT,
-                from.getLongitude(), from.getLatitude(),
-                to.getLongitude(), to.getLatitude()
+            COORDINATES_FORMAT,
+            from.getLongitude(), from.getLatitude(),
+            to.getLongitude(), to.getLatitude()
         );
 
         HttpHeaders headers = new HttpHeaders();
@@ -42,7 +42,7 @@ public class DistanceCalculator {
         ResponseEntity<DistanceResponse> response;
 
         try {
-             response = restTemplate.postForEntity(url, entity, DistanceResponse.class);
+            response = restTemplate.postForEntity(url, entity, DistanceResponse.class);
         } catch (Exception e) {
             throw new ServiceIsNotAvailable(SERVICE_IS_NOT_AVAILABLE_MESSAGE);
         }

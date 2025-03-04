@@ -1,11 +1,11 @@
 package org.modsen.dto.response;
 
-import static org.modsen.utils.constant.ExceptionConstant.INVALID_LOCATION_POINT_MESSAGE;
+import static org.modsen.util.constant.ExceptionConstant.INVALID_LOCATION_POINT_MESSAGE;
 
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import org.modsen.exception.DistanceCalculationException;
-import java.util.List;
 
 @Setter
 @Getter
@@ -16,8 +16,8 @@ public class DistanceResponse {
     public double getTotalDistance() {
         if (routes != null && !routes.isEmpty()) {
             return routes.getFirst()
-                    .getSummary()
-                    .getDistance();
+                .getSummary()
+                .getDistance();
         }
         throw new DistanceCalculationException(INVALID_LOCATION_POINT_MESSAGE);
     }

@@ -1,4 +1,4 @@
-package org.modsen.utils.constant;
+package org.modsen.util.constant;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

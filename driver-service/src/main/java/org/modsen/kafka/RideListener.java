@@ -1,6 +1,6 @@
 package org.modsen.kafka;
 
-import static org.modsen.utils.constant.ExceptionConstant.NO_AVAILABLE_DRIVERS_MESSAGE;
+import static org.modsen.util.constant.ExceptionConstant.NO_AVAILABLE_DRIVERS_MESSAGE;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +23,8 @@ public class RideListener {
     private final DriverRepository driverRepository;
 
     @KafkaListener(
-        topics = "${spring.ride-consumer.ride-topic}",
-        groupId = "${spring.ride-consumer.ride-group-id}",
+        topics = "${spring.kafka.ride-consumer.ride-topic}",
+        groupId = "${spring.kafka.ride-consumer.ride-group-id}",
         containerFactory = "kafkaRideListenerContainerFactory")
     public void onMessage(RideAvailableEvent rideAvailableEvent) throws RequestTimeoutException {
 

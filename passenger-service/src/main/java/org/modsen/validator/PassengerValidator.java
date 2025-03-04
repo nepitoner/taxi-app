@@ -1,8 +1,7 @@
-package org.modsen.util.validator;
-
-import org.modsen.dto.request.PassengerRequest;
+package org.modsen.validator;
 
 import java.util.UUID;
+import org.modsen.dto.request.PassengerRequest;
 
 public interface PassengerValidator {
 

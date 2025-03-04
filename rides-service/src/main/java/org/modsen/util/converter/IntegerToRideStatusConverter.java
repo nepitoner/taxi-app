@@ -1,4 +1,4 @@
-package org.modsen.utils.converter;
+package org.modsen.util.converter;
 
 import org.modsen.entity.RideStatus;
 import org.springframework.core.convert.converter.Converter;

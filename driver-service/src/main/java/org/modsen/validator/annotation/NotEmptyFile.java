@@ -1,15 +1,14 @@
 package org.modsen.validator.annotation;
 
+import static org.modsen.util.constant.ExceptionConstant.EMPTY_FILE_MESSAGE;
+
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import org.modsen.validator.FileEmptinessValidator;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import static org.modsen.utils.constant.ExceptionConstant.EMPTY_FILE_MESSAGE;
+import org.modsen.validator.FileEmptinessValidator;
 
 @Constraint(validatedBy = FileEmptinessValidator.class)
 @Target({ElementType.FIELD, ElementType.PARAMETER})

@@ -1,12 +1,11 @@
 package org.modsen.service;
 
-import org.modsen.dto.response.PagedResponse;
+import java.util.UUID;
 import org.modsen.dto.driver.DriverRequest;
 import org.modsen.dto.driver.DriverResponse;
 import org.modsen.dto.request.RequestParams;
+import org.modsen.dto.response.PagedResponse;
 import org.modsen.dto.response.RateResponse;
-
-import java.util.UUID;
 
 public interface DriverService {
 

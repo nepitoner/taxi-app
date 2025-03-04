@@ -11,7 +11,9 @@ spring:
   kafka:
     bootstrap-servers: ${KAFKA_URL:localhost:9092}
     producer:
-      group-id: passenger-driver
+      group:
+        passenger-group: passenger
+        driver-group: driver
       topic:
         passenger-driver-topic: rating-passenger-driver-topic
   integration:

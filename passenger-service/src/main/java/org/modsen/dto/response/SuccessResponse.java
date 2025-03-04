@@ -5,7 +5,7 @@ import lombok.Builder;
 @Builder
 public record SuccessResponse(
 
-        String passengerId
+    String id
 
 ) {
 }

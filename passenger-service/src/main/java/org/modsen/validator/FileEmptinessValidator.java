@@ -1,8 +1,8 @@
-package org.modsen.util.validator;
+package org.modsen.validator;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.modsen.util.validator.annotation.NotEmptyFile;
+import org.modsen.validator.annotation.NotEmptyFile;
 import org.springframework.web.multipart.MultipartFile;
 
 public class FileEmptinessValidator implements ConstraintValidator<NotEmptyFile, MultipartFile> {

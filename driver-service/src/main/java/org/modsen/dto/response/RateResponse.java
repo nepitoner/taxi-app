@@ -5,11 +5,11 @@ import lombok.Builder;
 @Builder
 public record RateResponse(
 
-        String eventId,
+    String eventId,
 
-        String  toId,
+    String toId,
 
-        float rating
+    float rating
 
 ) {
 }
