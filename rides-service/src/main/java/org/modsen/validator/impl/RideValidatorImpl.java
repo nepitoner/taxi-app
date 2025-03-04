@@ -1,8 +1,8 @@
 package org.modsen.validator.impl;
 
-import static org.modsen.utils.constant.ExceptionConstant.INVALID_RIDE_STATUS_CHANGE_MESSAGE;
-import static org.modsen.utils.constant.ExceptionConstant.INVALID_RIDE_STATUS_MESSAGE;
-import static org.modsen.utils.constant.ExceptionConstant.RIDE_NOT_FOUND_MESSAGE;
+import static org.modsen.util.constant.ExceptionConstant.INVALID_RIDE_STATUS_CHANGE_MESSAGE;
+import static org.modsen.util.constant.ExceptionConstant.INVALID_RIDE_STATUS_MESSAGE;
+import static org.modsen.util.constant.ExceptionConstant.RIDE_NOT_FOUND_MESSAGE;
 
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;

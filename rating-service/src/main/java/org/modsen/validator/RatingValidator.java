@@ -1,4 +1,4 @@
-package org.modsen.utils.validator;
+package org.modsen.validator;
 
 import java.util.UUID;
 import org.modsen.dto.response.RideResponse;

@@ -1,6 +1,6 @@
 package org.modsen.dto.response;
 
-import static org.modsen.utils.constant.ExceptionConstant.INVALID_LOCATION_POINT_MESSAGE;
+import static org.modsen.util.constant.ExceptionConstant.INVALID_LOCATION_POINT_MESSAGE;
 
 import java.util.List;
 import lombok.Getter;

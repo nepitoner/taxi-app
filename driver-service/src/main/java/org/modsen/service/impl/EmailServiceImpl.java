@@ -1,8 +1,8 @@
 package org.modsen.service.impl;
 
-import static org.modsen.utils.constant.DriverServiceConstant.EMAIL_BUTTONS;
-import static org.modsen.utils.constant.DriverServiceConstant.EMAIL_SUBJECT;
-import static org.modsen.utils.constant.ExceptionConstant.MESSAGE_CAN_T_BE_SENT_RIGHT_NOW;
+import static org.modsen.util.constant.DriverServiceConstant.EMAIL_BUTTONS;
+import static org.modsen.util.constant.DriverServiceConstant.EMAIL_SUBJECT;
+import static org.modsen.util.constant.ExceptionConstant.MESSAGE_CAN_T_BE_SENT_RIGHT_NOW;
 
 import com.resend.Resend;
 import com.resend.core.exception.ResendException;

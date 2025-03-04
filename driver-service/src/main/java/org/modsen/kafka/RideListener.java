@@ -1,6 +1,6 @@
 package org.modsen.kafka;
 
-import static org.modsen.utils.constant.ExceptionConstant.NO_AVAILABLE_DRIVERS_MESSAGE;
+import static org.modsen.util.constant.ExceptionConstant.NO_AVAILABLE_DRIVERS_MESSAGE;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

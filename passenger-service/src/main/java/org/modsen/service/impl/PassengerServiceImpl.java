@@ -15,7 +15,7 @@ import org.modsen.entity.Passenger;
 import org.modsen.mapper.PassengerMapper;
 import org.modsen.repository.PassengerRepository;
 import org.modsen.service.PassengerService;
-import org.modsen.util.validator.PassengerValidator;
+import org.modsen.validator.PassengerValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

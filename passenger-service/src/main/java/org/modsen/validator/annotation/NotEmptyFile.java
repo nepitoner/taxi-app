@@ -1,4 +1,4 @@
-package org.modsen.util.validator.annotation;
+package org.modsen.validator.annotation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -7,7 +7,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import org.modsen.util.constant.ExceptionConstant;
-import org.modsen.util.validator.FileEmptinessValidator;
+import org.modsen.validator.FileEmptinessValidator;
 
 @Constraint(validatedBy = FileEmptinessValidator.class)
 @Target({ElementType.FIELD, ElementType.PARAMETER})

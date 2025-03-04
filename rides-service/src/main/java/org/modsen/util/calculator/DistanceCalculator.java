@@ -1,7 +1,7 @@
-package org.modsen.utils.calculator;
+package org.modsen.util.calculator;
 
-import static org.modsen.utils.constant.ExceptionConstant.SERVICE_IS_NOT_AVAILABLE_MESSAGE;
-import static org.modsen.utils.constant.RideConstant.COORDINATES_FORMAT;
+import static org.modsen.util.constant.ExceptionConstant.SERVICE_IS_NOT_AVAILABLE_MESSAGE;
+import static org.modsen.util.constant.RideConstant.COORDINATES_FORMAT;
 
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;

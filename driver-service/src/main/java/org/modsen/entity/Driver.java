@@ -26,8 +26,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.modsen.utils.SexType;
-import org.modsen.utils.SexTypeConverter;
+import org.modsen.util.SexType;
+import org.modsen.util.SexTypeConverter;
 
 @Entity
 @Getter

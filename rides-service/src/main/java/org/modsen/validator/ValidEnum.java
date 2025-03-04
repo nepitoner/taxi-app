@@ -1,6 +1,6 @@
 package org.modsen.validator;
 
-import static org.modsen.utils.constant.ExceptionConstant.INVALID_ENUM_MESSAGE;
+import static org.modsen.util.constant.ExceptionConstant.INVALID_ENUM_MESSAGE;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

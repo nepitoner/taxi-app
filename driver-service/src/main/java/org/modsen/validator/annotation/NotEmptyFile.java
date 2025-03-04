@@ -1,6 +1,6 @@
 package org.modsen.validator.annotation;
 
-import static org.modsen.utils.constant.ExceptionConstant.EMPTY_FILE_MESSAGE;
+import static org.modsen.util.constant.ExceptionConstant.EMPTY_FILE_MESSAGE;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

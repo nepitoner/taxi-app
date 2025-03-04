@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 import lombok.Builder;
-import org.modsen.utils.SexTypeConverter;
+import org.modsen.util.SexTypeConverter;
 
 @Builder
 @Schema(description = "Dto for getting driver's information")

@@ -1,8 +1,8 @@
-package org.modsen.utils.validator.impl;
+package org.modsen.validator.impl;
 
-import static org.modsen.utils.constant.ExceptionConstant.PARTICIPANT_NOT_FOUND_MESSAGE;
-import static org.modsen.utils.constant.ExceptionConstant.RATING_NOT_FOUND_MESSAGE;
-import static org.modsen.utils.constant.ExceptionConstant.REPEATED_ATTEMPT_MESSAGE;
+import static org.modsen.util.constant.ExceptionConstant.PARTICIPANT_NOT_FOUND_MESSAGE;
+import static org.modsen.util.constant.ExceptionConstant.RATING_NOT_FOUND_MESSAGE;
+import static org.modsen.util.constant.ExceptionConstant.REPEATED_ATTEMPT_MESSAGE;
 
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ import org.modsen.exception.ParticipantNotFoundException;
 import org.modsen.exception.RatingNotFoundException;
 import org.modsen.exception.RepeatedRatingAttemptException;
 import org.modsen.repository.RatingRepository;
-import org.modsen.utils.validator.RatingValidator;
+import org.modsen.validator.RatingValidator;
 import org.springframework.stereotype.Component;
 
 @Slf4j

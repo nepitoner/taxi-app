@@ -14,7 +14,7 @@ import org.modsen.dto.response.PassengerResponse;
 import org.modsen.dto.response.PassengerWithRatingResponse;
 import org.modsen.dto.response.SuccessResponse;
 import org.modsen.exception.RequestTimeoutException;
-import org.modsen.util.validator.annotation.NotEmptyFile;
+import org.modsen.validator.annotation.NotEmptyFile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;

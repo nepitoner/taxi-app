@@ -1,4 +1,4 @@
-package org.modsen.util.validator;
+package org.modsen.validator;
 
 import java.util.UUID;
 import org.modsen.dto.request.PassengerRequest;

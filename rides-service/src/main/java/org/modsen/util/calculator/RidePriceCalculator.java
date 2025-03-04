@@ -1,8 +1,8 @@
-package org.modsen.utils.calculator;
+package org.modsen.util.calculator;
 
-import static org.modsen.utils.constant.ExceptionConstant.INVALID_LOCATION_POINT_MESSAGE;
-import static org.modsen.utils.constant.ExceptionConstant.REPEATED_COORDINATES_MESSAGE;
-import static org.modsen.utils.constant.RideConstant.RIDE_PRICE_PER_KM;
+import static org.modsen.util.constant.ExceptionConstant.INVALID_LOCATION_POINT_MESSAGE;
+import static org.modsen.util.constant.ExceptionConstant.REPEATED_COORDINATES_MESSAGE;
+import static org.modsen.util.constant.RideConstant.RIDE_PRICE_PER_KM;
 
 import java.math.BigDecimal;
 import java.util.List;
