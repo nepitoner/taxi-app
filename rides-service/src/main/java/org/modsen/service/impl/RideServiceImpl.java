@@ -62,7 +62,7 @@ public class RideServiceImpl implements RideService {
         Page<Ride> responsePage = rideRepository.findAll(pageable);
 
         PagedRideResponse pagedRideResponse = rideMapper
-            .mapPageEntityToPagedDto(requestParams.page(), requestParams.limit(), responsePage);
+            .mapPageEntityToPagedDto(requestParams.page(), limit, responsePage);
         log.info("Ride Service. Get all request. Pages amount {}", responsePage.getTotalPages());
         return pagedRideResponse;
     }
@@ -76,7 +76,7 @@ public class RideServiceImpl implements RideService {
         Page<Ride> responsePage = rideRepository.findByDriverId(driverId, pageable);
 
         PagedRideResponse pagedRideResponse = rideMapper
-            .mapPageEntityToPagedDto(requestParams.page(), requestParams.limit(), responsePage);
+            .mapPageEntityToPagedDto(requestParams.page(), limit, responsePage);
         log.info("Ride Service. Get all by driver id request. Pages amount {}", responsePage.getTotalPages());
         return pagedRideResponse;
     }
@@ -90,7 +90,7 @@ public class RideServiceImpl implements RideService {
         Page<Ride> responsePage = rideRepository.findByPassengerId(passengerId, pageable);
 
         PagedRideResponse pagedRideResponse = rideMapper
-            .mapPageEntityToPagedDto(requestParams.page(), requestParams.limit(), responsePage);
+            .mapPageEntityToPagedDto(requestParams.page(), limit, responsePage);
         log.info("Ride Service. Get all by passenger id request. Pages amount {}", responsePage.getTotalPages());
         return pagedRideResponse;
     }
