@@ -1,8 +1,8 @@
 package org.modsen.config;
 
 import java.util.Arrays;
-import org.modsen.utils.converter.IntegerToRideStatusConverter;
-import org.modsen.utils.converter.RideStatusToIntegerConverter;
+import org.modsen.util.converter.IntegerToRideStatusConverter;
+import org.modsen.util.converter.RideStatusToIntegerConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;

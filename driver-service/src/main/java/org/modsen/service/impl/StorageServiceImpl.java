@@ -1,6 +1,6 @@
 package org.modsen.service.impl;
 
-import static org.modsen.utils.constant.DriverServiceConstant.DRIVER_PHOTO_NAME;
+import static org.modsen.util.constant.DriverServiceConstant.DRIVER_PHOTO_NAME;
 
 import io.minio.BucketExistsArgs;
 import io.minio.MakeBucketArgs;

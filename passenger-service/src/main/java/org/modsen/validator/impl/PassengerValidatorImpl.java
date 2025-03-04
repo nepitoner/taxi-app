@@ -1,4 +1,4 @@
-package org.modsen.util.validator.impl;
+package org.modsen.validator.impl;
 
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -7,7 +7,7 @@ import org.modsen.exception.PassengerNotFoundException;
 import org.modsen.exception.RepeatedDataException;
 import org.modsen.repository.PassengerRepository;
 import org.modsen.util.constant.ExceptionConstant;
-import org.modsen.util.validator.PassengerValidator;
+import org.modsen.validator.PassengerValidator;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -6,7 +6,7 @@ import org.modsen.dto.driver.DriverRequest;
 import org.modsen.exception.DriverNotFoundException;
 import org.modsen.exception.RepeatedDataException;
 import org.modsen.repository.DriverRepository;
-import org.modsen.utils.constant.ExceptionConstant;
+import org.modsen.util.constant.ExceptionConstant;
 import org.modsen.validator.DriverValidator;
 import org.springframework.stereotype.Component;
 

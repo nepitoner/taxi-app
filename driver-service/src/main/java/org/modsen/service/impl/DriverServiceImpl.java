@@ -1,6 +1,6 @@
 package org.modsen.service.impl;
 
-import static org.modsen.utils.constant.ExceptionConstant.TAKEN_CAR_MESSAGE;
+import static org.modsen.util.constant.ExceptionConstant.TAKEN_CAR_MESSAGE;
 
 import java.time.Clock;
 import java.time.LocalDateTime;

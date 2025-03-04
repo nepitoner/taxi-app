@@ -23,7 +23,7 @@ import org.modsen.mapper.RideMapper;
 import org.modsen.repository.RideRepository;
 import org.modsen.service.KafkaMessagingService;
 import org.modsen.service.RideService;
-import org.modsen.utils.calculator.RidePriceCalculator;
+import org.modsen.util.calculator.RidePriceCalculator;
 import org.modsen.validator.RideValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

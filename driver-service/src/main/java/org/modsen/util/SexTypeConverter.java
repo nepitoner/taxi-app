@@ -1,4 +1,4 @@
-package org.modsen.utils;
+package org.modsen.util;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

@@ -1,4 +1,4 @@
-package org.modsen.utils.constant;
+package org.modsen.util.constant;
 
 import java.math.BigDecimal;
 import lombok.AccessLevel;

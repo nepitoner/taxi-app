@@ -18,7 +18,7 @@ import org.modsen.dto.response.SuccessResponse;
 import org.modsen.exception.RequestTimeoutException;
 import org.modsen.service.PassengerService;
 import org.modsen.service.StorageService;
-import org.modsen.util.validator.annotation.NotEmptyFile;
+import org.modsen.validator.annotation.NotEmptyFile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

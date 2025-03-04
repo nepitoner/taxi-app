@@ -18,7 +18,7 @@ import org.modsen.mapper.RatingMapper;
 import org.modsen.repository.RatingChangeEventRepository;
 import org.modsen.repository.RatingRepository;
 import org.modsen.service.RatingService;
-import org.modsen.utils.validator.RatingValidator;
+import org.modsen.validator.RatingValidator;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

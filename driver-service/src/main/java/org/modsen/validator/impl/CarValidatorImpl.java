@@ -6,7 +6,7 @@ import org.modsen.dto.car.CarRequest;
 import org.modsen.exception.CarNotFoundException;
 import org.modsen.exception.RepeatedDataException;
 import org.modsen.repository.CarRepository;
-import org.modsen.utils.constant.ExceptionConstant;
+import org.modsen.util.constant.ExceptionConstant;
 import org.modsen.validator.CarValidator;
 import org.springframework.stereotype.Component;
 

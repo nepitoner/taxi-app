@@ -1,4 +1,4 @@
-package org.modsen.utils.calculator;
+package org.modsen.util.calculator;
 
 import lombok.Builder;
 import lombok.Getter;

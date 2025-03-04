@@ -1,6 +1,6 @@
 package org.modsen.dto.driver;
 
-import static org.modsen.utils.constant.DriverServiceConstant.PHONE_NUMBER_REGEX;
+import static org.modsen.util.constant.DriverServiceConstant.PHONE_NUMBER_REGEX;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Convert;
@@ -11,7 +11,7 @@ import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import java.time.LocalDate;
 import lombok.Builder;
-import org.modsen.utils.SexTypeConverter;
+import org.modsen.util.SexTypeConverter;
 
 @Builder
 @Schema(description = "Dto for getting driver's information")

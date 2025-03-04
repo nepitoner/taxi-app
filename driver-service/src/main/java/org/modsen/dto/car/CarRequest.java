@@ -1,6 +1,6 @@
 package org.modsen.dto.car;
 
-import static org.modsen.utils.constant.DriverServiceConstant.CAR_NUMBER_REGEX;
+import static org.modsen.util.constant.DriverServiceConstant.CAR_NUMBER_REGEX;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
