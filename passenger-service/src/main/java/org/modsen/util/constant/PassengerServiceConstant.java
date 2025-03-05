@@ -8,4 +8,6 @@ public final class PassengerServiceConstant {
 
     public final static String PHONE_NUMBER_REGEX = "^\\+375(29|25|33|44)\\d{7}$";
 
+    public final static String PHOTO_PASSENGER_NAME = "passenger_photo_%s";
+
 }
