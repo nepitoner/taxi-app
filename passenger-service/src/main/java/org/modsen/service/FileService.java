@@ -1,4 +1,4 @@
-package org.modsen.service.impl;
+package org.modsen.service;
 
 import java.io.InputStream;
 import org.modsen.exception.RequestTimeoutException;
