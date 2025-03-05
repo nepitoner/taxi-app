@@ -3,14 +3,15 @@ package org.modsen.service.impl;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import io.minio.MinioClient;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -30,7 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 class StorageServiceImplTest {
 
     @Mock
-    private MinioClient minioClient;
+    private FileService fileService;
 
     @Mock
     private PassengerService passengerService;
@@ -63,6 +64,8 @@ class StorageServiceImplTest {
     void testSaveFileReference() throws IOException, RequestTimeoutException {
         when(properties.bucket()).thenReturn(bucket);
         when(properties.bucket().getPhotoBucketName()).thenReturn(photoBucketName);
+        when(fileService.uploadFile(eq(photoBucketName), eq(expectedFileRef),
+            any(InputStream.class), eq(photoFile.getContentType()))).thenReturn(expectedFileRef);
         when(passengerService.addPhoto(passengerId, expectedFileRef)).thenReturn(passengerId);
 
         UUID result = storageService.saveFileReference(photoFile, passengerId);
@@ -81,19 +84,6 @@ class StorageServiceImplTest {
         assertThatThrownBy(() -> storageService.saveFileReference(photoFile, passengerId))
             .isInstanceOf(IOException.class)
             .hasMessage("Failed to get input stream");
-
-        verify(passengerService, never()).addPhoto(any(), any());
-    }
-
-    @Test
-    @DisplayName("Test saving file reference but throws RequestTimeoutException")
-    void testSaveFileReference_RequestTimeoutException() {
-        when(properties.bucket()).thenReturn(bucket);
-        when(bucket.getPhotoBucketName()).thenReturn(null);
-
-        assertThatThrownBy(() -> storageService.saveFileReference(photoFile, passengerId))
-            .isInstanceOf(RequestTimeoutException.class)
-            .hasMessage("bucket name must not be null.");
 
         verify(passengerService, never()).addPhoto(any(), any());
     }
