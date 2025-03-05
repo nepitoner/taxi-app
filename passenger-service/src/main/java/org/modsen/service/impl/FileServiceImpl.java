@@ -1,4 +1,4 @@
-package org.modsen.service;
+package org.modsen.service.impl;
 
 import io.minio.BucketExistsArgs;
 import io.minio.MakeBucketArgs;
@@ -7,7 +7,7 @@ import io.minio.PutObjectArgs;
 import java.io.InputStream;
 import lombok.RequiredArgsConstructor;
 import org.modsen.exception.RequestTimeoutException;
-import org.modsen.service.impl.FileService;
+import org.modsen.service.FileService;
 import org.springframework.stereotype.Service;
 
 @Service

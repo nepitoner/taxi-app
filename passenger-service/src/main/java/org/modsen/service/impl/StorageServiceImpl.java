@@ -7,6 +7,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.modsen.config.MinioConfigProperties;
 import org.modsen.exception.RequestTimeoutException;
+import org.modsen.service.FileService;
 import org.modsen.service.PassengerService;
 import org.modsen.service.StorageService;
 import org.springframework.stereotype.Service;
