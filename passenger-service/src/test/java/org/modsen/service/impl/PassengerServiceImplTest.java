@@ -16,7 +16,7 @@ import static org.modsen.util.TestUtil.passengerDtoRequest;
 import static org.modsen.util.TestUtil.passengerDtoResponse;
 import static org.modsen.util.TestUtil.passengerWithRatingResponse;
 import static org.modsen.util.TestUtil.rateResponse;
-import static org.modsen.util.TestUtil.requestParams;
+import static org.modsen.util.TestUtil.pagedRequestParams;
 import static org.modsen.util.constant.ExceptionConstant.PASSENGER_NOT_FOUND_MESSAGE;
 import static org.modsen.util.constant.ExceptionConstant.REPEATED_EMAIL_MESSAGE;
 import static org.modsen.util.constant.ExceptionConstant.REPEATED_PHONE_NUMBER_MESSAGE;
@@ -83,7 +83,7 @@ class PassengerServiceImplTest {
 
     private UUID passengerId;
     private Clock clockFix;
-    private RequestParams requestParams = requestParams();
+    private RequestParams requestParams = pagedRequestParams();
     private Passenger passenger;
     private PassengerRequest passengerRequest;
     private RateResponse rateResponse;
@@ -97,7 +97,7 @@ class PassengerServiceImplTest {
         passengerId = UUID.randomUUID();
         clock = Clock.systemDefaultZone();
         clockFix = Clock.fixed(Instant.parse("2025-02-23T10:15:30Z"), ZoneId.of("UTC"));
-        requestParams = requestParams();
+        requestParams = pagedRequestParams();
         passenger = passenger(passengerId, clock);
         passengerRequest = passengerDtoRequest();
         rateResponse = rateResponse(passengerId);

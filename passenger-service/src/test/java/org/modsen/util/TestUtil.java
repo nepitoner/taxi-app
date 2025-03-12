@@ -31,7 +31,7 @@ public final class TestUtil {
         return MAPPER.writeValueAsString(object);
     }
 
-    public static RequestParams requestParams() {
+    public static RequestParams pagedRequestParams() {
         return RequestParams.builder()
             .page(0)
             .limit(10)

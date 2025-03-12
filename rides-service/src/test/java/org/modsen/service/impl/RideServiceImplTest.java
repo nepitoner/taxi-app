@@ -14,7 +14,7 @@ import static org.mockito.Mockito.when;
 import static org.modsen.entity.RideStatus.CANCELED;
 import static org.modsen.entity.RideStatus.CREATED;
 import static org.modsen.util.TestUtil.pagedRideResponse;
-import static org.modsen.util.TestUtil.requestParams;
+import static org.modsen.util.TestUtil.pagedRequestParams;
 import static org.modsen.util.TestUtil.ride;
 import static org.modsen.util.TestUtil.rideRequest;
 import static org.modsen.util.TestUtil.rideResponse;
@@ -114,7 +114,7 @@ class RideServiceImplTest {
         rideId = UUID.randomUUID();
         driverId = UUID.randomUUID();
         passengerId = UUID.randomUUID();
-        requestParams = requestParams();
+        requestParams = pagedRequestParams();
         rideRequest = rideRequest(passengerId);
         ride = ride(rideId, driverId, passengerId, CREATED);
         rideResponse = rideResponse(rideId, driverId, passengerId, CREATED);

@@ -15,7 +15,7 @@ import static org.modsen.util.TestUtil.rateResponse;
 import static org.modsen.util.TestUtil.rating;
 import static org.modsen.util.TestUtil.ratingRequest;
 import static org.modsen.util.TestUtil.ratingResponse;
-import static org.modsen.util.TestUtil.requestParams;
+import static org.modsen.util.TestUtil.pagedRequestParams;
 import static org.modsen.util.TestUtil.rideComment;
 import static org.modsen.util.constant.ExceptionConstant.RATING_NOT_FOUND_MESSAGE;
 import static org.modsen.util.constant.ExceptionConstant.REPEATED_ATTEMPT_MESSAGE;
@@ -96,7 +96,7 @@ class RatingServiceImplTest {
         rateResponse = rateResponse(toId);
         rating = rating(ratingId, fromId, toId, rideId);
         rideResponse = new RideResponse(rideId, fromId, toId);
-        requestParams = requestParams();
+        requestParams = pagedRequestParams();
         commentRequest = rideComment(ratingId);
     }
 

@@ -30,7 +30,7 @@ public final class TestUtil {
         return MAPPER.writeValueAsString(object);
     }
 
-    public static RideRequestParams requestParams() {
+    public static RideRequestParams pagedRequestParams() {
         return RideRequestParams.builder()
             .page(0)
             .limit(10)
