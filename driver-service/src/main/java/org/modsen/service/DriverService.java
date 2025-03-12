@@ -1,11 +1,13 @@
 package org.modsen.service;
 
+import java.io.IOException;
 import java.util.UUID;
 import org.modsen.dto.driver.DriverRequest;
 import org.modsen.dto.driver.DriverResponse;
 import org.modsen.dto.request.RequestParams;
 import org.modsen.dto.response.PagedResponse;
 import org.modsen.dto.response.RateResponse;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface DriverService {
 
@@ -17,7 +19,7 @@ public interface DriverService {
 
     void deleteDriver(UUID driverId);
 
-    UUID addPhoto(UUID driverId, String fileRef);
+    UUID addPhoto(MultipartFile photoFile, UUID driverId) throws IOException;
 
     DriverResponse addCar(UUID driverId, UUID carId);
 

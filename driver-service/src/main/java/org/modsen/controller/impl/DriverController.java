@@ -16,7 +16,6 @@ import org.modsen.dto.response.PagedResponse;
 import org.modsen.dto.response.SuccessResponse;
 import org.modsen.exception.RequestTimeoutException;
 import org.modsen.service.DriverService;
-import org.modsen.service.StorageService;
 import org.modsen.validator.annotation.NotEmptyFile;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -41,8 +40,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class DriverController implements DriverApi {
 
     private final DriverService driverService;
-
-    private final StorageService storageService;
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(produces = APPLICATION_JSON_VALUE)
@@ -88,7 +85,7 @@ public class DriverController implements DriverApi {
                                           @RequestPart(value = "photoFile")
                                           @NotEmptyFile MultipartFile photoFile)
         throws IOException, RequestTimeoutException {
-        UUID id = storageService.saveFileReference(photoFile, driverId);
+        UUID id = driverService.addPhoto(photoFile, driverId);
         return new SuccessResponse(id.toString());
     }
 

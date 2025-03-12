@@ -1,5 +1,6 @@
 package org.modsen.service.impl;
 
+import java.io.IOException;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -14,6 +15,7 @@ import org.modsen.dto.response.RateResponse;
 import org.modsen.entity.Passenger;
 import org.modsen.mapper.PassengerMapper;
 import org.modsen.repository.PassengerRepository;
+import org.modsen.service.FileService;
 import org.modsen.service.PassengerService;
 import org.modsen.validator.PassengerValidator;
 import org.springframework.data.domain.Page;
@@ -22,6 +24,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Service
@@ -33,6 +36,8 @@ public class PassengerServiceImpl implements PassengerService {
     private final PassengerMapper passengerMapper;
 
     private final PassengerRepository passengerRepository;
+
+    private final FileService fileService;
 
     private final Clock clock;
 
@@ -103,8 +108,10 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Override
     @Transactional
-    public UUID addPhoto(UUID passengerId, String fileRef) {
+    public UUID addPhoto(MultipartFile photoFile, UUID passengerId) throws IOException {
         passengerValidator.checkExistenceAndPresence(passengerId);
+
+        String fileRef = fileService.saveFileReference(photoFile, passengerId);
 
         Passenger passenger = passengerRepository.findByPassengerIdAndIsDeletedIsFalse(passengerId);
         passenger.setProfilePictureRef(fileRef);

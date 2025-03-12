@@ -21,6 +21,8 @@ import static org.modsen.util.constant.ExceptionConstant.PASSENGER_NOT_FOUND_MES
 import static org.modsen.util.constant.ExceptionConstant.REPEATED_EMAIL_MESSAGE;
 import static org.modsen.util.constant.ExceptionConstant.REPEATED_PHONE_NUMBER_MESSAGE;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -49,10 +51,14 @@ import org.modsen.exception.PassengerNotFoundException;
 import org.modsen.exception.RepeatedDataException;
 import org.modsen.mapper.PassengerMapper;
 import org.modsen.repository.PassengerRepository;
+import org.modsen.service.FileService;
 import org.modsen.validator.PassengerValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 @ExtendWith(MockitoExtension.class)
 class PassengerServiceImplTest {
@@ -62,6 +68,9 @@ class PassengerServiceImplTest {
 
     @Mock
     private PassengerMapper passengerMapper;
+
+    @Mock
+    private FileService fileService;
 
     @Mock
     private PassengerValidator passengerValidator;
@@ -79,10 +88,12 @@ class PassengerServiceImplTest {
     private PassengerRequest passengerRequest;
     private RateResponse rateResponse;
     private PassengerResponse passengerResponse;
+    private MultipartFile photoFile;
+    private String expectedFileRef;
 
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
         passengerId = UUID.randomUUID();
         clock = Clock.systemDefaultZone();
         clockFix = Clock.fixed(Instant.parse("2025-02-23T10:15:30Z"), ZoneId.of("UTC"));
@@ -91,6 +102,9 @@ class PassengerServiceImplTest {
         passengerRequest = passengerDtoRequest();
         rateResponse = rateResponse(passengerId);
         passengerResponse = passengerDtoResponse(passengerId, "buil@modsen.com", clock);
+        expectedFileRef = "photo_" + passengerId;
+        photoFile = new MockMultipartFile(expectedFileRef, expectedFileRef,
+            MediaType.IMAGE_JPEG_VALUE, new ByteArrayInputStream("photo".getBytes()));
     }
 
     @Test
@@ -251,16 +265,16 @@ class PassengerServiceImplTest {
 
     @Test
     @DisplayName("Test adding photo to the passenger")
-    void testAddPhoto() {
-        String fileRef = "photo_reference";
+    void testAddPhoto() throws IOException {
+        when(fileService.saveFileReference(photoFile, passengerId)).thenReturn(expectedFileRef);
         when(passengerRepository.findByPassengerIdAndIsDeletedIsFalse(passengerId)).thenReturn(passenger);
-        passenger.setProfilePictureRef(fileRef);
+        passenger.setProfilePictureRef(expectedFileRef);
         when(passengerRepository.save(passenger)).thenReturn(passenger);
 
-        UUID result = passengerService.addPhoto(passengerId, fileRef);
+        UUID result = passengerService.addPhoto(photoFile, passengerId);
 
         assertEquals(passengerId, result);
-        assertEquals(fileRef, passenger.getProfilePictureRef());
+        assertEquals(expectedFileRef, passenger.getProfilePictureRef());
         verify(passengerValidator).checkExistenceAndPresence(passengerId);
     }
 
@@ -270,7 +284,7 @@ class PassengerServiceImplTest {
         doThrow(new PassengerNotFoundException(PASSENGER_NOT_FOUND_MESSAGE
             .formatted(passengerId))).when(passengerValidator).checkExistenceAndPresence(passengerId);
 
-        assertThrows(PassengerNotFoundException.class, () -> passengerService.addPhoto(passengerId, "photo_ref"));
+        assertThrows(PassengerNotFoundException.class, () -> passengerService.addPhoto(photoFile, passengerId));
     }
 
     @Test

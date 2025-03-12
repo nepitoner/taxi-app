@@ -20,6 +20,8 @@ import static org.modsen.util.TestUtil.driverResponse;
 import static org.modsen.util.constant.ExceptionConstant.DRIVER_NOT_FOUND_MESSAGE;
 import static org.modsen.util.constant.ExceptionConstant.REPEATED_PHONE_NUMBER_MESSAGE;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -52,9 +54,13 @@ import org.modsen.mapper.DriverMapper;
 import org.modsen.repository.CarRepository;
 import org.modsen.repository.DriverRepository;
 import org.modsen.service.CarService;
+import org.modsen.service.FileService;
 import org.modsen.validator.DriverValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 @ExtendWith(MockitoExtension.class)
 class DriverServiceImplTest {
@@ -80,6 +86,9 @@ class DriverServiceImplTest {
     @Mock
     private CarService carService;
 
+    @Mock
+    private FileService fileService;
+
     @InjectMocks
     private DriverServiceImpl driverService;
 
@@ -91,9 +100,12 @@ class DriverServiceImplTest {
     private Car car;
     private CarResponse carResponse;
     private Clock clockFix;
+    private MultipartFile photoFile;
+    private String expectedFileRef;
+
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
         driverId = UUID.randomUUID();
         clockFix = Clock.fixed(Instant.parse("2025-02-23T10:15:30Z"), ZoneId.of("UTC"));
         driver = driver(driverId, "email@gmail.com", clockFix);
@@ -103,6 +115,9 @@ class DriverServiceImplTest {
         car = car(carId);
         carResponse = carResponse(carId);
         clock = Clock.systemDefaultZone();
+        expectedFileRef = "photo_" + driverId;
+        photoFile = new MockMultipartFile(expectedFileRef, expectedFileRef,
+            MediaType.IMAGE_JPEG_VALUE, new ByteArrayInputStream("photo".getBytes()));
     }
 
     @Test
@@ -217,16 +232,16 @@ class DriverServiceImplTest {
 
     @Test
     @DisplayName("Test adding photo to the driver")
-    void testAddPhoto() {
-        String fileRef = "photo_reference";
+    void testAddPhoto() throws IOException {
+        when(fileService.saveFileReference(photoFile, driverId)).thenReturn(expectedFileRef);
         when(driverRepository.findByIdAndIsDeletedIsFalse(driverId)).thenReturn(driver);
-        driver.setProfilePictureRef(fileRef);
+        driver.setProfilePictureRef(expectedFileRef);
         when(driverRepository.save(driver)).thenReturn(driver);
 
-        UUID result = driverService.addPhoto(driverId, fileRef);
+        UUID result = driverService.addPhoto(photoFile, driverId);
 
         assertThat(result).isEqualTo(driverId);
-        assertEquals(fileRef, driver.getProfilePictureRef());
+        assertEquals(expectedFileRef, driver.getProfilePictureRef());
         verify(driverValidator).checkExistenceAndPresence(driverId);
     }
 
@@ -236,7 +251,7 @@ class DriverServiceImplTest {
         doThrow(new DriverNotFoundException(DRIVER_NOT_FOUND_MESSAGE
             .formatted(driverId))).when(driverValidator).checkExistenceAndPresence(driverId);
 
-        assertThrows(DriverNotFoundException.class, () -> driverService.addPhoto(driverId, "photo_ref"));
+        assertThrows(DriverNotFoundException.class, () -> driverService.addPhoto(photoFile, driverId));
     }
 
     @Test

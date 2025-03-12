@@ -15,9 +15,7 @@ import org.modsen.dto.response.PagedPassengerResponse;
 import org.modsen.dto.response.PassengerResponse;
 import org.modsen.dto.response.PassengerWithRatingResponse;
 import org.modsen.dto.response.SuccessResponse;
-import org.modsen.exception.RequestTimeoutException;
 import org.modsen.service.PassengerService;
-import org.modsen.service.StorageService;
 import org.modsen.validator.annotation.NotEmptyFile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,8 +38,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class PassengerController implements PassengerApi {
 
     private final PassengerService passengerService;
-
-    private final StorageService storageService;
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<PagedPassengerResponse> getAllPassengers(
@@ -92,8 +88,8 @@ public class PassengerController implements PassengerApi {
     public ResponseEntity<SuccessResponse> addPassengerPhoto(@PathVariable UUID passengerId,
                                                              @RequestPart(value = "photoFile")
                                                              @NotEmptyFile MultipartFile photoFile)
-        throws IOException, RequestTimeoutException {
-        UUID id = storageService.saveFileReference(photoFile, passengerId);
+        throws IOException {
+        UUID id = passengerService.addPhoto(photoFile, passengerId);
         return ResponseEntity.status(HttpStatus.OK).body(new SuccessResponse(id.toString()));
     }
 

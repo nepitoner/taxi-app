@@ -2,6 +2,7 @@ package org.modsen.service.impl;
 
 import static org.modsen.util.constant.ExceptionConstant.TAKEN_CAR_MESSAGE;
 
+import java.io.IOException;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -21,6 +22,7 @@ import org.modsen.repository.CarRepository;
 import org.modsen.repository.DriverRepository;
 import org.modsen.service.CarService;
 import org.modsen.service.DriverService;
+import org.modsen.service.FileService;
 import org.modsen.validator.DriverValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +30,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Service
@@ -47,6 +50,8 @@ public class DriverServiceImpl implements DriverService {
     private final DriverValidator driverValidator;
 
     private final DriverRepository driverRepository;
+
+    private final FileService fileService;
 
     @Override
     @Transactional(readOnly = true)
@@ -103,8 +108,9 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     @Transactional
-    public UUID addPhoto(UUID driverId, String fileRef) {
+    public UUID addPhoto(MultipartFile photoFile, UUID driverId) throws IOException {
         driverValidator.checkExistenceAndPresence(driverId);
+        String fileRef = fileService.saveFileReference(photoFile, driverId);
 
         Driver driver = driverRepository.findByIdAndIsDeletedIsFalse(driverId);
         driver.setProfilePictureRef(fileRef);

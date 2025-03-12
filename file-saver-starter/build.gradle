@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version "${springDepManVersion}"
+    id 'maven-publish'
+}
+
+group = 'org.modsen'
+version = '0.0.3'
+
+repositories {
+    mavenCentral()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from(components["java"])
+            versionMapping {
+                usage("java-api") {
+                    fromResolutionOf("runtimeClasspath")
+                }
+                usage("java-runtime") {
+                    fromResolutionResult()
+                }
+            }
+        }
+    }
+
+    repositories {
+        mavenLocal()
+    }
+
+}
+
+dependencies {
+    implementation "io.minio:minio:${minioVersion}"
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-configuration-processor'
+
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    testImplementation "org.testcontainers:minio:${minioTestVersion}"
+    testImplementation "io.rest-assured:rest-assured:${restAssuredVersion}"
+    testImplementation "io.rest-assured:json-schema-validator:${restAssuredVersion}"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+
+
+
+}
+
+test {
+    useJUnitPlatform()
+}

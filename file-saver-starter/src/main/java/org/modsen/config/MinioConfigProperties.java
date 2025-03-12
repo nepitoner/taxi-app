@@ -1,5 +1,6 @@
-package org.modsen.config.properties;
+package org.modsen.config;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +19,7 @@ public record MinioConfigProperties(String url,
     }
 
     @Builder
-    @Getter
+    @Getter(AccessLevel.PUBLIC)
     @Setter
     public static class Bucket {
         private final String photoBucketName;

@@ -9,6 +9,7 @@ version = '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
@@ -23,6 +24,7 @@ dependencies {
     implementation "org.mapstruct:mapstruct:${mapStructVersion}"
     implementation "io.minio:minio:${minioVersion}"
     implementation 'org.springframework.kafka:spring-kafka'
+    implementation "org.modsen.file-saver-starter:${fileStarterVersion}"
 
     runtimeOnly "org.postgresql:postgresql:${postgresqlVersion}"
 
@@ -33,6 +35,8 @@ dependencies {
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "org.mockito:mockito-inline:${mockitoVersion}"
+    testImplementation "io.rest-assured:rest-assured:${restAssuredVersion}"
+    testImplementation "io.rest-assured:json-schema-validator:${restAssuredVersion}"
 }
 
 test {
