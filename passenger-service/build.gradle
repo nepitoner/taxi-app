@@ -35,8 +35,6 @@ dependencies {
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "org.mockito:mockito-inline:${mockitoVersion}"
-    testImplementation "io.rest-assured:rest-assured:${restAssuredVersion}"
-    testImplementation "io.rest-assured:json-schema-validator:${restAssuredVersion}"
 }
 
 test {
