@@ -43,12 +43,7 @@ dependencies {
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
     testImplementation "org.testcontainers:minio:${minioTestVersion}"
-    testImplementation "io.rest-assured:rest-assured:${restAssuredVersion}"
-    testImplementation "io.rest-assured:json-schema-validator:${restAssuredVersion}"
     testImplementation "org.springframework.boot:spring-boot-starter-test"
-
-
-
 }
 
 test {
